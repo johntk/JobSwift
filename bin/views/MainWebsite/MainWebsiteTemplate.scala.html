@@ -1,0 +1,123 @@
+@import helper._
+@(title: String)(loginForm: Form[Application.Login])(mainContent: Html)
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JOBSWIFT Irish Recruiters">
+
+    <title>@title</title>
+    
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+    <!-- Bootstrap core CSS -->
+    <link href="@routes.Assets.at("bootstrap/css/bootstrap.css")" rel="stylesheet">
+    <!-- FONTAWESOME STYLES-->
+	<link rel="stylesheet" type="text/css" href="@routes.Assets.at("bootstrap/font-awesome-4.1.0/css/font-awesome.min.css")">
+
+    <!-- Custom styles for this template -->
+    <link href="@routes.Assets.at("stylesheets/mainWebsite.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("stylesheets/jobListingTable.css")" rel="stylesheet">
+    
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+    
+    <script src="@routes.Assets.at("bootstrap/js/jquery.js")"></script>
+    <script src="@routes.Assets.at("javascripts/smoothscroll.js")"></script>
+    
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target="#navigation">
+  
+	@if(flash.containsKey("success")){
+	<div class="alert alert-success" style="margin: 30px 0 0 0;">
+		<strong> @flash.get("success") </strong>
+	</div>
+	} @if(flash.containsKey("error")){
+	<div class="alert alert-danger" style="margin: 30px 0 0 0;">
+		<strong> @flash.get("error") </strong>
+	</div>
+	}
+	
+	@mainContent
+
+	<!-- FOOTER -->
+	<div id="c">
+		<div class="container" style="color:white;">
+		
+		<div class="footer-button">
+			<a href="/dashboard" target="_blank" class="btn btn-primary square-btn-adjust">Recruiter Login</a>
+		</div>
+			
+		</div>
+	</div>
+	
+	
+	<!-- LOGIN Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">LOGIN</h4>
+				</div>
+				<div class="modal-body">
+
+					<form action="/authenticate" method="POST">
+					
+						<div class="form-group">
+							<label for="applicant_email">Email:</label>
+							<input type="text" class="form-control" name="applicant_email" id="applicant_email">
+						</div>
+						<div class="form-group">
+							<label for="applicant_password">Password:</label>
+							<input type="password" class="form-control" name="applicant_password" id="applicant_password">
+						</div>
+						
+						<input type="hidden" value="@loginForm("id").valueOr("")" name="id"/>
+						<input type="submit" class="btn btn-primary btn-square-adjust" value="Submit">
+						&nbsp;&nbsp;
+						<a class="btn btn-default btn-square-adjust" href="@routes.Application.index()">Cancel</a>
+						
+					</form>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="@routes.Assets.at("bootstrap/js/bootstrap.js")"></script>
+    
+	<script>
+	$('.carousel').carousel({
+	  interval: 3500
+	})
+	</script>
+	
+	<script language="javascript" type="text/javascript">
+
+	    $(document).ready(function () {
+	      setImageOne();
+	    });
+	
+	    function setImageOne() {
+	      $('#imageSwap').fadeIn(400).html('<img src="@routes.Assets.at("images/MainWebsite/phone1.png")" />').delay(5000).fadeOut(400, function () { setImageTwo(); });
+	    }
+	
+	    function setImageTwo() {
+	      $('#imageSwap').fadeIn(400).html('<img src="@routes.Assets.at("images/MainWebsite/phone2.png")" />').delay(5000).fadeOut(400, function () { setImageOne(); });
+	    }
+
+    </script>
+	
+  </body>
+</html>

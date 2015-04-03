@@ -1,0 +1,40 @@
+@(app: ApplicantModel)(loginForm: Form[Application.Login])
+@import helper._
+
+@MainWebsite.MainWebsiteTemplate("User Profile")(loginForm) {
+
+	<!-- Job Listings Fixed navbar -->
+	<div id="navigation" class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a href="/"><img class="nav-logo" src="@routes.Assets.at("images/title_logo.png")" alt="nav logo"></a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav" style="font-size: 21px;">
+					
+				</ul>
+
+				<div
+					style="color: white; padding: 15px 50px 5px 0; float: right; font-size: 16px;">
+					<a href="/dashboard" target="_blank" class="btn btn-primary square-btn-adjust">Login</a>
+				</div>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+
+	<div class="container">
+	<br><br>
+		<p>Currently Logged In: 
+		<br>
+		@app.applicant_email
+		<br>
+		@app.applicant_firstName
+		</p>
+	</div>
+}

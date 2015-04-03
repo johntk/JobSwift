@@ -1,0 +1,176 @@
+@(newApplicants: Int)(numJobs: Int)(applicants: List[ApplicantModel])(jobList: List[JobListingModel])
+@import java.math.BigInteger; var i=1
+@RecruitersScreenTemplate("Recruitment Agency") {
+
+<script>
+     function del(urlToDelete) {
+        $.ajax({
+          url: urlToDelete,
+          type: 'DELETE',
+          success: function(results) {
+            // Refresh the page
+            location.reload();
+          }
+        });
+      }
+</script>
+
+<div class="row">
+	<div class="col-md-12">
+		<h2>Admin Dashboard</h2>
+	</div>
+</div>
+<!-- /. ROW  -->
+
+<hr />
+
+<div class="row">
+	<div class="col-md-3 col-sm-6 col-xs-6">
+		<div class="panel panel-back noti-box">
+				<div class="inner-noti-box new-app-button">
+					<span class="icon-box bg-color-blue set-icon"> <i
+						class="fa fa-user"></i>
+					</span>
+					<div class="text-box">
+						<p class="main-text">@newApplicants New</p>
+						<p class="text-muted"> Applicant(s)</p>
+					</div>
+				</div>
+		</div>
+	</div>
+
+	<div class="col-md-3 col-sm-6 col-xs-6">
+		<div class="panel panel-back noti-box">
+				<div class="inner-noti-box job-list-button">
+					<span class="icon-box bg-color-blue set-icon"> <i
+						class="fa fa-bars"></i>
+					</span>
+					<div class="text-box">
+						<p class="main-text">@numJobs Job</p>
+						<p class="text-muted">listing(s)</p>
+					</div>
+				</div>
+		</div>
+	</div>
+	
+	<div class="col-md-3 col-sm-6 col-xs-6">
+		<div class="panel panel-back noti-box">
+				<div class="inner-noti-box">
+					<span class="icon-box bg-color-blue set-icon"> <i
+						class="fa fa-bell-o"></i>
+					</span>
+					<div class="text-box">
+						<p class="main-text">240 New</p>
+						<p class="text-muted">Notifications</p>
+					</div>
+				</div>
+		</div>
+	</div>
+	
+	<div class="col-md-3 col-sm-6 col-xs-6">
+		<div class="panel panel-back noti-box">
+				<div class="inner-noti-box">
+					<span class="icon-box bg-color-blue set-icon"> <i
+						class="fa fa-rocket"></i>
+					</span>
+					<div class="text-box">
+						<p class="main-text">3 Orders</p>
+						<p class="text-muted">Pending</p>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+<!-- /. ROW  -->
+
+<hr />
+
+<div class="toggle-hide app-list-table">
+	<h3>New (Unprocessed) Applicants</h3>
+	<div class="table-responsive" style="padding:10px;">
+	
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th></th>
+					<th>Email</th>
+					<th>Name</th>
+					<th>City</th>
+					<th>Registered Date</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody class="user_table_body">
+				@for(applicant <- applicants) {
+					<tr>
+						<td class="user_table_id">@i</td>
+						<td class="user_img_table"><img class="user_list_img" src="@routes.Assets.at("images/blank_user.jpg")"></td>
+						<td>@applicant.applicant_email</td>
+						<td>@applicant.applicant_title. @applicant.applicant_firstName @applicant.applicant_lastName</td>
+						<td>@applicant.applicant_city</td>
+						<td>@applicant.dateOfSignup</td>
+						<td>
+							<a href="@routes.ApplicantController.details(applicant.applicant_email)"><i class="fa fa-pencil"></i></a>
+						</td>
+					</tr>
+					@(i+=1)
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="toggle-hide job-list-table">
+	<h3>All Job Listings</h3>
+	<div class="table-responsive" style="padding:10px;">
+	
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Title</th>
+					<th>Type</th>
+					<th>Location</th>
+					<th>Salary</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody class="user_table_body">
+				@for(job <- jobList) {
+					<tr>
+						<td class="user_table_id"></td>
+						<td>@job.job_title</td>
+						<td>@job.job_type</td>
+						<td>@job.job_location</td>
+						<td>&euro;@job.job_salary</td>
+						<td>
+						<a class="text-danger" style="cursor: pointer;" onclick="javascript:del('@routes.JobListingController.delete(job.job_id)')"><i class="fa fa-remove fa-2x"></i></a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+	<script>
+		$(document).ready(function() {
+        	$('.new-app-button').click(function() {
+        		if ($(".job-list-table").is(":visible")) {
+        	    	$('.job-list-table').hide();
+        	    }
+				$('.app-list-table').fadeIn("fast");
+        	});
+        	
+        	$('.job-list-button').click(function() {
+        		if ($(".app-list-table").is(":visible")) {
+        	    	$('.app-list-table').hide();
+        	    }
+        	    $('.job-list-table').fadeIn("fast");
+    	});
+        	
+    	});
+	</script>
+
+}

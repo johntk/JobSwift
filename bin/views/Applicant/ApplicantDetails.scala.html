@@ -1,0 +1,23 @@
+@(appForm: Form[ApplicantModel])
+@import helper._
+
+@Recruiter.RecruitersScreenTemplate("Applicant Form") {    	
+	@helper.form(action = routes.ApplicantController.updateApplicant()) {
+		
+			<fieldset>
+				<legend>Applicant (@appForm("applicant_email").valueOr("New"))</legend>
+				
+				@helper.inputText(appForm("applicant_email"), '_label -> "Email")
+				@helper.inputText(appForm("applicant_gender"),'_label -> "Title")
+				@helper.inputText(appForm("applicant_firstName"),'_label -> "First Name")
+				@helper.inputText(appForm("applicant_lastName"),'_label -> "Surname")
+				@helper.inputText(appForm("applicant_city"),'_label -> "City")
+				@helper.inputPassword(appForm("applicant_password"),'_label -> "Password")
+				
+			</fieldset>
+			
+			<input type="hidden" value="@appForm("id").valueOr("")" name="id"/>
+			<input type="submit" class="btn btn-primary" value="Save">
+			<a class="btn" href="/dashboard">Cancel</a>
+	}
+}

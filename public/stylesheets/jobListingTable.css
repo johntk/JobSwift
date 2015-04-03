@@ -1,0 +1,28 @@
+
+#job-listings {
+	padding: 40px;
+	min-height: 100%;
+}
+
+.job-list-top {
+	margin: 0 0 0px 0;
+	padding: 25px 15px 25px 15px;
+	font-size: 22px;
+	font-weight: bold;
+	background: #DEDEDE;
+}
+
+.job-list-bottom {
+	padding: 25px 15px 25px 15px;
+	margin: 0 0 25px 0;
+	background: #fff;
+}
+
+.job-desc-heading {
+	font-weight: bold;
+	margin-right: 3em;	
+}
+
+#job-list-side-bar {
+	background: #fff;
+}

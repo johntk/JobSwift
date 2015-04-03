@@ -1,0 +1,30 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /							controllers.Application.index()
+GET     /joblistings				controllers.Application.jobListings()
+POST	/authenticate				controllers.Application.authenticateApplicant()
+
+GET		/userprofile				controllers.Application.applicantProfile()
+
+# Recruiters Dashboard
+GET     /dashboard					controllers.Application.dashboard()
+GET     /applicants					controllers.ApplicantController.listApplicants()
+GET     /newapplicants:processed	controllers.ApplicantController.listNewApplicants(processed: Int)
+GET     /applicants/:email			controllers.ApplicantController.details(email: String)
+POST	/submitform					controllers.Application.submitForm()
+POST	/addapplicant				controllers.ApplicantController.updateApplicant()
+DELETE  /applicants/:email			controllers.ApplicantController.delete(email: String)
+
+GET		/newjoblisting				controllers.JobListingController.newJobListing()
+POST	/addjob						controllers.JobListingController.addJobListing()
+DELETE  /joblisting/:id				controllers.JobListingController.delete(id: Long)
+
+# Android
+GET  /json    						controllers.AndroidController.json()
+POST /jsonPost    					controllers.AndroidController.jsonPost()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -1,0 +1,149 @@
+@(title: String)(mainContent: Html)
+@import helper._
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>@title</title>
+<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+<!-- BOOTSTRAP STYLES-->
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("bootstrap/css/bootstrap.css")">
+<!-- FONTAWESOME STYLES-->
+<link rel="stylesheet" type="text/css" href="@routes.Assets.at("bootstrap/font-awesome-4.1.0/css/font-awesome.min.css")">
+<!-- MORRIS CHART STYLES-->
+<link href="@routes.Assets.at("javascripts/morris/morris-0.4.3.min.css")" rel="stylesheet" />
+<!-- CUSTOM STYLES-->
+<link href="@routes.Assets.at("stylesheets/custom.css")" rel="stylesheet" />
+<!-- GOOGLE FONTS-->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+<!-- JQUERY SCRIPTS -->
+<script src="@routes.Assets.at("bootstrap/js/jquery.js")"></script>
+	
+</head>
+<body>
+	<div id="wrapper">
+		<nav class="navbar navbar-default navbar-cls-top " role="navigation"
+			style="margin-bottom: 0">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/dashboard">JOBSWIFT</a>
+			</div>
+			<div
+				style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;">
+				<a href="#" class="btn btn-danger square-btn-adjust">Logout</a>
+			</div>
+		</nav>
+		<!-- /. NAV TOP  -->
+		<nav class="navbar-default navbar-side" role="navigation">
+			<div class="sidebar-collapse">
+				<ul class="nav" id="main-menu">
+					<span>
+						<img src="@routes.Assets.at("images/icon.png")" class="user-image img-responsive" />
+					</span>
+
+
+					<li>
+						<a href="/dashboard"><i class="fa fa-home fa-3x"></i> Home</a>
+					</li>
+					
+					<li>
+						<a href="/applicants"><i class="fa fa-users fa-3x"></i> All Applicants</a>
+					</li>
+					
+					<li>
+						<a href="/newjoblisting"><i class="fa fa-cogs fa-3x"></i> Add Job Listing</a>
+					</li>
+					
+					<!--
+					<li>
+						<a href="/"><i class="fa fa-table fa-3x"></i> Table Examples</a>
+					</li>
+					<li>
+						<a href="/"><i class="fa fa-edit fa-3x"></i> Forms </a>
+					</li>
+
+					<li><a href="#"><i class="fa fa-sitemap fa-3x"></i>
+							Multi-Level Dropdown<span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level">
+							<li><a href="#">Second Level Link</a></li>
+							<li><a href="#">Second Level Link</a></li>
+							<li><a href="#">Second Level Link<span class="fa arrow"></span></a>
+								<ul class="nav nav-third-level">
+									<li><a href="#">Third Level Link</a></li>
+									<li><a href="#">Third Level Link</a></li>
+									<li><a href="#">Third Level Link</a></li>
+
+								</ul></li>
+						</ul></li>
+						 -->
+				</ul>
+				
+			</div>
+
+		</nav>
+		<!-- /. NAV SIDE  -->
+				
+		<div id="page-wrapper">
+			@if(flash.containsKey("success")){
+			   <div class="alert alert-success">
+			   <strong>
+			   @flash.get("success")
+			   </strong>
+			   </div>
+			 }
+			
+			 @if(flash.containsKey("error")){
+			   <div class="alert alert-danger">
+			   <strong>
+			   @flash.get("error")
+			   </strong>
+			   </div>
+			 }
+			 
+			<div class="fadeIn" id="page-inner">
+				@mainContent
+			</div>
+		<!-- /. PAGE INNER  -->
+	</div>
+	<!-- /. PAGE WRAPPER  -->
+	
+	</div>
+	<!-- /. WRAPPER  -->
+	
+	<!-- <div class="footer-wrapper">
+			Developed by:
+			<a href="https://twitter.com/AndrewDPollard" target="_blank"><i class="fa fa-twitter"></i> Andrew Pollard</a>
+			<a href="https://twitter.com/johntk86" target="_blank"><i class="fa fa-twitter"></i> John Kiernan</a>
+	</div> -->
+	
+	<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+	<!-- JQUERY SCRIPTS -->
+	<script src="@routes.Assets.at("bootstrap/js/jquery.js")"></script>
+	<!-- BOOTSTRAP SCRIPTS -->
+	<script src="@routes.Assets.at("bootstrap/js/bootstrap.min.js")"></script>
+	<!-- METISMENU SCRIPTS -->
+	<script src="@routes.Assets.at("javascripts/jquery.metisMenu.js")"></script>
+	<!-- MORRIS CHART SCRIPTS -->
+	<script src="@routes.Assets.at("javascripts/morris/raphael-2.1.0.min.js")"></script>
+	<script src="@routes.Assets.at("javascripts/morris/morris.js")"></script>
+	<!-- CUSTOM SCRIPTS -->
+	<script src="@routes.Assets.at("javascripts/custom.js")"></script>
+	
+	<!-- Fade in script-->
+	<script>
+	   	$(".fadeIn").hide(0).delay(30).fadeIn(400)
+	</script>
+	
+</body>
+</html>
+

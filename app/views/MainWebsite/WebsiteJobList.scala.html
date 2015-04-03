@@ -1,0 +1,65 @@
+@(jobs: List[JobListingModel])(loginForm: Form[Application.Login])
+@import helper._
+
+@MainWebsiteTemplate("JobSwift | Job Listings")(loginForm) {
+
+	<!-- Job Listings Fixed navbar -->
+	<div id="navigation" class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a href="/"><img class="nav-logo" src="@routes.Assets.at("images/title_logo.png")" alt="nav logo"></a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav" style="font-size: 21px;">
+					
+				</ul>
+
+				<div
+					style="color: white; padding: 15px 50px 5px 0; float: right; font-size: 16px;">
+					<a href="/dashboard" target="_blank" class="btn btn-primary square-btn-adjust">Login</a>
+				</div>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+
+
+<div class="container">
+
+	<div class="col-md-3 col-sm-3 col-xs-3" id="job-list-side-bar">
+		
+	</div>
+
+	<div class="col-md-9 col-sm-9 col-xs-9" id="job-listings">	
+		@for(job <- jobs) {
+			<div class="single-job-listing">
+				<div class="job-list-top">
+					<span class="job-title">@job.job_title</span> - 
+					@job.job_location
+				</div>
+				
+				<div class="job-list-bottom">
+					<span class="job-desc-heading">Salary:</span> &euro;@job.job_salary
+					<br>
+					<span class="job-desc-heading">Job Type:</span> @job.job_type
+					<br>
+					<span class="job-desc-heading">Location:</span> @job.job_location
+					<br><br>
+					<span class="job-desc-heading">Description</span>
+					<p>@job.job_description</p>
+					<span class="job-desc-heading">Criteria</span>
+					<p>@job.job_criteria</p>
+					<a href="#" class="btn btn-primary square-btn-adjust apply-button">Apply</a>
+				</div>
+			</div>
+		}
+	</div>
+
+</div>
+
+}
