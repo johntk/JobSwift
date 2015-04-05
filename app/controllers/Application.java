@@ -11,25 +11,24 @@ public class Application extends Controller {
 	// Create a form to be passed to main website for applicant sign up
 	private static final Form<ApplicantModel> appForm = Form.form(ApplicantModel.class);
 	private static ApplicantModel appMod = new ApplicantModel();
-	public static boolean loggedIn = false;
 
 	// Render the homepage for the main website
 	public static Result index() {
-		return ok(views.html.MainWebsite.Homepage.render(appForm, Form.form(Login.class)));
+		return ok(views.html.MainWebsite.Homepage.render(appForm, Form.form(Login.class) ));
 	}
+	
+	
 	
 	// Render the applicant profile view for the main website
 	@Security.Authenticated(Secured.class)
 	public static Result applicantProfile() {
 		appMod = getCurrentUser();
-		List<JobApplicationModel> jobAppList = JobApplicationModel.findAllApplicationsByUser(appMod);
-		return ok(views.html.Applicant.ApplicantProfile.render(appMod, jobAppList, Form.form(Login.class)));
+		List<JobApplicationModel> jobAppList = JobApplicationModel.findAllApplicationsByUser(ApplicantModel.findByEmail(request().username()));
+		return ok(views.html.Applicant.ApplicantProfile.render(appMod, jobAppList, Form.form(Login.class) ));
 	}
 	
 	// Render the dashboard view for the recruiters page
 	public static Result dashboard() {
-		// Create a list of unprocessed applicants to pass to dashboard view
-//		List<ApplicantModel> newApplicants = ApplicantModel.findUnprocessed();
 		// Create a list of all job listings to pass to dashboard view
 		List<JobListingModel> jobList = JobListingModel.findAll();
 		return ok(views.html.Recruiter.Dashboard.render(jobList.size(), jobList));
@@ -40,7 +39,7 @@ public class Application extends Controller {
 		Form<ApplicantModel> boundForm = appForm.bindFromRequest();
 		if (boundForm.hasErrors()) {
 			flash("error", "Please correct the form below.");
-			return badRequest(views.html.MainWebsite.Homepage.render(boundForm, Form.form(Login.class)));
+			return badRequest(views.html.MainWebsite.Homepage.render(boundForm, Form.form(Login.class) ));
 		}
 
 		ApplicantModel app = boundForm.get();
@@ -80,17 +79,14 @@ public class Application extends Controller {
 		if(ApplicantModel.authenticateApplicant(email, password) == null) {
 			// Clear the existing session
 			session().clear();
-			loggedIn = false;
 			flash("error", "Invalid Login!");
-			return badRequest(views.html.MainWebsite.Homepage.render(appForm, Form.form(Login.class)));
+			return badRequest(views.html.MainWebsite.Homepage.render(appForm, Form.form(Login.class) ));
 		}
 		
 		// Clear the existing session
 		session().clear();
-
 		// Add users email to the session
 		session("email", email);
-		loggedIn = true;
 		// Redirect to homepage
 		flash("success", "Login Successful!");
 		return redirect(routes.Application.index());
@@ -104,7 +100,6 @@ public class Application extends Controller {
 
 	public static Result logOut() {
 		session().clear();
-		loggedIn = false;
 		return redirect(routes.Application.index());
 	}
 }
