@@ -10,7 +10,7 @@
 				@helper.select(jobForm("job_sector"), options = options(JobListingController.sectorList), '_label -> "Sector")
 				@helper.inputText(jobForm("job_title"), '_label -> "Job Title")
 				@helper.inputText(jobForm("job_type"),'_label -> "Type")
-				@helper.inputText(jobForm("job_location"),'_label -> "Location")
+				@helper.select(jobForm("job_location"), options = options(JobListingController.locationList), '_label -> "Location")
 				@helper.inputText(jobForm("job_salary"),'_label -> "Salary (if applicable)")
 				@helper.textarea(jobForm("job_description"),'_label -> "Job Description")
 				@helper.textarea(jobForm("job_criteria"),'_label -> "Job Criteria")

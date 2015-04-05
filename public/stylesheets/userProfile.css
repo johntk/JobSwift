@@ -1,0 +1,50 @@
+
+.user-profile-container {
+	min-height: 92%;
+	margin-bottom: 50px;
+}
+
+#profile-inner-div {
+	float: none;
+	margin: 0 auto;
+}
+
+.profile-class {
+	position: relative;
+	background: #fff;
+	margin: 60px 0 0 0;
+	padding: 20px;
+	overflow: auto;
+}
+
+.cv-upload-div {
+	background: #fff;
+	padding: 20px;
+}
+
+#profile-section img {
+	float: left;
+	width: 50%;
+	max-width: 100px;
+	margin-right: 20px;
+}
+
+#single-job-listing {
+	background: #E1E1E1;
+	padding: 10px;
+	margin: 15px 0 15px 0;
+	width: 100%;
+	max-width: 400px;
+	border-radius: 6px;
+	float: left;
+}
+
+#job-app-progress {
+	font-size: 14px;
+	margin: 25px 0 0 20px;
+	float: left;
+}
+
+#user-photo:hover{
+	opacity: .7;
+}

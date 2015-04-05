@@ -4,10 +4,10 @@
 
 # Home page
 GET     /							controllers.Application.index()
-GET     /joblistings				controllers.Application.jobListings()
+GET     /joblistings				controllers.JobListingController.jobListings()
 POST	/authenticate				controllers.Application.authenticateApplicant()
-
-GET		/userprofile				controllers.Application.applicantProfile()
+GET     /logout						controllers.Application.logOut()
+POST	/jobsearch					controllers.JobListingController.jobSearchResult()
 
 # Recruiters Dashboard
 GET     /dashboard					controllers.Application.dashboard()
@@ -16,15 +16,19 @@ GET     /newapplicants:processed	controllers.ApplicantController.listNewApplican
 GET     /applicants/:email			controllers.ApplicantController.details(email: String)
 POST	/submitform					controllers.Application.submitForm()
 POST	/addapplicant				controllers.ApplicantController.updateApplicant()
-DELETE  /applicants/:email			controllers.ApplicantController.delete(email: String)
+DELETE  /applicants/:email			controllers.ApplicantController.deleteUser(email: String)
 
+# Applicant Profile
+GET		/userprofile				controllers.Application.applicantProfile()
+DELETE  /deleteaccount				controllers.ApplicantController.deleteCurrentUser()
+POST	/uploadcv					controllers.FileUploadController.uploadCV()
+POST	/uploadprofileimage			controllers.FileUploadController.uploadProfileImage()
+
+# Website Job Listings
 GET		/newjoblisting				controllers.JobListingController.newJobListing()
 POST	/addjob						controllers.JobListingController.addJobListing()
 DELETE  /joblisting/:id				controllers.JobListingController.delete(id: Long)
-
-# Android
-GET  /json    						controllers.AndroidController.json()
-POST /jsonPost    					controllers.AndroidController.jsonPost()
+GET		/apply:id					controllers.JobApplicationController.applyForJob(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

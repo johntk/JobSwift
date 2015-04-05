@@ -1,12 +1,12 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import controllers.DateTime;
 
 import javax.persistence.*;
+
 import play.db.ebean.Model;
 import play.data.validation.Constraints;
 
@@ -33,11 +33,19 @@ public class ApplicantModel extends Model {
 	@Constraints.Required
 	@Constraints.MinLength(6)
 	public String applicant_password;
+	@Constraints.Required
+	@Constraints.MinLength(6)
+	public String applicant_password_confirmation;
+	
+	@OneToMany
+	public List<JobApplicationModel> applicationList;
 
 	public String cvFilePath;
+	public String cvFileName;
+	
+	public String profileImage;
 	public String introVideoPath;
 
-	public int processed;
 	public DateTime dateTime;
 	public Date dateOfSignup = new Date();
 
@@ -46,16 +54,16 @@ public class ApplicantModel extends Model {
 	}
 
 	// Overloaded Constructor
-	public ApplicantModel(String email, String password, String firstName,
-			String lastName, String city) {
+	public ApplicantModel(String email, String title, String firstName, String lastName, String city, String password, String passwordConfirm) {
 		applicant_email = email;
-		applicant_password = password;
+		applicant_title = title;
 		applicant_firstName = firstName;
 		applicant_lastName = lastName;
 		applicant_city = city;
-		
+		applicant_password = password;
+		applicant_password_confirmation = passwordConfirm;
+
 		dateOfSignup = dateTime.getDateTime();
-		processed = 0;
 	}
 
 	public String toString() {
@@ -63,8 +71,7 @@ public class ApplicantModel extends Model {
 				applicant_lastName, applicant_email);
 	}
 
-	public static Finder<Long, ApplicantModel> find = new Finder<Long, ApplicantModel>(
-			Long.class, ApplicantModel.class);
+	public static Finder<Long, ApplicantModel> find = new Finder<Long, ApplicantModel>(Long.class, ApplicantModel.class);
 
 	public static List<ApplicantModel> findAll() {
 		return ApplicantModel.find.all();
@@ -75,15 +82,15 @@ public class ApplicantModel extends Model {
 	}
 
 	// Method to retrieve all applications from the DB that are unprocessed
-	public static List<ApplicantModel> findUnprocessed() {
-		List<ApplicantModel> tempApps = new ArrayList<ApplicantModel>();
-		tempApps = find.where().eq("processed", 0).findList();
-		return tempApps;
-	}
+//	public static List<ApplicantModel> findUnprocessed() {
+//		List<ApplicantModel> tempApps = new ArrayList<ApplicantModel>();
+//		tempApps = find.where().eq("processed", 0).findList();
+//		return tempApps;
+//	}
 	
 	// Authenticate a user based on email and password
 	public static ApplicantModel authenticateApplicant(String email, String password) {
 		return find.where().eq("applicant_email", email).eq("applicant_password", password).findUnique();
 	}
-
+	
 }

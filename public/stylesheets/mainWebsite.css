@@ -2,6 +2,11 @@ html {
     height: 100%;
 }
 
+
+body.modal-open #navigation{
+	margin-right: 17px;
+}
+
 body {
   background-color: #f2f2f2;
     font-family: "Lato";
@@ -15,11 +20,14 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+.navbar-style {
+	padding: 15px 0 10px 0; !important
+}
+
 .nav-logo {
 	float: left;
-	width: 80%;
-	max-width: 200px;
-	margin: 10px 0 15px 10px;
+	max-width: 180px;
+	margin: 0 20px 0 20px;
 }
 
 /* Titles */
@@ -76,6 +84,11 @@ a:after {
     padding: 0;
 }
 
+
+.blue-text {
+	color: #226bb3;
+}
+
 .shadow {
 	transition: 0.2s;
 	-webkit-transition: 0.2s;
@@ -93,6 +106,14 @@ a:after {
 	-moz-transition: 0.2s;
 	-o-transition: 0.2s;
 	-ms-transition: 0.2s;
+}
+
+#user-profile-icon {
+	font-size: 18px;
+}
+
+#user-profile-icon:hover {
+
 }
 
 /* ==========================================================================
@@ -137,10 +158,16 @@ a:after {
 }
 
 #headerwrap h1 {
-	margin-top: 30px;
-	color: white;
-	font-size: 70px;
-	
+	background: rgba(192,192,192,.6);
+	padding: 15px 10px 15px 10px;
+	color: #696969;
+	border-radius: 6px;
+	font-size: 1.9em;
+	max-width: 650px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 #headerwrap h2 {
@@ -164,17 +191,6 @@ a:after {
 	color: white
 }
 
-#headerSubText{
-	background: rgba(186,186,186,.4);
-	padding: 15px 10px 15px 10px;
-	color: #696969;
-	border-radius: 6px;
-	font-size: 1.9em;
-	max-width: 650px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
 /* intro Wrap */
 
 #intro {
@@ -191,23 +207,10 @@ a:after {
 	font-size: 20px;
 }
 
-/* Showcase Wrap */
-
-#showcase {
-	display: block;
-	background-color: #2f2f2f;
-	padding-top: 50px;
-	padding-bottom: 50px;
-}
-
-#showcase h1 {
-	color: white;
-}
-
 #signupwrap {
 	/*background-color: #2f2f2f;*/
 	background-color: #34495e;
-	padding-top: 90px;
+	padding-top: 40px;
 	padding-bottom: 60px;
 	
 }
@@ -228,11 +231,17 @@ a:after {
 }
 
 .form-container {
-	padding: 15px;
-	width: 50%;
-	margin-left: auto;
-	margin-right: auto;
-	color: #A9BED6
+	padding: 10px 10px 50px 10px;
+	float: none;
+	margin: 0 auto;
+	background: rgba(255,255,255,.4);
+	border-radius: 8px;
+	overflow: auto;
+}
+
+.inner-form-container {
+	float: none;
+	margin: 0 auto;
 }
 
 /* Copyright Wrap */
@@ -259,4 +268,7 @@ a:after {
 	background: red;
   }
 }
+
+/* animation */
+
 

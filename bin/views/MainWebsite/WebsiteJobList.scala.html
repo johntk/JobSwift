@@ -1,65 +1,87 @@
-@(jobs: List[JobListingModel])(loginForm: Form[Application.Login])
+@(jobs: List[JobListingModel])(jobSearchForm: Form[JobListingController.JobSearch])(loginForm: Form[Application.Login])(locations: List[String])(sectors: List[String])
 @import helper._
 
 @MainWebsiteTemplate("JobSwift | Job Listings")(loginForm) {
 
-	<!-- Job Listings Fixed navbar -->
-	<div id="navigation" class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a href="/"><img class="nav-logo" src="@routes.Assets.at("images/title_logo.png")" alt="nav logo"></a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav" style="font-size: 21px;">
+<div class="container job-list-container">
+	<div id="job-list-outer">
+	
+	<div class="row job-list-heading">
+		<h4><strong>Showing Results for @if(jobs == null){0}else{@jobs.size} jobs</strong></h4>
+	</div>
+	<div class="clearfix"></div>
+		<div class="col-md-3 col-sm-3 col-xs-3" id="job-list-side-bar">
+			<h3><strong>Search Jobs</strong></h3>
+			<hr>
+			<div>
+				<form action="jobsearch" method="POST">
+				
+					<div class="form-group">
+						<label for="job_location">Location</label>
+						<select class="form-control" name="job_location">
+							<option value="" disabled selected>Choose a location</option>
+							@for(location <- locations) {
+								<option value="@location" name="job_location">@location</option>
+							}
+						</select>
+					</div>
 					
-				</ul>
-
-				<div
-					style="color: white; padding: 15px 50px 5px 0; float: right; font-size: 16px;">
-					<a href="/dashboard" target="_blank" class="btn btn-primary square-btn-adjust">Login</a>
-				</div>
+					<div class="form-group">
+					<label for="job_sector">Sector</label>
+					<select class="form-control" name="job_sector">
+						<option value="" disabled selected>Choose a sector</option>
+						@for(sector <- sectors) {
+							<option value="@sector" name="job_sector">@sector</option>
+						}
+					</select>
+					</div>
+					<br>
+					<input type="hidden" value="@jobSearchForm("id").valueOr("")" name="id"/>
+					<input type="submit" class="btn btn-primary btn-square-adjust" value="Submit">
+				</form>
 			</div>
-			<!--/.nav-collapse -->
+		</div>
+		
+		<div class="col-md-8 col-sm-8 col-xs-8 job-list-box">
+			@if(jobs != null) {	
+				@for(job <- jobs) {
+					<div class="single-job-listing">
+						<div class="job-list-top">
+							<span class="job-title">@job.job_title</span> - 
+							@job.job_location
+						</div>
+						
+						<div class="job-list-bottom">
+							<ul id="job-list-head" class = "job-list heading">
+								<li>Salary:</li>
+								<li>Job Type:</li>
+								<li>Location:</li>
+							</ul>
+						
+							<ul id="job-list-content" class="job-list content">
+								<li>&euro;@job.job_salary</li>
+								<li>@job.job_type</li>
+								<li>@job.job_location</li>
+							</ul>
+							<div class="clearfix"></div>
+							<br>
+							
+							<details>
+								<summary class="job-list heading">Description</summary>
+								<p>@job.job_description</p>
+							</details>
+							<details>
+								<summary class="job-list heading">Criteria</summary>
+								<p>@job.job_criteria</p>
+							</details>
+							<br>
+							<a href="/apply@job.job_id" class="btn btn-success square-btn-adjust apply-button">Apply</a>
+						</div>
+					</div>
+				}
+			@JobListingController.clearJobResults
+			}
 		</div>
 	</div>
-
-
-<div class="container">
-
-	<div class="col-md-3 col-sm-3 col-xs-3" id="job-list-side-bar">
-		
-	</div>
-
-	<div class="col-md-9 col-sm-9 col-xs-9" id="job-listings">	
-		@for(job <- jobs) {
-			<div class="single-job-listing">
-				<div class="job-list-top">
-					<span class="job-title">@job.job_title</span> - 
-					@job.job_location
-				</div>
-				
-				<div class="job-list-bottom">
-					<span class="job-desc-heading">Salary:</span> &euro;@job.job_salary
-					<br>
-					<span class="job-desc-heading">Job Type:</span> @job.job_type
-					<br>
-					<span class="job-desc-heading">Location:</span> @job.job_location
-					<br><br>
-					<span class="job-desc-heading">Description</span>
-					<p>@job.job_description</p>
-					<span class="job-desc-heading">Criteria</span>
-					<p>@job.job_criteria</p>
-					<a href="#" class="btn btn-primary square-btn-adjust apply-button">Apply</a>
-				</div>
-			</div>
-		}
-	</div>
-
 </div>
-
 }

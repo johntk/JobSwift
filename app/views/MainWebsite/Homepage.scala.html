@@ -1,43 +1,15 @@
 @(appForm: Form[ApplicantModel])(loginForm: Form[Application.Login])
 @import helper._
 
-@MainWebsiteTemplate("JobSwift | Irish Recruiters")(loginForm) {
-
-	<!-- Homescreen Fixed navbar -->
-	<div id="navigation" class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="smoothScroll" href="#home"><img class="nav-logo" src="@routes.Assets.at("images/title_logo.png")" alt="nav logo"></a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav" style="font-size: 21px;">
-					<li><a href="#desc" class="smoothScroll">Description</a></li>
-					<li><a href="#signup" class="smoothScroll">Sign Up</a></li>
-					<li><a href="/joblistings">Jobs</a></li>
-				</ul>
-				
-				<div style="float: right; margin: 15px 20px 5px 0;">
-				<button type="button" class="btn btn-primary btn-lg" style="font-size: 16px; margin-right: 10px;" data-toggle="modal" data-target="#myModal">LOGIN</button>
-				<a href="/userprofile"><i class="fa fa-user fa-2x"></i></a>
-				</div>
-			</div>
-			<!--/.nav-collapse -->
-		</div>
-	</div>
-
+@MainWebsiteTemplate("JobSwift | Irish Recruiters | Home")(loginForm) {
 
 	<section id="home" name="home"></section>
 	<div id="headerwrap">
 	    <div class="container text-center">
     		<div class="col-md-7 col-sm-7 col-xs-12">
 				<img class="logo" src="@routes.Assets.at("images/websiteLogo.png")">
-				<div id="headerSubText">
-					Cutting&#8209;Edge Recruitment Technology
+				<div>
+					<h1>Cutting&#8209;Edge Recruitment Technology</h1>
 				</div>
 				<br>
 				<div>
@@ -167,37 +139,68 @@
 	<section id="signup" name="signup"></section>
 	<div id="signupwrap">
 		<div class="container">
-			<div class="form-container text-center">
-				 
-				@helper.form(action = routes.Application.submitForm()) {
-				<fieldset>
-					<div class="row" id="legend">
-						<legend>SIGN UP</legend>
-					</div>
-					
-					<div class="row">
-						<div class="col-md-6 col-lg-6">
-							@helper.select(appForm("applicant_title"), options = options(Application.formTitleOptions), '_label -> "Title")
-							@helper.inputText(appForm("applicant_firstName"),'_label -> "First Name")
-							@helper.inputText(appForm("applicant_lastName"),'_label -> "Surname")
-							@helper.inputText(appForm("applicant_city"),'_label -> "City")
-						</div>
-						<div class="col-md-6 col-lg-6">
-							@helper.inputText(appForm("applicant_email"), '_label -> "Email Address")
-							@helper.inputPassword(appForm("applicant_password"),'_label -> "Password")
-						</div>
+		
+			<div class="form-container col-xs-11 col-sm-9 col-md-8 col-lg-8">
+				<div class="inner-form-container col-xs-11 col-sm-9 col-md-8 col-lg-8">
+				
+					<div class="text-center">
+						<h2 style="color:#fff"><strong>Signup Form</strong></h2>
 					</div>
 					<br>
-					<div class="row">
-						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<input type="hidden" value="@appForm("id").valueOr("")" name="id"/>
-							<input type="submit" class="btn btn-primary btn-square-adjust" value="Submit">
-							&nbsp;&nbsp;
-							<a class="btn btn-default btn-square-adjust" href="@routes.Application.index()">Cancel</a>
+					<form action="/submitform" method="POST">	
+						<div class="row">
+								<div class="form-group">
+									
+									<select name="applicant_title" class="form-control" id="applicant_title">
+										<option disabled="disabled" selected="selected">Choose a Title...</option>
+										<option value="Mr">Mr</option>
+										<option value="Ms">Ms</option>
+									</select>
+								</div>
+								
+								<div class="form-group">
+									
+									<input type="text" class="form-control" name="applicant_firstName" placeholder="First Names(s)" id="applicant_firstName">
+								</div>
+								
+								<div class="form-group">
+									
+									<input type="text" class="form-control" name="applicant_lastName" placeholder="Surname" id="applicant_lastName">
+								</div>
+								
+								<div class="form-group">
+									
+									<input type="text" class="form-control" name="applicant_city" placeholder="City" id="applicant_city">
+								</div>
+							
+								<div class="form-group">
+									
+									<input type="text" class="form-control" name="applicant_email" placeholder="Email" id="applicant_email">
+								</div>
+								
+								<div class="form-group">
+									
+									<input type="password" class="form-control" name="applicant_password" placeholder="Password" id="applicant_password">
+								</div>
+								
+								<div class="form-group">
+									
+									<input type="password" class="form-control" name="applicant_password_confirmation" placeholder="Confirm Password" id="applicant_password_confirmation">
+								</div>
+								
 						</div>
-					</div>
-				</fieldset>
-				}
+						
+						<div class="row centered">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<input type="hidden" value="@appForm("id").valueOr("")" name="id"/>
+								<input type="submit" class="btn btn-primary btn-square-adjust" value="Submit">
+								&nbsp;&nbsp;
+								<a class="btn btn-default btn-square-adjust" href="@routes.Application.index()">Cancel</a>
+							</div>
+						</div>	
+						
+					</form>
+				</div>
 			</div>
 					
 		</div>

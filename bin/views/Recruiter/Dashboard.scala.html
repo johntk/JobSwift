@@ -1,4 +1,4 @@
-@(newApplicants: Int)(numJobs: Int)(applicants: List[ApplicantModel])(jobList: List[JobListingModel])
+@(numJobs: Int)(jobList: List[JobListingModel])
 @import java.math.BigInteger; var i=1
 @RecruitersScreenTemplate("Recruitment Agency") {
 
@@ -32,7 +32,7 @@
 						class="fa fa-user"></i>
 					</span>
 					<div class="text-box">
-						<p class="main-text">@newApplicants New</p>
+						<p class="main-text">&nbsp;New</p>
 						<p class="text-muted"> Applicant(s)</p>
 					</div>
 				</div>
@@ -46,7 +46,7 @@
 						class="fa fa-bars"></i>
 					</span>
 					<div class="text-box">
-						<p class="main-text">@numJobs Job</p>
+						<p class="main-text">@numJobs&nbsp;Job</p>
 						<p class="text-muted">listing(s)</p>
 					</div>
 				</div>
@@ -60,7 +60,7 @@
 						class="fa fa-bell-o"></i>
 					</span>
 					<div class="text-box">
-						<p class="main-text">240 New</p>
+						<p class="main-text">240&nbsp;New</p>
 						<p class="text-muted">Notifications</p>
 					</div>
 				</div>
@@ -74,7 +74,7 @@
 						class="fa fa-rocket"></i>
 					</span>
 					<div class="text-box">
-						<p class="main-text">3 Orders</p>
+						<p class="main-text">3&nbsp;Orders</p>
 						<p class="text-muted">Pending</p>
 					</div>
 				</div>
@@ -85,6 +85,7 @@
 
 <hr />
 
+@**
 <div class="toggle-hide app-list-table">
 	<h3>New (Unprocessed) Applicants</h3>
 	<div class="table-responsive" style="padding:10px;">
@@ -120,7 +121,7 @@
 		</table>
 	</div>
 </div>
-
+**@
 <div class="toggle-hide job-list-table">
 	<h3>All Job Listings</h3>
 	<div class="table-responsive" style="padding:10px;">

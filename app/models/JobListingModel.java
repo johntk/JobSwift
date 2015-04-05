@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -26,7 +27,6 @@ public class JobListingModel extends Model{
 	public String job_type;
 	@Constraints.Required
 	public String job_location;
-	
 	public double job_salary;
 	@Lob
 	@Constraints.Required
@@ -35,12 +35,16 @@ public class JobListingModel extends Model{
 	@Constraints.Required
 	public String job_criteria;
 	
+	@OneToMany
+	public List<JobApplicationModel> applicationList;
+	
 	// Default Constructor
 	public JobListingModel(){}
 	
 	// Overloaded Constructor
-	public JobListingModel(String job_title, String job_type, String job_location, double job_salary, String job_description, String job_criteria)
+	public JobListingModel(String job_sector, String job_title, String job_type, String job_location, double job_salary, String job_description, String job_criteria)
 	{
+		this.job_sector = job_sector;
 		this.job_title = job_title;
 		this.job_type = job_type;
 		this.job_location = job_location;
@@ -54,14 +58,21 @@ public class JobListingModel extends Model{
 	}
 	
 	public static Finder<Long, JobListingModel> find = new Finder<Long, JobListingModel>(Long.class, JobListingModel.class);
+	
+	// Find a job listing by it's id (primary key)
+	public static JobListingModel findById(Long id) {
+		return find.where().eq("job_id", id).findUnique();
+	}
 
 	// Query database for all job listings
 	public static List<JobListingModel> findAll() {
 		return JobListingModel.find.all();
 	}
 	
-	// Find a job listing by it's id (primary key)
-	public static JobListingModel findById(Long id) {
-		return find.where().eq("job_id", id).findUnique();
+	// Query database for all job listings
+	public static List<JobListingModel> findByForm(String location, String sector) {
+		List<JobListingModel> tempJobs = new ArrayList<JobListingModel>();
+		tempJobs = find.where().eq("job_location", location).eq("job_sector", sector).findList();
+		return tempJobs;
 	}
 }

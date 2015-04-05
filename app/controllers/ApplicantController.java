@@ -2,13 +2,10 @@ package controllers;
 
 import models.*;
 import play.mvc.*;
+
 import java.util.*;
+
 import play.data.Form;
-import play.libs.Json;
-import play.libs.Json.*;                        
-import static play.libs.Json.toJson;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class ApplicantController extends Controller {
 	
@@ -39,7 +36,7 @@ public class ApplicantController extends Controller {
     	Form<ApplicantModel> filledForm = appForm.fill(app);
     	return ok(views.html.Applicant.ApplicantDetails.render(filledForm));
     }
-    
+
     // Form to update applicant details from recruiters screen *UNUSED*
     public static Result updateApplicant() {
         Form<ApplicantModel> boundForm = appForm.bindFromRequest();
@@ -59,14 +56,38 @@ public class ApplicantController extends Controller {
         } else return redirect(routes.Application.dashboard());
     }
     
-    public static Result delete(String email) {
+ // Delete method to delete user from recruiters dashboard
+    public static Result deleteUser(String email) {
     	final ApplicantModel app = ApplicantModel.findByEmail(email);
     	if(app == null) {
     		return notFound(String.format("Applicant %s does not exist.", email));
     	}
-
+    	
+    	List<JobApplicationModel> jam = JobApplicationModel.findAllApplicationsByUser(app);
+    	if(jam != null) {
+	    	for(int i=0; i<jam.size(); i++) {
+	    		jam.get(i).delete();
+	    	}
+    	}
     	app.delete();
     	return redirect(routes.ApplicantController.listApplicants());
     }
-	
+    
+    // Method to delete user from user profile
+    @Security.Authenticated(Secured.class)
+    public static Result deleteCurrentUser() {
+    	ApplicantModel app = Application.getCurrentUser();
+    	Application.logOut();
+    	List<JobApplicationModel> jam = JobApplicationModel.findAllApplicationsByUser(app);
+    	if(jam != null) {
+	    	for(int i=0; i<jam.size(); i++) {
+	    		jam.get(i).delete();
+	    	}
+    	}
+    	app.delete();
+    	
+    	flash("success","Account Deleted");
+    	return redirect(routes.Application.index());
+    }
+
 }

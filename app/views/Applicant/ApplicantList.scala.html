@@ -41,16 +41,16 @@
 						<td>@applicant.applicant_firstName @applicant.applicant_lastName</td>
 						<td>@applicant.applicant_city</td>
 						<td>@applicant.dateOfSignup</td>
-						
+						@**
 						@if(applicant.processed == 0) {
 							<td><strong>NO</strong></td>	
 						} else {
 							<td><strong>YES</strong></td>
 						}
-						
+						 **@
 						<td>
 						<!-- <a href="@routes.ApplicantController.details(applicant.applicant_email)"><i class="fa fa-pencil"></i></a>  -->
-						<a class="text-danger" style="cursor: pointer;" onclick="javascript:del('@routes.ApplicantController.delete(applicant.applicant_email)')"><i class="fa fa-remove fa-2x"></i></a>
+						<a class="text-danger" style="cursor: pointer;" onclick="javascript:del('@routes.ApplicantController.deleteUser(applicant.applicant_email)')"><i class="fa fa-remove fa-2x"></i></a>
 						</td>
 					</tr>
 					@(i+=1)

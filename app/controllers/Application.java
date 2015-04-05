@@ -1,44 +1,38 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import models.*;
 import play.data.Form;
 import play.mvc.*;
-import play.mvc.Security;
 
 public class Application extends Controller {
 
 	// Create a form to be passed to main website for applicant sign up
 	private static final Form<ApplicantModel> appForm = Form.form(ApplicantModel.class);
-	private static ApplicantModel appMod;
+	private static ApplicantModel appMod = new ApplicantModel();
+	public static boolean loggedIn = false;
 
 	// Render the homepage for the main website
 	public static Result index() {
 		return ok(views.html.MainWebsite.Homepage.render(appForm, Form.form(Login.class)));
 	}
 	
-	// Render the job listings view for the main website
-	public static Result jobListings() {
-		List<JobListingModel> jobList = JobListingModel.findAll();
-		return ok(views.html.MainWebsite.WebsiteJobList.render(jobList, Form.form(Login.class)));
-	}
-	
 	// Render the applicant profile view for the main website
 	@Security.Authenticated(Secured.class)
 	public static Result applicantProfile() {
-		appMod = new ApplicantModel().findByEmail(request().username());
-		return ok(views.html.Applicant.ApplicantProfile.render(appMod, Form.form(Login.class)));
+		appMod = getCurrentUser();
+		List<JobApplicationModel> jobAppList = JobApplicationModel.findAllApplicationsByUser(appMod);
+		return ok(views.html.Applicant.ApplicantProfile.render(appMod, jobAppList, Form.form(Login.class)));
 	}
 	
 	// Render the dashboard view for the recruiters page
 	public static Result dashboard() {
 		// Create a list of unprocessed applicants to pass to dashboard view
-		List<ApplicantModel> newApplicants = ApplicantModel.findUnprocessed();
+//		List<ApplicantModel> newApplicants = ApplicantModel.findUnprocessed();
 		// Create a list of all job listings to pass to dashboard view
 		List<JobListingModel> jobList = JobListingModel.findAll();
-		return ok(views.html.Recruiter.Dashboard.render(newApplicants.size(), jobList.size(), newApplicants, jobList));
+		return ok(views.html.Recruiter.Dashboard.render(jobList.size(), jobList));
 	}
 
 	// Method for submitting sign-up form from main website
@@ -50,28 +44,24 @@ public class Application extends Controller {
 		}
 
 		ApplicantModel app = boundForm.get();
-
+		
+		if(!app.applicant_password.equals(app.applicant_password_confirmation)) {
+			flash("error", "Passwords do not match!");
+			return redirect(routes.Application.index());
+		}
+		
 		if (app.applicant_id == null) {
 			if (ApplicantModel.findByEmail(app.applicant_email) != null) {
-				flash("error",
-						String.format("User %s is already registered!", app));
+				flash("error", String.format("User %s is already registered!", app));
 				return redirect(routes.Application.index());
 			} else {
 				app.save();
+				FileUploadController.createUserFolder(app.applicant_email);
 				flash("success", "Sign up successful");
 				return redirect(routes.Application.index());
 			}
 		} else
 			return redirect(routes.Application.index());
-	}
-
-	// Creates a list of title options for the sign up form
-	public static final List<String> formTitleOptions() {
-		List<String> list = new ArrayList<String>();
-		list.add("");
-		list.add("Mr");
-		list.add("Ms");
-		return list;
 	}
 	
 	// Inner class to store user credentials for logging in
@@ -86,20 +76,35 @@ public class Application extends Controller {
 		String email = loginForm.get().applicant_email;
 		String password = loginForm.get().applicant_password;
 		
+		// Check if the user exists in the database
 		if(ApplicantModel.authenticateApplicant(email, password) == null) {
 			// Clear the existing session
 			session().clear();
-			flash("error", "Invalid Login Credentials!");
+			loggedIn = false;
+			flash("error", "Invalid Login!");
 			return badRequest(views.html.MainWebsite.Homepage.render(appForm, Form.form(Login.class)));
 		}
 		
 		// Clear the existing session
 		session().clear();
+
 		// Add users email to the session
 		session("email", email);
-		
+		loggedIn = true;
 		// Redirect to homepage
 		flash("success", "Login Successful!");
+		return redirect(routes.Application.index());
+	}
+	
+	@Security.Authenticated(Secured.class)
+	public static ApplicantModel getCurrentUser() {
+		appMod = ApplicantModel.findByEmail(request().username());
+		return appMod;
+	}
+
+	public static Result logOut() {
+		session().clear();
+		loggedIn = false;
 		return redirect(routes.Application.index());
 	}
 }

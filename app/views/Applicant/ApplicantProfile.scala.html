@@ -1,40 +1,92 @@
-@(app: ApplicantModel)(loginForm: Form[Application.Login])
+@(app: ApplicantModel)(jobAppList: List[JobApplicationModel])(loginForm: Form[Application.Login])
+@import java.math.BigInteger; var i=1
 @import helper._
 
-@MainWebsite.MainWebsiteTemplate("User Profile")(loginForm) {
+@MainWebsite.MainWebsiteTemplate("User Profile")(loginForm){
+<script>
+	     function del(urlToDelete) {
+	        $.ajax({
+	          url: urlToDelete,
+	          type: 'DELETE',
+	          success: function(results) {
+	            // Refresh the page
+	            location.reload();
+	          }
+	        });
+	      }
+	</script>
 
-	<!-- Job Listings Fixed navbar -->
-	<div id="navigation" class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a href="/"><img class="nav-logo" src="@routes.Assets.at("images/title_logo.png")" alt="nav logo"></a>
+	<div class="user-profile-container container">
+		<div class="col-sm-12 col-md-10 col-lg-8" id="profile-inner-div">
+			<div id="profile-section" class="profile-class">
+			<div>
+				<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccountModal" style="float: right">Delete Account</a>
 			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav" style="font-size: 21px;">
-					
-				</ul>
-
-				<div
-					style="color: white; padding: 15px 50px 5px 0; float: right; font-size: 16px;">
-					<a href="/dashboard" target="_blank" class="btn btn-primary square-btn-adjust">Login</a>
+				<h3 class="blue-text"><strong>User Profile</strong></h3>
+				<hr>
+				
+				<div id="applicant-info">
+				@if(app != null) {
+					@if(app.profileImage == null) {
+						<a href="" data-toggle="modal" data-target="#uploadImageModal" title="Upload Photo">
+							<img class="thumbnail" id="user-photo" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
+						</a>
+					} else {
+						<a href="" data-toggle="modal" data-target="#uploadImageModal" title="Upload Photo">
+							<img class="thumbnail" id="user-photo" src="@routes.Assets.at(app.profileImage)" alt="user-photo">
+						</a>
+					}
+						<strong class="blue-text">Name:</strong>&nbsp;&nbsp;@app.applicant_firstName&nbsp;@app.applicant_lastName
+						<br>
+						<strong class="blue-text">Email:</strong>&nbsp;&nbsp;@app.applicant_email
+						<br>
+						<strong class="blue-text">City:</strong>&nbsp;&nbsp;@app.applicant_city
+					}
 				</div>
+					
 			</div>
-			<!--/.nav-collapse -->
+			<div class="clearfix"></div>
+			
+			<!-- Form for uploading CV -->
+			@if(app.cvFileName == null) {
+				<div class="cv-upload-div">
+					<hr>
+					<button class="btn btn-default" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
+				</div>
+			}else {
+				<div class="cv-upload-div">
+					<h4 class="blue-text"><strong>Your CV on File</strong></h4>
+					<a href="@routes.Assets.at(app.cvFilePath)" download class="btn btn-primary" id="cv-filename"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;@app.cvFileName</a>
+				</div>
+				
+				<div class="cv-upload-div">
+					<hr>
+					<button class="btn btn-default" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
+				</div>
+			}
+			<div class="clearfix"></div>
+			
+			<div id="job-list" class="profile-class">
+				<h3 class="blue-text"><strong>Job Applications for @app.applicant_firstName @app.applicant_lastName</strong></h3>
+				<hr>
+	
+				@if(jobAppList.size != 0) {
+					@for(jobApp <- jobAppList) {
+						<div id="single-job-listing">
+							@i | <span>@jobApp.job.job_title &#8209; <strong>@jobApp.job.job_location</strong></span>
+						</div>
+						@if(jobApp.processed == 0) {
+							<span id="job-app-progress" class="label label-danger">In Progress</span>
+						} else {
+							<span id="job-app-progress" class="label label-warning">Application Accepted</span>
+						}
+						@(i+=1)
+					} 
+				} else {
+					<p>You have not applied for any jobs yet.  Start by searching&nbsp;&nbsp;<a href="/joblistings"><strong><u>here</u></strong></a></p>
+				}
+			</div>
 		</div>
 	</div>
 
-	<div class="container">
-	<br><br>
-		<p>Currently Logged In: 
-		<br>
-		@app.applicant_email
-		<br>
-		@app.applicant_firstName
-		</p>
-	</div>
 }
