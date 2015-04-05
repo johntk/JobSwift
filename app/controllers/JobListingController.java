@@ -16,7 +16,7 @@ public class JobListingController extends Controller {
 	// Render the job listings view for the main website
 	public static Result jobListings() {
 		return ok(views.html.MainWebsite.WebsiteJobList.render
-				(tempJobs,Form.form(JobListingController.JobSearch.class), Form.form(Login.class), JobListingController.locationList(), JobListingController.sectorList()));
+				(tempJobs,Form.form(JobListingController.JobSearch.class), Form.form(Login.class), JobListingController.locationList(), JobListingController.sectorList() ));
 	}
 	
 	public static Result newJobListing()

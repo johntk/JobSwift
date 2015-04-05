@@ -57,7 +57,7 @@
 					</ul>
 				}
 				<div style="float: right;">
-					@if(Application.loggedIn == false) {
+					@if(session.get("email") == null) {
 						<a class="btn btn-primary" style="margin-top: 12px;" data-toggle="modal" data-target="#loginModal">LOGIN</a>
 					} else {
 						<a href="" data-toggle="modal" data-target="#userAccountModal">
