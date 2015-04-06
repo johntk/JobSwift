@@ -23,7 +23,7 @@ create table applicant_model (
 create table interview_question_model (
   question_id               bigint auto_increment not null,
   question                  longtext,
-  jlm_job_id                bigint,
+  job_job_id                bigint,
   constraint pk_interview_question_model primary key (question_id))
 ;
 
@@ -47,8 +47,8 @@ create table job_listing_model (
   constraint pk_job_listing_model primary key (job_id))
 ;
 
-alter table interview_question_model add constraint fk_interview_question_model_jlm_1 foreign key (jlm_job_id) references job_listing_model (job_id) on delete restrict on update restrict;
-create index ix_interview_question_model_jlm_1 on interview_question_model (jlm_job_id);
+alter table interview_question_model add constraint fk_interview_question_model_job_1 foreign key (job_job_id) references job_listing_model (job_id) on delete restrict on update restrict;
+create index ix_interview_question_model_job_1 on interview_question_model (job_job_id);
 alter table job_application_model add constraint fk_job_application_model_app_2 foreign key (app_applicant_id) references applicant_model (applicant_id) on delete restrict on update restrict;
 create index ix_job_application_model_app_2 on job_application_model (app_applicant_id);
 alter table job_application_model add constraint fk_job_application_model_job_3 foreign key (job_job_id) references job_listing_model (job_id) on delete restrict on update restrict;

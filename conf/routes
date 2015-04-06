@@ -12,6 +12,7 @@ POST	/jobsearch					controllers.JobListingController.jobSearchResult()
 # Recruiters Dashboard
 GET     /dashboard					controllers.Application.dashboard()
 GET     /applicants					controllers.ApplicantController.listApplicants()
+GET     /recruiterjoblistings		controllers.JobListingController.listJobs()
 GET     /newapplicants:processed	controllers.ApplicantController.listNewApplicants(processed: Int)
 GET     /applicants/:email			controllers.ApplicantController.details(email: String)
 POST	/submitform					controllers.Application.submitForm()

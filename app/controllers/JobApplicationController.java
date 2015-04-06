@@ -5,10 +5,10 @@ import play.mvc.*;
 
 public class JobApplicationController extends Controller {
 	
-	@Security.Authenticated(Secured.class)
 	public static Result applyForJob(Long id) {
-		if(Application.getCurrentUser() != null) {
-			ApplicantModel app = Application.getCurrentUser();
+		if(session().get("email") != null) {
+			
+			ApplicantModel app = ApplicantModel.findByEmail(session().get("email"));
 			if(app.cvFileName != null) {
 				JobListingModel jlm = JobListingModel.findById(id);
 				JobApplicationModel temp = new JobApplicationModel(app, jlm);

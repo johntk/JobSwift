@@ -38,6 +38,9 @@ public class JobListingModel extends Model{
 	@OneToMany
 	public List<JobApplicationModel> applicationList;
 	
+	@Constraints.Required
+	public List<String> questions;
+	
 	@OneToMany
 	public List<InterviewQuestionModel> interviewQuestions;
 	

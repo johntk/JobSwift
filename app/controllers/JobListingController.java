@@ -41,12 +41,20 @@ public class JobListingController extends Controller {
         if(job.job_id == null)
         {
 			job.save();
+        	
+        	for(int i = 0; i < job.questions.size(); i++) {
+        		if(job.questions.get(i) != null){
+        			job.interviewQuestions.add(new InterviewQuestionModel(job, job.questions.get(i)));
+        			job.interviewQuestions.get(i).save();
+        		}
+        	}
+			
 			flash("success", String.format("Successfully added job listing %s", job));
-			return redirect(routes.ApplicantController.listApplicants());
+			return redirect(routes.JobListingController.listJobs());
         } else {
           job.update();
           flash("success", String.format("Successfully updated job listing %s", job));
-          return redirect(routes.ApplicantController.listApplicants());
+          return redirect(routes.JobListingController.listJobs());
         }
 	}
 	
@@ -55,7 +63,12 @@ public class JobListingController extends Controller {
     	if(job == null) {
     		return notFound(String.format("Job %s does not exist.", id));
     	}
-
+    	
+    	List<InterviewQuestionModel> temp = InterviewQuestionModel.findAllQuestionsByJobListing(job);
+    	for(int i = 0; i< temp.size(); i++) {
+    		temp.get(i).delete();
+    	}
+    	
     	List<JobApplicationModel> jam = JobApplicationModel.findAllApplicationsByJobListing(job);
     	if(jam != null) {
 	    	for(int i=0; i<jam.size(); i++) {
@@ -134,5 +147,9 @@ public class JobListingController extends Controller {
 		list.add("Wicklow");
 		return list;
 	}
-
+	
+	public static Result listJobs() {
+		List<JobListingModel> jobs = JobListingModel.findAll();
+    	return ok(views.html.Recruiter.JobList.render(jobs));
+	}
 }

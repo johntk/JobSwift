@@ -1,5 +1,6 @@
 @(jobForm: Form[JobListingModel])(locations: List[String])(sectors: List[String])
 @import helper._
+@import java.math.BigInteger; var i=0
 
 @Recruiter.RecruitersScreenTemplate("Job Listing Form") {
 			
@@ -50,12 +51,31 @@
 						<label for="job_criteria">Criteria</label>		
 						<textarea type="text" class="form-control" name="job_criteria" placeholder="Criteria" id="job_criteria"></textarea>
 					</div>
-					
+					<hr>
+					<div id="interview-questions">
+					<h4><strong>Interview Questions</strong></h4>
+					</div>
 					<br>
+					<a class="btn btn-primary" id="addQuestion">Add an Interview Question</a>
+					<br>
+					<br>
+					<hr>
 					<input type="hidden" value="@jobForm("id").valueOr("")" name="id"/>
-					<input type="submit" class="btn btn-primary" value="Save">
+					<input type="submit" class="btn btn-success" value="Save">
 					
 				</form>
 			</div>
+			
+			<script>
+			var num = 0;
+			$('#addQuestion').click(
+					function() {
+						$('#interview-questions').append(
+							'<div class="form-group"><input type="text" class="form-control" name="questions['+num+']" placeholder="Interview Question '+(num+1)+'"></div>'
+						);
+						num++;
+					}
+				);
+			</script>
 
 }
