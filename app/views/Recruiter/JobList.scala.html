@@ -26,7 +26,6 @@
 					<th>Type</th>
 					<th>Location</th>
 					<th>Salary</th>
-					<th>Add Interview</th>
 					<th>DELETE</th>
 				</tr>
 			</thead>
@@ -38,11 +37,7 @@
 						<td>@job.job_type</td>
 						<td>@job.job_location</td>
 						<td>&euro;@job.job_salary</td>
-						
-						<td>
-						
-						</td>
-						
+
 						<td>
 							<a class="text-danger" style="cursor: pointer;" onclick="javascript:del('@routes.JobListingController.delete(job.job_id)')"><i class="fa fa-remove fa-2x"></i></a>
 						</td>

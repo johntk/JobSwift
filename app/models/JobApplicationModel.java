@@ -74,4 +74,9 @@ public class JobApplicationModel extends Model {
 	    return jobList;
 	}
 	
+	public static List<JobApplicationModel> findAllUnprocessedApplications() {
+		List<JobApplicationModel> temp = find.where().eq("processed", 0).findList();
+		return temp;
+	}
+	
 }

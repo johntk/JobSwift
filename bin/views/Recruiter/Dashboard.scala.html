@@ -1,4 +1,4 @@
-@(numJobs: Int)(jobList: List[JobListingModel])
+@(jobList: List[JobListingModel])(applicationList: List[JobApplicationModel])
 @import java.math.BigInteger; var i=1
 @RecruitersScreenTemplate("Recruitment Agency") {
 
@@ -32,8 +32,8 @@
 						class="fa fa-user"></i>
 					</span>
 					<div class="text-box">
-						<p class="main-text">&nbsp;New</p>
-						<p class="text-muted"> Applicant(s)</p>
+						<p class="main-text">@applicationList.size&nbsp;New</p>
+						<p class="text-muted"> Job Applications</p>
 					</div>
 				</div>
 		</div>
@@ -46,7 +46,7 @@
 						class="fa fa-bars"></i>
 					</span>
 					<div class="text-box">
-						<p class="main-text">@numJobs&nbsp;Job</p>
+						<p class="main-text">@jobList.size&nbsp;Job</p>
 						<p class="text-muted">listing(s)</p>
 					</div>
 				</div>

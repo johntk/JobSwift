@@ -18,7 +18,6 @@ public class Application extends Controller {
 	}
 	
 	
-	
 	// Render the applicant profile view for the main website
 	@Security.Authenticated(Secured.class)
 	public static Result applicantProfile() {
@@ -31,7 +30,8 @@ public class Application extends Controller {
 	public static Result dashboard() {
 		// Create a list of all job listings to pass to dashboard view
 		List<JobListingModel> jobList = JobListingModel.findAll();
-		return ok(views.html.Recruiter.Dashboard.render(jobList.size(), jobList));
+		List<JobApplicationModel> applicationList = JobApplicationModel.findAllUnprocessedApplications();
+		return ok(views.html.Recruiter.Dashboard.render(jobList, applicationList));
 	}
 
 	// Method for submitting sign-up form from main website
