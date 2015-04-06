@@ -38,6 +38,9 @@ public class JobListingModel extends Model{
 	@OneToMany
 	public List<JobApplicationModel> applicationList;
 	
+	@OneToMany
+	public List<InterviewQuestionModel> interviewQuestions;
+	
 	// Default Constructor
 	public JobListingModel(){}
 	

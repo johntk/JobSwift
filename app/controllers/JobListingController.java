@@ -21,7 +21,7 @@ public class JobListingController extends Controller {
 	
 	public static Result newJobListing()
 	{
-		return ok(views.html.Recruiter.JobDetailsForm.render(jobForm));
+		return ok(views.html.Recruiter.JobDetailsForm.render(jobForm, locationList(), sectorList()));
 	}
 	
 	
@@ -33,7 +33,7 @@ public class JobListingController extends Controller {
         if(boundForm.hasErrors())
         {
           flash("error", "Please correct the form below.");
-          return badRequest(views.html.Recruiter.JobDetailsForm.render(boundForm));
+          return badRequest(views.html.Recruiter.JobDetailsForm.render(boundForm, locationList(), sectorList()));
         }
 
         JobListingModel job = boundForm.get();

@@ -80,7 +80,7 @@ public class Application extends Controller {
 			// Clear the existing session
 			session().clear();
 			flash("error", "Invalid Login!");
-			return badRequest(views.html.MainWebsite.Homepage.render(appForm, Form.form(Login.class) ));
+			return redirect(routes.Application.index());
 		}
 		
 		// Clear the existing session
