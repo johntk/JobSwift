@@ -48,22 +48,16 @@
 			<div class="clearfix"></div>
 			
 			<!-- Form for uploading CV -->
-			@if(app.cvFileName == null) {
-				<div class="cv-upload-div">
-					<hr>
-					<button class="btn btn-default" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
-				</div>
-			}else {
+			@if(app.cvFileName != null) {
 				<div class="cv-upload-div">
 					<h4 class="blue-text"><strong>Your CV on File</strong></h4>
 					<a href="@routes.Assets.at(app.cvFilePath)" download class="btn btn-primary" id="cv-filename"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;@app.cvFileName</a>
 				</div>
-				
-				<div class="cv-upload-div">
-					<hr>
-					<button class="btn btn-default" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
-				</div>
 			}
+			<div class="cv-upload-div">
+				<hr>
+				<button class="btn btn-default" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
+			</div>
 			<div class="clearfix"></div>
 			
 			<div id="job-list" class="profile-class">
