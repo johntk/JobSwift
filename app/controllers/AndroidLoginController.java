@@ -11,12 +11,13 @@ import play.mvc.*;
 public class AndroidLoginController extends Controller {
 	
 	// Process the applicant login form from the homepage
+	@BodyParser.Of(BodyParser.Json.class)
 	public static Result login() {
 		
 		String email, password;
+		JsonNode json = request().body().asJson();
 		ObjectNode result = Json.newObject();
 		boolean error;
-		JsonNode json = request().body().asJson();
 		
 	    if(json == null) {
 	    	error = true;
