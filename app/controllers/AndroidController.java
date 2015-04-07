@@ -34,10 +34,10 @@ public class AndroidController extends Controller {
 	// JSON get request 
 	public static Result json(){
 	
-				ObjectNode result = Json.newObject();
-				result.put("content", "Hello John");
-				return ok(result);
-			}
+		ObjectNode result = Json.newObject();
+		result.put("content", "Hello John");
+		return ok(result);
+	}
 			
 
 	// Multipart Post request
