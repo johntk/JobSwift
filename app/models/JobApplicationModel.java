@@ -22,9 +22,9 @@ public class JobApplicationModel extends Model {
 	@Id
 	public Long job_application_id;
 	
-	public int processed;	
+	public String status;	
 	@Formats.DateTime(pattern="dd/MM/yyyy")
-	private static Date date = new Date();
+	public Date date = new Date();
 	
 	@ManyToOne
 	public ApplicantModel app;
@@ -39,12 +39,21 @@ public class JobApplicationModel extends Model {
 	public JobApplicationModel(ApplicantModel app, JobListingModel job) {
 		this.app = app;
 		this.job = job;
-		
+		status = "submitted";
 		date = Calendar.getInstance().getTime();
-		processed = 0;
 	}
 	
 	public static Finder<Long, JobApplicationModel> find = new Finder<Long, JobApplicationModel>(Long.class, JobApplicationModel.class);
+	
+	// Find all job applications in the database
+	public static List<JobApplicationModel> findAll() {
+		return JobApplicationModel.find.all();
+	}
+	
+	// Find a job application listing by it's id (primary key)
+	public static JobApplicationModel findById(Long id) {
+		return find.where().eq("job_application_id", id).findUnique();
+	}
 	
 	// Find all job applications for a given user
 	public static List<JobApplicationModel> findAllApplicationsByUser(ApplicantModel tempApp){
@@ -72,6 +81,11 @@ public class JobApplicationModel extends Model {
 			}
 		}
 	    return jobList;
+	}
+	
+	public static List<JobApplicationModel> findAllUnprocessedApplications() {
+		List<JobApplicationModel> temp = find.where().eq("status", null).findList();
+		return temp;
 	}
 	
 }
