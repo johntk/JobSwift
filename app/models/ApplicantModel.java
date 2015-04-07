@@ -80,13 +80,6 @@ public class ApplicantModel extends Model {
 	public static ApplicantModel findByEmail(String email) {
 		return find.where().eq("applicant_email", email).findUnique();
 	}
-
-	// Method to retrieve all applications from the DB that are unprocessed
-//	public static List<ApplicantModel> findUnprocessed() {
-//		List<ApplicantModel> tempApps = new ArrayList<ApplicantModel>();
-//		tempApps = find.where().eq("processed", 0).findList();
-//		return tempApps;
-//	}
 	
 	// Authenticate a user based on email and password
 	public static ApplicantModel authenticateApplicant(String email, String password) {

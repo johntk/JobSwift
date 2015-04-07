@@ -24,7 +24,7 @@ public class JobApplicationModel extends Model {
 	
 	public int processed;	
 	@Formats.DateTime(pattern="dd/MM/yyyy")
-	private static Date date = new Date();
+	public Date date = new Date();
 	
 	@ManyToOne
 	public ApplicantModel app;

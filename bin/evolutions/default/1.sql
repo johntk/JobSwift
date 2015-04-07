@@ -30,6 +30,7 @@ create table interview_question_model (
 create table job_application_model (
   job_application_id        bigint auto_increment not null,
   processed                 integer,
+  date                      datetime,
   app_applicant_id          bigint,
   job_job_id                bigint,
   constraint pk_job_application_model primary key (job_application_id))

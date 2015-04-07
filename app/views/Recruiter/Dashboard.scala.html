@@ -93,16 +93,21 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>Title</th>
+					<th>Applicant</th>
+					<th>Job Title</th>
 					<th>Location</th>
+					<th>Date of Application</th>
 				</tr>
 			</thead>
 			<tbody class="user_table_body">
-				@for(job <- jobList) {
+				@for(application <- applicationList) {
 					<tr>
 						<td class="user_table_id">@i</td>
-						<td>@job.job_title</td>
-						<td>@job.job_location</td>
+						<td><a href="" class="btn btn-success">@application.app.applicant_firstName @application.app.applicant_lastName</a></td>
+						<td>@application.job.job_title</td>
+						<td>@application.job.job_location</td>
+						<td>@application.date</td>
+						
 						@**<td>
 							<a href="@routes.ApplicantController.details(applicant.applicant_email)"><i class="fa fa-pencil"></i></a>
 						</td>**@
