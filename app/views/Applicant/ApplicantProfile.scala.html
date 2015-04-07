@@ -2,7 +2,7 @@
 @import java.math.BigInteger; var i=1
 @import helper._
 
-@MainWebsite.MainWebsiteTemplate("User Profile")(loginForm){
+@MainWebsite.MainWebsiteTemplate("User Profile")(loginForm) {
 <script>
 	     function del(urlToDelete) {
 	        $.ajax({
@@ -48,22 +48,16 @@
 			<div class="clearfix"></div>
 			
 			<!-- Form for uploading CV -->
-			@if(app.cvFileName == null) {
-				<div class="cv-upload-div">
-					<hr>
-					<button class="btn btn-default" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
-				</div>
-			}else {
+			@if(app.cvFileName != null) {
 				<div class="cv-upload-div">
 					<h4 class="blue-text"><strong>Your CV on File</strong></h4>
 					<a href="@routes.Assets.at(app.cvFilePath)" download class="btn btn-primary" id="cv-filename"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;@app.cvFileName</a>
 				</div>
-				
-				<div class="cv-upload-div">
-					<hr>
-					<button class="btn btn-default" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
-				</div>
 			}
+			<div class="cv-upload-div">
+				<hr>
+				<button class="btn btn-default" data-toggle="modal" data-target="#uploadCVModal">Upload CV</button>
+			</div>
 			<div class="clearfix"></div>
 			
 			<div id="job-list" class="profile-class">
@@ -72,19 +66,78 @@
 	
 				@if(jobAppList.size != 0) {
 					@for(jobApp <- jobAppList) {
-						<div id="single-job-listing">
-							@i | <span>@jobApp.job.job_title &#8209; <strong>@jobApp.job.job_location</strong></span>
+						<div id="applicant-job-listing">
+							<strong>@i</strong> | <span>@jobApp.job.job_title &#8209; <strong>@jobApp.job.job_location</strong></span>
 						</div>
-						@if(jobApp.processed == 0) {
-							<span id="job-app-progress" class="label label-danger">In Progress</span>
+						
+						@if(jobApp.status == "submitted") {
+							<div>
+								<span>Application Status:</span> <span id="job-app-progress" class="label label-danger" style="float: none;">Submitted</span>
+							</div>
+							<br>
+							<div class="progress">
+								<div class="progress-bar progress-bar-danger progress-bar-striped active" style="width: 20%">
+							    	Submitted
+								</div>
+								<div class="progress-bar progress-bar-warning" style="width: 30%; opacity: 0.3;">
+							    	Accepted
+								</div>
+								<div class="progress-bar progress-bar-success" style="width: 50%;  opacity: 0.3;">
+							    	Interview Stage
+								</div>
+							</div>
 						} else {
-							<span id="job-app-progress" class="label label-warning">Application Accepted</span>
-						}
+							@if(jobApp.status == "rejected"){
+								<div>
+									<span>Application Status:</span> <span id="job-app-progress" class="label label-danger" style="float: none;">Unsuccessful</span>
+								</div>
+								<br>
+							
+								<div class="progress">
+									<div class="progress-bar progress-bar-danger progress-bar-striped active" style="width: 20%; opacity: 0.3;">
+								    	Unsuccessful
+									</div>
+									<div class="progress-bar progress-bar-warning progress-bar-striped active" style="width: 30%; opacity: 0.3;">
+								    	Accepted
+									</div>
+									<div class="progress-bar progress-bar-success" style="width: 50%; opacity: 0.3;">
+								    	Interview Stage
+									</div>
+								</div>
+						} else {
+							@if(jobApp.status == "accepted"){
+								<div class="progress">
+									<div class="progress-bar progress-bar-danger progress-bar-striped active" style="width: 20%">
+								    	Submitted
+									</div>
+									<div class="progress-bar progress-bar-warning progress-bar-striped active" style="width: 30%">
+								    	Accepted
+									</div>
+									<div class="progress-bar progress-bar-success" style="width: 50%; opacity: 0.3;">
+								    	Interview Stage
+									</div>
+								</div>
+						} else {
+							@if(jobApp.status == "interview"){
+							<div class="progress">
+								<div class="progress-bar progress-bar-danger progress-bar-striped active" style="width: 20%">
+							    	Submitted
+								</div>
+								<div class="progress-bar progress-bar-warning progress-bar-striped active" style="width: 30%">
+							    	Accepted
+								</div>
+								<div class="progress-bar progress-bar-success progress-bar-striped active" style="width: 50%">
+							    	Interview Stage
+								</div>
+							</div>
+						}}
+						}}
+						<hr>
 						@(i+=1)
-					} 
-				} else {
-					<p>You have not applied for any jobs yet.  Start by searching&nbsp;&nbsp;<a href="/joblistings"><strong><u>here</u></strong></a></p>
-				}
+						} 
+					} else {
+						<p>You have not applied for any jobs yet.  Start by searching&nbsp;&nbsp;<a href="/joblistings"><strong><u>here</u></strong></a></p>
+					}
 			</div>
 		</div>
 	</div>

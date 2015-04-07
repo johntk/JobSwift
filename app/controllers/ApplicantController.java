@@ -17,10 +17,10 @@ public class ApplicantController extends Controller {
     	return ok(views.html.Applicant.ApplicantList.render(applicants));
     }
 	
-	// Overloaded method to retrieve applicants by email
-	public static Result listNewApplicants(int processed) {
-    	List<ApplicantModel> applicants = ApplicantModel.findAll();
-    	return ok(views.html.Applicant.ApplicantList.render(applicants));
+	// Displays all job applciations in the recruiters dashboard
+	public static Result listAllJobApplications() {
+    	List<JobApplicationModel> jobApps = JobApplicationModel.findAll();
+    	return ok(views.html.Recruiter.JobApplicationList.render(jobApps));
     }
     
     public static Result newApplicant() {

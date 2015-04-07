@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
@@ -36,3 +37,46 @@ POST /jsonPost    					controllers.AndroidController.jsonPost()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+=======
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /							controllers.Application.index()
+GET     /joblistings				controllers.JobListingController.jobListings()
+POST	/authenticate				controllers.Application.authenticateApplicant()
+GET     /logout						controllers.Application.logOut()
+POST	/jobsearch					controllers.JobListingController.jobSearchResult()
+
+# Recruiters Dashboard
+GET     /dashboard					controllers.Application.dashboard()
+GET     /applicants					controllers.ApplicantController.listApplicants()
+GET     /recruiterjoblistings		controllers.JobListingController.listJobs()
+GET     /applicants/:email			controllers.ApplicantController.details(email: String)
+GET		/jobapplications			controllers.ApplicantController.listAllJobApplications()
+POST	/submitform					controllers.Application.submitForm()
+POST	/addapplicant				controllers.ApplicantController.updateApplicant()
+DELETE  /applicants/:email			controllers.ApplicantController.deleteUser(email: String)
+DELETE  /jobapplication/:id			controllers.JobApplicationController.delete(id: Long)
+POST	/addjob						controllers.JobListingController.addJobListing()
+
+# Applicant Profile
+GET		/userprofile				controllers.Application.applicantProfile()
+DELETE  /deleteaccount				controllers.ApplicantController.deleteCurrentUser()
+POST	/uploadcv					controllers.FileUploadController.uploadCV()
+POST	/uploadprofileimage			controllers.FileUploadController.uploadProfileImage()
+
+# Website Job Listings
+GET		/newjoblisting				controllers.JobListingController.newJobListing()
+DELETE  /joblisting/:id				controllers.JobListingController.delete(id: Long)
+GET		/apply:id					controllers.JobApplicationController.applyForJob(id: Long)
+
+# Android
+GET		/json    					controllers.AndroidController.json()
+POST	/jsonPost    				controllers.AndroidController.jsonPost()
+POST	/androidlogin				controllers.AndroidLoginController.login()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+>>>>>>> 04f2303664c21b4d4d6bbdb34c60e28597ebf1d0
