@@ -13,11 +13,12 @@ POST	/jobsearch					controllers.JobListingController.jobSearchResult()
 GET     /dashboard					controllers.Application.dashboard()
 GET     /applicants					controllers.ApplicantController.listApplicants()
 GET     /recruiterjoblistings		controllers.JobListingController.listJobs()
-GET     /newapplicants:processed	controllers.ApplicantController.listNewApplicants(processed: Int)
 GET     /applicants/:email			controllers.ApplicantController.details(email: String)
+GET		/jobapplications			controllers.ApplicantController.listAllJobApplications()
 POST	/submitform					controllers.Application.submitForm()
 POST	/addapplicant				controllers.ApplicantController.updateApplicant()
 DELETE  /applicants/:email			controllers.ApplicantController.deleteUser(email: String)
+DELETE  /jobapplication/:id			controllers.JobApplicationController.delete(id: Long)
 POST	/addjob						controllers.JobListingController.addJobListing()
 
 # Applicant Profile
