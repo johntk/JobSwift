@@ -30,11 +30,13 @@ public class AndroidLoginController extends Controller {
 	            return ok(result);
 	        } else {
 	        	result.put("error", false);
-	        	result.put("uid", "1234");
-	        	result.put("user", app.applicant_firstName);
-	        	result.put("user", app.applicant_email);
-	        	result.put("user", "");
-	        	result.put("user", "");
+	        	result.put("app_id", app.applicant_id);
+	        	result.put("first_name", app.applicant_firstName);
+	        	result.put("last_name", app.applicant_lastName);
+	        	result.put("email", app.applicant_email);
+	        	result.put("city", app.applicant_city);
+	        	result.put("cvFilePath", app.cvFilePath);
+	        	result.put("profileImage", app.profileImage);
 	            return ok(result);
 	        }
 	    }
