@@ -24,6 +24,7 @@
 					<th>Applicant</th>
 					<th>Job</th>
 					<th>Date of Application</th>
+					<th>Process</th>
 					<th>DELETE</th>
 				</tr>
 			</thead>
@@ -31,10 +32,12 @@
 				@for(jobApp <- jobApps) {
 					<tr>
 						<td class="user_table_id"></td>
-						<td><a href="" class="btn btn-success">@jobApp.app.applicant_firstName @jobApp.app.applicant_lastName</a></td>
+						<td><a href="" class="btn btn-primary">@jobApp.app.applicant_firstName @jobApp.app.applicant_lastName</a></td>
 						<td>@jobApp.job.job_title</td>
 						<td>@jobApp.date</td>
+						<td>
 
+						</td>
 						<td>
 							<a class="text-danger" style="cursor: pointer;" onclick="javascript:del('@routes.JobApplicationController.delete(jobApp.job_application_id)')"><i class="fa fa-remove fa-2x"></i></a>
 						</td>

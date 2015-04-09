@@ -49,4 +49,5 @@ public class JobApplicationController extends Controller {
     	jobApp.delete();
     	return redirect(routes.ApplicantController.listAllJobApplications());
     }
+
 }

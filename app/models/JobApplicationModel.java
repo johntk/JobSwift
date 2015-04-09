@@ -7,10 +7,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import controllers.Secured;
 import play.data.format.Formats;
 import play.db.ebean.Model;
-import play.mvc.Security;
 
 @Entity
 public class JobApplicationModel extends Model {
@@ -84,8 +82,8 @@ public class JobApplicationModel extends Model {
 	}
 	
 	public static List<JobApplicationModel> findAllUnprocessedApplications() {
-		List<JobApplicationModel> temp = find.where().eq("status", null).findList();
+		List<JobApplicationModel> temp = find.where().eq("status", "submitted").findList();
 		return temp;
 	}
-	
+
 }

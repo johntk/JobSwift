@@ -16,12 +16,12 @@ public class JobListingController extends Controller {
 	// Render the job listings view for the main website
 	public static Result jobListings() {
 		return ok(views.html.MainWebsite.WebsiteJobList.render
-				(tempJobs,Form.form(JobListingController.JobSearch.class), Form.form(Login.class), JobListingController.locationList(), JobListingController.sectorList() ));
+				(tempJobs,Form.form(JobListingController.JobSearch.class), Form.form(Login.class), JobListingController.locationList(), jobTypeList(), JobListingController.sectorList() ));
 	}
 	
 	public static Result newJobListing()
 	{
-		return ok(views.html.Recruiter.JobDetailsForm.render(jobForm, locationList(), sectorList()));
+		return ok(views.html.Recruiter.JobDetailsForm.render(jobForm, locationList(), jobTypeList(), sectorList()));
 	}
 	
 	
@@ -33,7 +33,7 @@ public class JobListingController extends Controller {
         if(boundForm.hasErrors())
         {
           flash("error", "Please correct the form below.");
-          return badRequest(views.html.Recruiter.JobDetailsForm.render(boundForm, locationList(), sectorList()));
+          return badRequest(views.html.Recruiter.JobDetailsForm.render(boundForm, locationList(), jobTypeList(), sectorList()));
         }
 
         JobListingModel job = boundForm.get();
@@ -83,20 +83,30 @@ public class JobListingController extends Controller {
 	public static class JobSearch {
 		public String job_location;
 		public String job_sector;
+		public String job_type;
 	}
 	
 	public static Result jobSearchResult() {
 		Form<JobSearch> jobForm = Form.form(JobSearch.class).bindFromRequest();
 		String location = jobForm.get().job_location;
 		String sector = jobForm.get().job_sector;
+		String jobType = jobForm.get().job_type;
 		
-		tempJobs = JobListingModel.findByForm(location, sector);
+		tempJobs = JobListingModel.findByForm(location, sector, jobType);
 		
 		return redirect(routes.JobListingController.jobListings());
 	}
 	
 	public static void clearJobResults() {
 		tempJobs = null;
+	}
+	
+	public static final List<String> jobTypeList() {
+		List<String> list = new ArrayList<String>();
+		list.add("Permanent");
+		list.add("Temporary");
+		list.add("Contract");
+		return list;
 	}
 	
 	// Creates a list of sectors for the new job listing form
