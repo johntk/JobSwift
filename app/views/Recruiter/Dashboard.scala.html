@@ -103,7 +103,10 @@
 				@for(application <- applicationList) {
 					<tr>
 						<td class="user_table_id">@i</td>
-						<td><a href="" class="btn btn-success">@application.app.applicant_firstName @application.app.applicant_lastName</a></td>
+						<td>
+						<p><strong>Name:</strong> @application.app.applicant_firstName @application.app.applicant_lastName</p>
+						<a href="" class="btn btn-default">View Applicant's Profile</a>
+						</td>
 						<td>@application.job.job_title</td>
 						<td>@application.job.job_location</td>
 						<td>@application.date</td>

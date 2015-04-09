@@ -1,0 +1,61 @@
+@(appForm: Form[ApplicantModel])(loginForm: Form[Application.Login])
+@import helper._
+
+@MainWebsite.MainWebsiteTemplate("Edit Profile")(loginForm) { 
+
+		<div class="user-profile-container container" style="margin-top:80px;">
+			<form action="/updateapplicant" method="POST">	
+						<div class="row col-xs-12 col-sm-8 col-md-6 col-lg-5" id="edit-profile-form">
+								<h2>Edit Details</h2>
+								<div class="form-group">
+									
+									<select name="applicant_title" class="form-control" value="@appForm.get().applicant_title" id="applicant_title">
+										<option value="Mr">Mr</option>
+										<option value="Ms">Ms</option>
+									</select>
+								</div>
+								
+								<div class="form-group">
+									<label for="applicant_firstName">First Names(s)</label>
+									<input type="text" class="form-control" name="applicant_firstName" value="@appForm.get().applicant_firstName" placeholder="First Names(s)" id="applicant_firstName">
+								</div>
+								
+								<div class="form-group">
+									<label for="applicant_lastName">Surname</label>
+									<input type="text" class="form-control" name="applicant_lastName" value="@appForm.get().applicant_lastName" placeholder="Surname" id="applicant_lastName">
+								</div>
+								
+								<div class="form-group">
+									<label for="applicant_city">City</label>
+									<input type="text" class="form-control" name="applicant_city" value="@appForm.get().applicant_city" placeholder="City" id="applicant_city">
+								</div>
+							
+								<div class="form-group">
+									<label for="email">Email (Cannot Be Changed)</label>
+									<input type="text" class="form-control" readonly name="applicant_email" value="@appForm.get().applicant_email" placeholder="Email" id="applicant_email">
+								</div>
+								
+								<div class="form-group">
+									<label for="applicant_password">Change Password</label>
+									<input type="password" class="form-control" name="applicant_password" value="@appForm.get().applicant_password" placeholder="Password" id="applicant_password">
+								</div>
+								
+								<div class="form-group">
+									<label for="applicant_password_confirmation">Confirm New Password</label>
+									<input type="password" class="form-control" name="applicant_password_confirmation" value="@appForm.get().applicant_password" placeholder="Confirm Password" id="applicant_password_confirmation">
+								</div>
+								
+						</div>
+						
+						<div class="row centered">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<input type="hidden" value="@appForm("applicant_id").valueOr("")" name="applicant_id"/>
+								<input type="submit" class="btn btn-primary btn-square-adjust" value="Submit">
+								&nbsp;&nbsp;
+								<a class="btn btn-default btn-square-adjust" href="@routes.Application.applicantProfile()">Cancel</a>
+							</div>
+						</div>	
+						
+					</form>
+		</div>
+}

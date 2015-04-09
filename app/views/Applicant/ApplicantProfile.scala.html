@@ -19,33 +19,38 @@
 	<div class="user-profile-container container">
 		<div class="col-sm-12 col-md-10 col-lg-8" id="profile-inner-div">
 			<div id="profile-section" class="profile-class">
-			<div>
-				<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccountModal" style="float: right">Delete Account</a>
-			</div>
+				<div>
+					<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccountModal" style="float: right">Delete Account</a>
+				</div>
+				
 				<h3 class="blue-text"><strong>User Profile</strong></h3>
 				<hr>
 				
-				<div id="applicant-info">
-				@if(app != null) {
-					@if(app.profileImage == null) {
-						<a href="" data-toggle="modal" data-target="#uploadImageModal" title="Upload Photo">
-							<img class="thumbnail" id="user-photo" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
-						</a>
-					} else {
-						<a href="" data-toggle="modal" data-target="#uploadImageModal" title="Upload Photo">
-							<img class="thumbnail" id="user-photo" src="@routes.Assets.at(app.profileImage)" alt="user-photo">
-						</a>
-					}
-						<strong class="blue-text">Name:</strong>&nbsp;&nbsp;@app.applicant_firstName&nbsp;@app.applicant_lastName
-						<br>
-						<strong class="blue-text">Email:</strong>&nbsp;&nbsp;@app.applicant_email
-						<br>
-						<strong class="blue-text">City:</strong>&nbsp;&nbsp;@app.applicant_city
+				<div class="col-xs-12 col-sm-12 col-md-12" id="applicant-info">
+					@if(app != null) {
+						@if(app.profileImage == null) {
+							<a href="" data-toggle="modal" data-target="#uploadImageModal" title="Upload Photo">
+								<img class="thumbnail" id="user-photo" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
+							</a>
+						} else {
+							<a href="" data-toggle="modal" data-target="#uploadImageModal" title="Upload Photo">
+								<img class="thumbnail" id="user-photo" src="@routes.Assets.at(app.profileImage)" alt="user-photo">
+							</a>
+						}
+							<strong class="blue-text">Name:</strong>&nbsp;&nbsp;@app.applicant_firstName&nbsp;@app.applicant_lastName
+							<br>
+							<strong class="blue-text">Email:</strong>&nbsp;&nbsp;@app.applicant_email
+							<br>
+							<strong class="blue-text">City:</strong>&nbsp;&nbsp;@app.applicant_city
 					}
 				</div>
-					
+				
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<a href="/editprofile/@app.applicant_email" class="btn btn-default btn-sm">Edit Profile</a>
+				</div>
+				
 			</div>
-			<div class="clearfix"></div>
+			
 			
 			<!-- Form for uploading CV -->
 			@if(app.cvFileName != null) {
