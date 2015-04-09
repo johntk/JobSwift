@@ -81,8 +81,10 @@ public class JobListingModel extends Model{
 	// Query database for job listings based on search values
 	public static List<JobListingModel> findByForm(String location, String sector, String jobType) {
 		List<JobListingModel> tempJobs = new ArrayList<JobListingModel>();
-		
-		tempJobs = find.where().ilike("job_location", location).ilike("job_sector", sector).ilike("job_type", jobType).findList();
+		if(location != null || sector != null || jobType != null) {
+			
+			tempJobs = find.where().ilike("job_location", location).ilike("job_sector", sector).ilike("job_type", jobType).findList();
+		}
 		return tempJobs;
 	}
 }

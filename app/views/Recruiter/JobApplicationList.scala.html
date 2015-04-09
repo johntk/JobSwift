@@ -36,7 +36,23 @@
 						<td>@jobApp.job.job_title</td>
 						<td>@jobApp.date</td>
 						<td>
-
+						@if(jobApp.status == "submitted") {
+							<a href= "@routes.JobApplicationController.setApplicationStatus(jobApp.job_application_id,"accepted")" class="btn btn-success btn-sm" style="margin: 5px;">Accept</a>
+							<a href= "@routes.JobApplicationController.setApplicationStatus(jobApp.job_application_id, "declined")" class="btn btn-danger btn-sm" style="margin: 5px;">Decline</a>
+						} else {
+							@if(jobApp.status == "declined"){
+								<a href= "@routes.JobApplicationController.setApplicationStatus(jobApp.job_application_id,"submitted")" class="btn btn-warning btn-sm" style="margin: 5px;">Reopen Application</a>
+							} else {
+								@if(jobApp.status == "accepted") {
+									<a href= "@routes.JobApplicationController.setApplicationStatus(jobApp.job_application_id,"interview")" class="btn btn-success btn-sm" style="margin: 5px;">Submit Interview</a>
+									<a href= "@routes.JobApplicationController.setApplicationStatus(jobApp.job_application_id,"submitted")" class="btn btn-danger btn-sm" style="margin: 5px;">Cancel</a>	
+								} else {
+								 @if(jobApp.status == "interview") {
+								 	<span>Interview Sent</span>
+								 }
+								}
+							}
+						}
 						</td>
 						<td>
 							<a class="text-danger" style="cursor: pointer;" onclick="javascript:del('@routes.JobApplicationController.delete(jobApp.job_application_id)')"><i class="fa fa-remove fa-2x"></i></a>

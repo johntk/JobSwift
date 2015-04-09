@@ -20,6 +20,7 @@ POST	/addapplicant				controllers.ApplicantController.updateApplicant()
 DELETE  /applicants/:email			controllers.ApplicantController.deleteUser(email: String)
 DELETE  /jobapplication/:id			controllers.JobApplicationController.delete(id: Long)
 POST	/addjob						controllers.JobListingController.addJobListing()
+GET		/setapplicationstatus:id/status		controllers.JobApplicationController.setApplicationStatus(id: Long, status: String)
 
 
 # Applicant Profile

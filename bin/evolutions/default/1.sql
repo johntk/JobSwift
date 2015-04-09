@@ -39,6 +39,7 @@ create table job_application_model (
 create table job_listing_model (
   job_id                    bigint auto_increment not null,
   job_sector                varchar(255),
+  job_company               varchar(255),
   job_title                 varchar(255),
   job_type                  varchar(255),
   job_location              varchar(255),

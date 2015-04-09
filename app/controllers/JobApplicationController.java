@@ -49,5 +49,13 @@ public class JobApplicationController extends Controller {
     	jobApp.delete();
     	return redirect(routes.ApplicantController.listAllJobApplications());
     }
+	
+	public static Result setApplicationStatus(Long id, String status) {
+		
+		JobApplicationModel jam = JobApplicationModel.findById(id);
+		jam.status = status;
+		jam.update();
+		return redirect(routes.ApplicantController.listAllJobApplications());
+	}
 
 }
