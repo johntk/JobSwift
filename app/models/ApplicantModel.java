@@ -10,6 +10,8 @@ import javax.persistence.*;
 import play.db.ebean.Model;
 import play.data.validation.Constraints;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 @Entity
 public class ApplicantModel extends Model {
 
@@ -33,9 +35,6 @@ public class ApplicantModel extends Model {
 	@Constraints.Required
 	@Constraints.MinLength(6)
 	public String applicant_password;
-	@Constraints.Required
-	@Constraints.MinLength(6)
-	public String applicant_password_confirmation;
 	
 	@OneToMany
 	public List<JobApplicationModel> applicationList;
@@ -54,21 +53,19 @@ public class ApplicantModel extends Model {
 	}
 
 	// Overloaded Constructor
-	public ApplicantModel(String email, String title, String firstName, String lastName, String city, String password, String passwordConfirm) {
+	public ApplicantModel(String email, String title, String firstName, String lastName, String city, String password) {
 		applicant_email = email;
 		applicant_title = title;
 		applicant_firstName = firstName;
 		applicant_lastName = lastName;
 		applicant_city = city;
 		applicant_password = password;
-		applicant_password_confirmation = passwordConfirm;
 
 		dateOfSignup = dateTime.getDateTime();
 	}
 
 	public String toString() {
-		return String.format("%s %s - %s", applicant_firstName,
-				applicant_lastName, applicant_email);
+		return String.format("%s", applicant_email);
 	}
 
 	public static Finder<Long, ApplicantModel> find = new Finder<Long, ApplicantModel>(Long.class, ApplicantModel.class);

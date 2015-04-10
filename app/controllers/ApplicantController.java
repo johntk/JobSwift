@@ -49,11 +49,6 @@ public class ApplicantController extends Controller {
 
         ApplicantModel app = boundForm.get();
         
-        if(!app.applicant_password.equals(app.applicant_password_confirmation)) {
-			flash("error", "Passwords do not match!");
-			return redirect(routes.ApplicantController.details(app.applicant_email));
-		}
-        
         if(app.applicant_id != null)
         {
         	app.update();

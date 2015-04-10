@@ -43,12 +43,7 @@ public class Application extends Controller {
 		}
 
 		ApplicantModel app = boundForm.get();
-		
-		if(!app.applicant_password.equals(app.applicant_password_confirmation)) {
-			flash("error", "Passwords do not match!");
-			return redirect(routes.Application.index());
-		}
-		
+
 		if (app.applicant_id == null) {
 			if (ApplicantModel.findByEmail(app.applicant_email) != null) {
 				flash("error", String.format("User %s is already registered!", app));

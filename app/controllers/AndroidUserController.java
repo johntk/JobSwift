@@ -59,7 +59,7 @@ public class AndroidUserController extends Controller {
 	    	app.applicant_firstName = json.findPath("first_name").textValue();
 	    	app.applicant_lastName = json.findPath("last_name").textValue();
 	    	app.applicant_city = json.findPath("city").textValue();
-	    	app.applicant_password = app.applicant_password_confirmation = json.findPath("password").textValue();
+	    	app.applicant_password = json.findPath("password").textValue();
 	    	
 	    	if (app.applicant_id == null) {
 				if (ApplicantModel.findByEmail(app.applicant_email) != null) {
@@ -80,6 +80,24 @@ public class AndroidUserController extends Controller {
 		    	result.put("error_msg", "Something Went Wrong");
 		        return ok(result);
 	    	}
+	    }
+	}
+	
+	public static Result getInterviews() {
+		JsonNode json = request().body().asJson();
+		ObjectNode result = Json.newObject();
+		
+		if(json == null) {
+			System.out.println("no json");
+	    	result.put("error", true);
+	    	result.put("error_msg", "No JSon");
+	        return badRequest(result);
+	    } else {
+	    	ApplicantModel app = ApplicantModel.findByEmail(json.findPath("email").textValue());
+	    	if(app != null) {
+	    		
+	    	}
+	    	return ok();
 	    }
 	}
 }

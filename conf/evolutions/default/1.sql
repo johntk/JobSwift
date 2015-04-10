@@ -11,7 +11,6 @@ create table applicant_model (
   applicant_last_name       varchar(255),
   applicant_city            varchar(255),
   applicant_password        varchar(255),
-  applicant_password_confirmation varchar(255),
   cv_file_path              varchar(255),
   cv_file_name              varchar(255),
   profile_image             varchar(255),
