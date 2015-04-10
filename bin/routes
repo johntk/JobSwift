@@ -35,7 +35,9 @@ GET		/apply:id					controllers.JobApplicationController.applyForJob(id: Long)
 # Android
 GET		/json    					controllers.AndroidController.json()
 POST	/update    					controllers.AndroidController.update()
-POST	/androidlogin				controllers.AndroidLoginController.login()
+POST	/androidlogin				controllers.AndroidUserController.login()
+POST	/androidregister			controllers.AndroidUserController.register()
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
