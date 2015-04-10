@@ -3,6 +3,7 @@ package controllers;
 import play.Play;
 import play.mvc.*;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import play.mvc.Http.RequestBody;
@@ -40,7 +41,7 @@ public class AndroidController extends Controller {
 	}
 			
 
-	// Multipart Post request
+	// MultipartRequest Post update
 	public static Result update(){
 			
 		//get the body of the request
@@ -52,13 +53,13 @@ public class AndroidController extends Controller {
 		// Pull the hashMap from the MultipartFormData
 		Map<String, String[]> myMap  = multippartBody.asFormUrlEncoded();
 		
-		// Loop to print the contents of the hashMap
-//		for(int i =0; i < myMap.size(); i++){
-//			String param = "param" + (i + 1);
-//			System.out.println(myMap.get(param)[i]);	
-//		}
 		
-		System.out.println(myMap.size());
+		Iterator<String> myVeryOwnIterator = myMap.keySet().iterator();
+	    while(myVeryOwnIterator.hasNext()) {
+	        String key=(String)myVeryOwnIterator.next();
+	        String[] value= myMap.get(key);
+	        System.out.println(key + " " + value[0]);
+	    }
 		
 
 		// Create a directory for the Video and add the video to it
