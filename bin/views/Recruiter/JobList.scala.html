@@ -1,0 +1,49 @@
+@(jobList: List[JobListingModel])
+
+@Recruiter.RecruitersScreenTemplate("Job Listings") {
+
+<script>
+     function del(urlToDelete) {
+        $.ajax({
+          url: urlToDelete,
+          type: 'DELETE',
+          success: function(results) {
+            // Refresh the page
+            location.reload();
+          }
+        });
+      }
+</script>
+
+	<h3>All Job Listings</h3>
+	<div class="table-responsive" style="padding:10px;">
+	
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Title</th>
+					<th>Type</th>
+					<th>Location</th>
+					<th>Salary</th>
+					<th>DELETE</th>
+				</tr>
+			</thead>
+			<tbody class="user_table_body">
+				@for(job <- jobList) {
+					<tr>
+						<td class="user_table_id"></td>
+						<td>@job.job_title</td>
+						<td>@job.job_type</td>
+						<td>@job.job_location</td>
+						<td>&euro;@job.job_salary</td>
+						
+						<td>
+							<a class="text-danger" style="cursor: pointer;" onclick="javascript:del('@routes.JobListingController.delete(job.job_id)')"><i class="fa fa-remove fa-2x"></i></a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}
