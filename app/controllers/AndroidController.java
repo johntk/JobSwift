@@ -41,7 +41,7 @@ public class AndroidController extends Controller {
 			
 
 	// Multipart Post request
-	public static Result jsonPost(){
+	public static Result update(){
 			
 		//get the body of the request
 		RequestBody body = request().body();
@@ -53,10 +53,12 @@ public class AndroidController extends Controller {
 		Map<String, String[]> myMap  = multippartBody.asFormUrlEncoded();
 		
 		// Loop to print the contents of the hashMap
-		for(int i =0; i < myMap.size(); i++){
-			String param = "param" + (i + 1);
-			System.out.println(myMap.get(param)[i]);	
-		}
+//		for(int i =0; i < myMap.size(); i++){
+//			String param = "param" + (i + 1);
+//			System.out.println(myMap.get(param)[i]);	
+//		}
+		
+		System.out.println(myMap.size());
 		
 
 		// Create a directory for the Video and add the video to it
