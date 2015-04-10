@@ -42,25 +42,16 @@ public class Application extends Controller {
 			return badRequest(views.html.MainWebsite.Homepage.render(boundForm, Form.form(Login.class) ));
 		}
 
-		ApplicantModel app = boundForm.get();
-		
-		if(!app.applicant_password.equals(app.applicant_password_confirmation)) {
-			flash("error", "Passwords do not match!");
-			return redirect(routes.Application.index());
-		}
-		
-		if (app.applicant_id == null) {
-			if (ApplicantModel.findByEmail(app.applicant_email) != null) {
-				flash("error", String.format("User %s is already registered!", app));
+			if (ApplicantModel.findByEmail(boundForm.get().applicant_email) != null) {
+				flash("error", String.format("User "+ boundForm.get().applicant_email +" is already registered!"));
 				return redirect(routes.Application.index());
 			} else {
-				app.save();
-				FileUploadController.createUserFolder(app.applicant_email);
+				ApplicantModel.create(boundForm.get().applicant_email, boundForm.get().applicant_title, boundForm.get().applicant_firstName,
+						boundForm.get().applicant_lastName, boundForm.get().applicant_city, boundForm.get().applicant_password);
+				FileUploadController.createUserFolder(boundForm.get().applicant_email);
 				flash("success", "Sign up successful");
 				return redirect(routes.Application.index());
 			}
-		} else
-			return redirect(routes.Application.index());
 	}
 	
 	// Inner class to store user credentials for logging in

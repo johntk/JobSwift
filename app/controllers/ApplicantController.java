@@ -5,6 +5,7 @@ import play.mvc.*;
 
 import java.util.*;
 
+import controllers.Application.Login;
 import play.data.Form;
 
 public class ApplicantController extends Controller {
@@ -34,26 +35,26 @@ public class ApplicantController extends Controller {
     	}
     	
     	Form<ApplicantModel> filledForm = appForm.fill(app);
-    	return ok(views.html.Applicant.ApplicantDetails.render(filledForm));
+    	return ok(views.html.Applicant.WebsiteApplicantDetails.render(filledForm, Form.form(Login.class)));
     }
-
-    // Form to update applicant details from recruiters screen *UNUSED*
+    
+    // Form to update applicant details
     public static Result updateApplicant() {
         Form<ApplicantModel> boundForm = appForm.bindFromRequest();
         if(boundForm.hasErrors())
         {
           flash("error", "Please correct the form below.");
-          return badRequest(views.html.Applicant.ApplicantDetails.render(boundForm));
+          return badRequest(views.html.Applicant.WebsiteApplicantDetails.render(boundForm, Form.form(Login.class) ));
         }
 
         ApplicantModel app = boundForm.get();
         
-        if(app.applicant_id == null)
+        if(app.applicant_id != null)
         {
         	app.update();
             flash("success", String.format("Successfully updated user %s", app));
-            return redirect(routes.ApplicantController.listApplicants());
-        } else return redirect(routes.Application.dashboard());
+            return redirect(routes.Application.applicantProfile());
+        } else return redirect(routes.Application.applicantProfile());
     }
     
  // Delete method to delete user from recruiters dashboard

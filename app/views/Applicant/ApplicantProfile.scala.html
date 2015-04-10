@@ -16,42 +16,45 @@
 	      }
 	</script>
 
-	<div class="user-profile-container container">
+	<div class="user-profile-container container" style="padding: 0;">
 		<div class="col-sm-12 col-md-10 col-lg-8" id="profile-inner-div">
 			<div id="profile-section" class="profile-class">
-			<div>
-				<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccountModal" style="float: right">Delete Account</a>
-			</div>
+				
 				<h3 class="blue-text"><strong>User Profile</strong></h3>
 				<hr>
 				
-				<div id="applicant-info">
-				@if(app != null) {
-					@if(app.profileImage == null) {
-						<a href="" data-toggle="modal" data-target="#uploadImageModal" title="Upload Photo">
-							<img class="thumbnail" id="user-photo" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
-						</a>
-					} else {
-						<a href="" data-toggle="modal" data-target="#uploadImageModal" title="Upload Photo">
-							<img class="thumbnail" id="user-photo" src="@routes.Assets.at(app.profileImage)" alt="user-photo">
-						</a>
-					}
-						<strong class="blue-text">Name:</strong>&nbsp;&nbsp;@app.applicant_firstName&nbsp;@app.applicant_lastName
-						<br>
-						<strong class="blue-text">Email:</strong>&nbsp;&nbsp;@app.applicant_email
-						<br>
-						<strong class="blue-text">City:</strong>&nbsp;&nbsp;@app.applicant_city
-					}
+				<div class="col-xs-12 col-sm-12 col-md-12" id="applicant-info">
+					<div class="row">
+						@if(app != null) {
+							@if(app.profileImage == null) {
+								<a href="" data-toggle="modal" data-target="#uploadImageModal" title="Upload Photo">
+									<img class="thumbnail" id="user-photo" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
+								</a>
+							} else {
+								<a href="" data-toggle="modal" data-target="#uploadImageModal" title="Upload Photo">
+									<img class="thumbnail" id="user-photo" src="@routes.Assets.at(app.profileImage)" alt="user-photo">
+								</a>
+							}
+								<strong class="blue-text">Name:</strong>&nbsp;&nbsp;@app.applicant_firstName&nbsp;@app.applicant_lastName
+								<br>
+								<strong class="blue-text">Email:</strong>&nbsp;&nbsp;@app.applicant_email
+								<br>
+								<strong class="blue-text">City:</strong>&nbsp;&nbsp;@app.applicant_city
+						}
+					</div>
+					<div class="row" style="margin-top: 10px;">
+						<a href="/editprofile/@app.applicant_email" class="btn btn-default btn-sm">Edit Details</a>
+					</div>
 				</div>
-					
+				
 			</div>
-			<div class="clearfix"></div>
+			
 			
 			<!-- Form for uploading CV -->
 			@if(app.cvFileName != null) {
 				<div class="cv-upload-div">
 					<h4 class="blue-text"><strong>Your CV on File</strong></h4>
-					<a href="@routes.Assets.at(app.cvFilePath)" download class="btn btn-primary" id="cv-filename"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;@app.cvFileName</a>
+					<a href="@routes.Assets.at(app.cvFilePath)" download class="btn btn-primary" style="white-space: normal;" id="cv-filename"><i class="fa fa-file-text-o"></i> @app.cvFileName</a>
 				</div>
 			}
 			<div class="cv-upload-div">
@@ -87,7 +90,7 @@
 								</div>
 							</div>
 						} else {
-							@if(jobApp.status == "rejected"){
+							@if(jobApp.status == "declined"){
 								<div>
 									<span>Application Status:</span> <span id="job-app-progress" class="label label-danger" style="float: none;">Unsuccessful</span>
 								</div>
@@ -106,6 +109,11 @@
 								</div>
 						} else {
 							@if(jobApp.status == "accepted"){
+								<div>
+									<span>Application Status:</span> <span id="job-app-progress" class="label label-warning" style="float: none;">Accepted</span>
+								</div>
+								<br>
+								
 								<div class="progress">
 									<div class="progress-bar progress-bar-danger progress-bar-striped active" style="width: 20%">
 								    	Submitted
@@ -119,6 +127,11 @@
 								</div>
 						} else {
 							@if(jobApp.status == "interview"){
+								<div>
+									<span>Application Status:</span> <span id="job-app-progress" class="label label-success" style="float: none;">Interview</span>
+								</div>
+								<br>
+							
 							<div class="progress">
 								<div class="progress-bar progress-bar-danger progress-bar-striped active" style="width: 20%">
 							    	Submitted
@@ -140,6 +153,11 @@
 					}
 			</div>
 		</div>
+		
+			<div class="centered" style="margin-top:30px;">
+				<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccountModal">Delete Account</a>
+			</div>
+		
 	</div>
 
 }

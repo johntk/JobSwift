@@ -22,6 +22,8 @@ public class JobListingModel extends Model{
 	@Constraints.Required
 	public String job_sector;
 	@Constraints.Required
+	public String job_company;
+	@Constraints.Required
 	public String job_title;
 	@Constraints.Required
 	public String job_type;
@@ -48,9 +50,10 @@ public class JobListingModel extends Model{
 	public JobListingModel(){}
 	
 	// Overloaded Constructor
-	public JobListingModel(String job_sector, String job_title, String job_type, String job_location, double job_salary, String job_description, String job_criteria)
+	public JobListingModel(String job_sector, String job_company, String job_title, String job_type, String job_location, double job_salary, String job_description, String job_criteria)
 	{
 		this.job_sector = job_sector;
+		this.job_company = job_company;
 		this.job_title = job_title;
 		this.job_type = job_type;
 		this.job_location = job_location;
@@ -75,10 +78,13 @@ public class JobListingModel extends Model{
 		return JobListingModel.find.all();
 	}
 	
-	// Query database for all job listings
-	public static List<JobListingModel> findByForm(String location, String sector) {
+	// Query database for job listings based on search values
+	public static List<JobListingModel> findByForm(String location, String sector, String jobType) {
 		List<JobListingModel> tempJobs = new ArrayList<JobListingModel>();
-		tempJobs = find.where().eq("job_location", location).eq("job_sector", sector).findList();
+		if(location != null || sector != null || jobType != null) {
+			
+			tempJobs = find.where().ilike("job_location", location).ilike("job_sector", sector).ilike("job_type", jobType).findList();
+		}
 		return tempJobs;
 	}
 }
