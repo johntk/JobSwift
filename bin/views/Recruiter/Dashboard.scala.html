@@ -24,7 +24,7 @@
 
 <hr />
 
-<div>
+<div class="row">
 	<div class="col-md-3 col-sm-6 col-xs-6">
 		<div class="panel panel-back noti-box">
 				<div class="inner-noti-box new-app-button">
@@ -33,7 +33,7 @@
 					</span>
 					<div class="text-box">
 						<p class="main-text">@applicationList.size&nbsp;New</p>
-						<p class="text-muted"> Job Applications</p>
+						<p class="text-muted">&nbsp;Job&nbsp;Applications</p>
 					</div>
 				</div>
 		</div>
@@ -52,7 +52,7 @@
 				</div>
 		</div>
 	</div>
-	
+
 	<div class="col-md-3 col-sm-6 col-xs-6">
 		<div class="panel panel-back noti-box">
 				<div class="inner-noti-box">
@@ -103,7 +103,10 @@
 				@for(application <- applicationList) {
 					<tr>
 						<td class="user_table_id">@i</td>
-						<td><a href="" class="btn btn-success">@application.app.applicant_firstName @application.app.applicant_lastName</a></td>
+						<td>
+						<p><strong>Name:</strong> @application.app.applicant_firstName @application.app.applicant_lastName</p>
+						<a href="" class="btn btn-default">View Applicant's Profile</a>
+						</td>
 						<td>@application.job.job_title</td>
 						<td>@application.job.job_location</td>
 						<td>@application.date</td>

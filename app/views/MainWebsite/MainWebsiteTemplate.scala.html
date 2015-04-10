@@ -141,7 +141,7 @@
 
 	<!-- User Account Modal -->
 	<div class="modal fade" id="userAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="max-width: 260px;">
+		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
@@ -164,7 +164,7 @@
 	
 	<!-- Delete Account Modal -->
 	<div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="max-width: 260px;">
+		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
@@ -184,7 +184,7 @@
 	
 	<!-- Upload CV file Modal -->
 	<div class="modal fade" id="uploadCVModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="max-width: 320px;">
+		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
@@ -275,6 +275,21 @@
     	$('#flash-message').fadeOut('fast');
 	}, 4000);
     </script>
+    
+    <!-- Script to validate matching passwords -->
+    <script>
+	function validateForm() {
+	    var pass = document.forms["userSignupForm"]["applicant_password"].value;
+	    var passc = document.forms["userSignupForm"]["applicant_password_confirmation"].value;
+	    if (pass.length < 6) {
+	    	alert("Password must be at least 6 characters.");
+	        return false;
+	    } else if (pass != passc) {
+	        alert("Passwords Do Not Match");
+	        return false;
+	    }
+	}
+	</script>
     
   </body>
 </html>

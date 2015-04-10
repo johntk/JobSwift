@@ -97,7 +97,7 @@ p {
 	float: left;
 	margin: 0 15px 10px 0;
 	width: 70px;
-	height: 70px;
+	min-height: 70px;
 	line-height: 75px;
 	vertical-align: middle;
 	text-align: center;
@@ -436,3 +436,10 @@ p {
 		border-radius: 0px;
 	}
 }
+
+@media only screen and ( max-width :868px) {
+	.noti-box {
+		height: 180px;
+	}
+}
+

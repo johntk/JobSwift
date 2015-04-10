@@ -11,7 +11,6 @@ create table applicant_model (
   applicant_last_name       varchar(255),
   applicant_city            varchar(255),
   applicant_password        varchar(255),
-  applicant_password_confirmation varchar(255),
   cv_file_path              varchar(255),
   cv_file_name              varchar(255),
   profile_image             varchar(255),
@@ -39,6 +38,7 @@ create table job_application_model (
 create table job_listing_model (
   job_id                    bigint auto_increment not null,
   job_sector                varchar(255),
+  job_company               varchar(255),
   job_title                 varchar(255),
   job_type                  varchar(255),
   job_location              varchar(255),

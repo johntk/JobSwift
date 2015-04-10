@@ -15,22 +15,6 @@ import play.libs.Json;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class AndroidController extends Controller {
-	
-	public static String getGlobalUploadFolderAbolutePath() {
-		String root = Play.application().path().toString();
-		String globalFolderPath = root + "/public/globalUploadFolder/";
-		File globalFolder = new File(globalFolderPath);
-		
-		// Check if the main upload folder exists first, if not create it
-		if(!globalFolder.exists()) {
-			try{
-				globalFolder.mkdir();
-			}catch(SecurityException se){
-				System.out.println("cannot create global directory");
-		    }
-		}
-		return globalFolderPath;
-	}
 
 	// JSON get request 
 	public static Result json(){
@@ -66,7 +50,7 @@ public class AndroidController extends Controller {
 			if(videoFile != null) {
 				File file = videoFile.getFile(); 
 				String fileName = videoFile.getFilename();
-				File newDir = new File(getGlobalUploadFolderAbolutePath(),"videos");
+				File newDir = new File(FileUploadController.getGlobalUploadFolderAbolutePath(),"videos");
 		        if(!newDir.isDirectory()){
 		            newDir.mkdirs();
 		        }

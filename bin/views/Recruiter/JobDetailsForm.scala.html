@@ -1,4 +1,4 @@
-@(jobForm: Form[JobListingModel])(locations: List[String])(sectors: List[String])
+@(jobForm: Form[JobListingModel])(locations: List[String])(jobTypes: List[String])(sectors: List[String])
 @import helper._
 @import java.math.BigInteger; var i=0
 
@@ -18,13 +18,23 @@
 					</div>
 					
 					<div class="form-group">
+						<label for="job_company">Company</label>			
+						<input type="text" class="form-control" name="job_company" placeholder="Company" id="job_company">
+					</div>
+					
+					<div class="form-group">
 						<label for="job_title">Title</label>			
 						<input type="text" class="form-control" name="job_title" placeholder="Job Title" id="job_title">
 					</div>
 					
 					<div class="form-group">
-						<label for="job_type">Type (Permanent/Temporary)</label>			
-						<input type="text" class="form-control" name="job_type" placeholder="Job Type" id="job_type">
+						<label for="job_type">Job Type</label>
+						<select class="form-control" name="job_type">
+							<option value="" disabled selected>Choose a Job Type</option>
+							@for(jobType <- jobTypes) {
+								<option value="@jobType" name="job_type">@jobType</option>
+							}
+						</select>
 					</div>
 					
 					<div class="form-group">

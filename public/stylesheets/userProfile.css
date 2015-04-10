@@ -47,3 +47,8 @@
 #user-photo:hover{
 	opacity: .7;
 }
+
+#edit-profile-form {
+	float: none;
+	margin: 0 auto;
+}

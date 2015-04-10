@@ -1,14 +1,16 @@
 package models;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import controllers.DateTime;
 
 import javax.persistence.*;
 
 import play.db.ebean.Model;
+import play.data.format.Formats;
 import play.data.validation.Constraints;
+
+import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
 public class ApplicantModel extends Model {
@@ -33,9 +35,6 @@ public class ApplicantModel extends Model {
 	@Constraints.Required
 	@Constraints.MinLength(6)
 	public String applicant_password;
-	@Constraints.Required
-	@Constraints.MinLength(6)
-	public String applicant_password_confirmation;
 	
 	@OneToMany
 	public List<JobApplicationModel> applicationList;
@@ -46,31 +45,27 @@ public class ApplicantModel extends Model {
 	public String profileImage;
 	public String introVideoPath;
 
-	public DateTime dateTime;
+	@Formats.DateTime(pattern="dd/MM/yyyy")
 	public Date dateOfSignup = new Date();
 
-	// Default Constructor
-	public ApplicantModel() {
-	}
+	public static ApplicantModel create(String email, String title, String firstName, String lastName, String city, String password) {
+		ApplicantModel app = new ApplicantModel();
+		app.applicant_email = email;
+		app.applicant_title = title;
+		app.applicant_firstName = firstName;
+		app.applicant_lastName = lastName;
+		app.applicant_city = city;
+		app.applicant_password = BCrypt.hashpw(password, BCrypt.gensalt());
 
-	// Overloaded Constructor
-	public ApplicantModel(String email, String title, String firstName, String lastName, String city, String password, String passwordConfirm) {
-		applicant_email = email;
-		applicant_title = title;
-		applicant_firstName = firstName;
-		applicant_lastName = lastName;
-		applicant_city = city;
-		applicant_password = password;
-		applicant_password_confirmation = passwordConfirm;
-
-		dateOfSignup = dateTime.getDateTime();
+		app.dateOfSignup = Calendar.getInstance().getTime();
+		app.save();
+		return app;
 	}
 
 	public String toString() {
-		return String.format("%s %s - %s", applicant_firstName,
-				applicant_lastName, applicant_email);
+		return String.format("%s", applicant_email);
 	}
-
+	
 	public static Finder<Long, ApplicantModel> find = new Finder<Long, ApplicantModel>(Long.class, ApplicantModel.class);
 
 	public static List<ApplicantModel> findAll() {
@@ -83,7 +78,10 @@ public class ApplicantModel extends Model {
 	
 	// Authenticate a user based on email and password
 	public static ApplicantModel authenticateApplicant(String email, String password) {
-		return find.where().eq("applicant_email", email).eq("applicant_password", password).findUnique();
+		ApplicantModel app = ApplicantModel.findByEmail(email);
+		if(app != null && BCrypt.checkpw(password, app.applicant_password)) {
+			return app;
+		}else return null;
 	}
 	
 }
