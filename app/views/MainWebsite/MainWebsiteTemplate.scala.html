@@ -281,7 +281,10 @@
 	function validateForm() {
 	    var pass = document.forms["userSignupForm"]["applicant_password"].value;
 	    var passc = document.forms["userSignupForm"]["applicant_password_confirmation"].value;
-	    if (pass != passc) {
+	    if (pass.length < 6) {
+	    	alert("Password must be at least 6 characters.");
+	        return false;
+	    } else if (pass != passc) {
 	        alert("Passwords Do Not Match");
 	        return false;
 	    }

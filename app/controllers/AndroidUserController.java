@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import play.libs.Json;
 import play.mvc.*;
+
+import org.mindrot.jbcrypt.BCrypt;
  
 
 public class AndroidUserController extends Controller {
@@ -59,7 +61,7 @@ public class AndroidUserController extends Controller {
 	    	app.applicant_firstName = json.findPath("first_name").textValue();
 	    	app.applicant_lastName = json.findPath("last_name").textValue();
 	    	app.applicant_city = json.findPath("city").textValue();
-	    	app.applicant_password = json.findPath("password").textValue();
+	    	app.applicant_password = BCrypt.hashpw(json.findPath("password").textValue(), BCrypt.gensalt());
 	    	
 	    	if (app.applicant_id == null) {
 				if (ApplicantModel.findByEmail(app.applicant_email) != null) {
