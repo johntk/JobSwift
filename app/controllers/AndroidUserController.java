@@ -1,5 +1,7 @@
 package controllers;
-import models.ApplicantModel;
+import java.util.List;
+
+import models.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -87,19 +89,50 @@ public class AndroidUserController extends Controller {
 	
 	public static Result getInterviews() {
 		JsonNode json = request().body().asJson();
-		ObjectNode result = Json.newObject();
+		ObjectNode singleJobInterview = Json.newObject();
+		ObjectNode jobInterviewColection = Json.newObject();
 		
-		if(json == null) {
-			System.out.println("no json");
-	    	result.put("error", true);
-	    	result.put("error_msg", "No JSon");
-	        return badRequest(result);
+		if(json != null) {
+	        return badRequest();
 	    } else {
-	    	ApplicantModel app = ApplicantModel.findByEmail(json.findPath("email").textValue());
+	    	ApplicantModel app = ApplicantModel.findByEmail("e@e");
+	    	
 	    	if(app != null) {
+	    		List<JobApplicationModel> jobAppList = JobApplicationModel.findAllApplicationsByUser(app);
 	    		
+	    		for(int i=0; i< jobAppList.size(); i++) {
+	    			JobListingModel jlm = jobAppList.get(i).job;
+	    			singleJobInterview.put("job_id", jlm.job_id);
+	    			singleJobInterview.put("company", jlm.job_company);
+	    			singleJobInterview.put("title", jlm.job_title);
+	    			
+	    			List<InterviewQuestionModel> iqList = InterviewQuestionModel.findAllQuestionsByJobListing(jlm);
+	    			for(int j=0; j < iqList.size(); j++) {
+	    				singleJobInterview.put("question"+j, iqList.get(j).question);
+	    			}
+	    			jobInterviewColection.put("jobInterview"+i, singleJobInterview);
+	    		}
 	    	}
-	    	return ok();
+	    	return ok(jobInterviewColection);
 	    }
 	}
+	
+//	public static Result print() {
+//		
+//		ApplicantModel app = ApplicantModel.findByEmail("e@e");
+//    	if(app != null) {
+//    		List<JobApplicationModel> jobAppList = JobApplicationModel.findAllApplicationsByUser(app);
+//    		for(int i=0; i< jobAppList.size(); i++) {
+//    			JobListingModel jlm = jobAppList.get(i).job;
+//    			System.out.println("Questions for job: " + jlm.job_title);
+//    			List<InterviewQuestionModel> iqList = InterviewQuestionModel.findAllQuestionsByJobListing(jlm);
+//    			for(int j=0; j < iqList.size(); j++) {
+//    				System.out.println(iqList.get(j).question);
+//    			}
+//    		}
+//    		return ok();
+//    	}else {
+//    		return ok();
+//    	}
+//	}
 }
