@@ -38,6 +38,12 @@ public class ApplicantController extends Controller {
     	return ok(views.html.Applicant.WebsiteApplicantDetails.render(filledForm, Form.form(Login.class)));
     }
     
+    public static Result viewApplicantProfile(String email) {
+    	ApplicantModel app = ApplicantModel.findByEmail(email);
+    	List<JobApplicationModel> appList = JobApplicationModel.findAllApplicationsByUser(app);
+    	return ok(views.html.Recruiter.ViewApplicantProfile.render(app, appList));
+    }
+    
     // Form to update applicant details
     public static Result updateApplicant() {
         Form<ApplicantModel> boundForm = appForm.bindFromRequest();

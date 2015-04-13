@@ -1,4 +1,4 @@
-@(jobList: List[JobListingModel])(applicationList: List[JobApplicationModel])
+@(jobList: List[JobListingModel])(applicationList: List[JobApplicationModel])(interviewList: List[JobApplicationModel])
 @import java.math.BigInteger; var i=1
 @RecruitersScreenTemplate("Recruitment Agency") {
 
@@ -38,6 +38,20 @@
 				</div>
 		</div>
 	</div>
+	
+	<div class="col-md-3 col-sm-6 col-xs-6">
+		<div class="panel panel-back noti-box">
+				<div class="inner-noti-box">
+					<span class="icon-box bg-color-blue set-icon"> <i
+						class="fa fa-check-square-o"></i>
+					</span>
+					<div class="text-box">
+						<p class="main-text">@interviewList.size&nbsp;Interviews</p>
+						<p class="text-muted">Completed</p>
+					</div>
+				</div>
+		</div>
+	</div>
 
 	<div class="col-md-3 col-sm-6 col-xs-6">
 		<div class="panel panel-back noti-box">
@@ -60,26 +74,13 @@
 						class="fa fa-bell-o"></i>
 					</span>
 					<div class="text-box">
-						<p class="main-text">240&nbsp;New</p>
+						<p class="main-text">nbsp;New</p>
 						<p class="text-muted">Notifications</p>
 					</div>
 				</div>
 		</div>
 	</div>
-	
-	<div class="col-md-3 col-sm-6 col-xs-6">
-		<div class="panel panel-back noti-box">
-				<div class="inner-noti-box">
-					<span class="icon-box bg-color-blue set-icon"> <i
-						class="fa fa-rocket"></i>
-					</span>
-					<div class="text-box">
-						<p class="main-text">3&nbsp;Orders</p>
-						<p class="text-muted">Pending</p>
-					</div>
-				</div>
-		</div>
-	</div>
+
 </div>
 <!-- /. ROW  -->
 
@@ -94,6 +95,8 @@
 				<tr>
 					<th>#</th>
 					<th>Applicant</th>
+					<th>Job ID</th>
+					<th>Company</th>
 					<th>Job Title</th>
 					<th>Location</th>
 					<th>Date of Application</th>
@@ -105,8 +108,10 @@
 						<td class="user_table_id">@i</td>
 						<td>
 						<p><strong>Name:</strong> @application.app.applicant_firstName @application.app.applicant_lastName</p>
-						<a href="" class="btn btn-default">View Applicant's Profile</a>
+						<a href="/viewuser@application.app.applicant_email" target="_blank" class="btn btn-default">View Applicant's Profile</a>
 						</td>
+						<td>@application.job.job_id</td>
+						<td>@application.job.job_company</td>
 						<td>@application.job.job_title</td>
 						<td>@application.job.job_location</td>
 						<td>@application.date</td>

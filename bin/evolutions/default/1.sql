@@ -29,6 +29,8 @@ create table interview_question_model (
 create table job_application_model (
   job_application_id        bigint auto_increment not null,
   status                    varchar(255),
+  interview_done            integer,
+  is_complete               integer,
   date                      datetime,
   app_applicant_id          bigint,
   job_job_id                bigint,
