@@ -111,6 +111,7 @@ public class AndroidUserController extends Controller {
 	    				jsonApp.put("job_title", jobAppList.get(i).job.job_title);
 	    				jsonApp.put("job_description", jobAppList.get(i).job.job_description);
 	    				jsonApp.put("job_location", jobAppList.get(i).job.job_location);
+	    				jsonApp.put("status", jobAppList.get(i).status);
 	    				appList.add(jsonApp);
 	    			}
 	    		}
