@@ -1,0 +1,103 @@
+@(app: ApplicantModel)(jobAppList: List[JobApplicationModel])
+@import java.math.BigInteger; var i=1
+
+@Recruiter.RecruitersScreenTemplate("Applicant's Profile") {
+	
+	<div class="user-profile-container container" style="padding: 0;">
+		<div class="col-sm-12 col-md-10 col-lg-8" id="profile-inner-div">
+			<div id="profile-section" class="profile-class">
+				
+				<h3 class="blue-text"><strong>@app.applicant_firstName's Profile</strong></h3>
+				<hr>
+				
+				<div class="col-xs-12 col-sm-12 col-md-12" id="applicant-info">
+					<div class="row">
+						@if(app != null) {
+							@if(app.profileImage == null) {
+								<img class="thumbnail" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
+							} else {
+								<img class="thumbnail" src="@routes.Assets.at(app.profileImage)" alt="user-photo">
+							}
+								<strong class="blue-text">Name:</strong>&nbsp;&nbsp;@app.applicant_firstName&nbsp;@app.applicant_lastName
+								<br>
+								<strong class="blue-text">Email:</strong>&nbsp;&nbsp;@app.applicant_email
+								<br>
+								<strong class="blue-text">City:</strong>&nbsp;&nbsp;@app.applicant_city
+						}
+					</div>
+				</div>
+			</div>
+			
+			@if(app.cvFileName != null) {
+				<div class="cv-upload-div">
+					<h4 class="blue-text"><strong>Download @app.applicant_firstName's CV</strong></h4>
+					<a href="@routes.Assets.at(app.cvFilePath)" download class="btn btn-primary" style="white-space: normal;" id="cv-filename"><i class="fa fa-file-text-o"></i> @app.cvFileName</a>
+				</div>
+			}
+			
+			
+			<div id="job-list" class="profile-class">
+				<h3 class="blue-text"><strong>Job Applications for @app.applicant_firstName @app.applicant_lastName</strong></h3>
+				<hr>
+	
+				@if(jobAppList.size != 0) {
+					@for(jobApp <- jobAppList) {
+						<div id="applicant-job-listing" class="row">
+							<strong>@i</strong> | <span>@jobApp.job.job_title &#8209; <strong>@jobApp.job.job_location</strong>&nbsp;-&nbsp;Job ID: @jobApp.job.job_id</span>
+						</div>
+						
+						@if(jobApp.status == "submitted") {
+							<div>
+								<span>Application Status:</span> <span id="job-app-progress" class="label label-danger" style="float: none;">Submitted</span>
+							</div>
+							<div class="row view-profile-buttons">
+								<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id,"accepted")" class="btn btn-success btn-sm" style="margin: 5px;">Accept</a>
+								<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id, "declined")" class="btn btn-danger btn-sm" style="margin: 5px;">Decline</a>
+							</div>
+							<br>
+
+						} else {
+							@if(jobApp.status == "declined"){
+								<div>
+									<span>Application Status:</span> <span id="job-app-progress" class="label label-danger" style="float: none;">Unsuccessful</span>
+								</div>
+								<div class="row view-profile-buttons">
+								<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id,"submitted")" class="btn btn-warning btn-sm" style="margin: 5px;">Reopen Application</a>
+								</div>
+								<br>
+							
+						} else {
+							@if(jobApp.status == "accepted"){
+								<div>
+									<span>Application Status:</span> <span id="job-app-progress" class="label label-warning" style="float: none;">Accepted</span>
+								</div>
+								<div class="row view-profile-buttons">
+									<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id,"interview")" class="btn btn-success btn-sm" style="margin: 5px;">Submit Interview</a>
+									<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id,"submitted")" class="btn btn-danger btn-sm" style="margin: 5px;">Cancel</a>
+								</div>
+								<br>
+								
+						} else {
+							@if(jobApp.status == "interview"){
+								<div>
+									<span>Application Status:</span> <span id="job-app-progress" class="label label-success" style="float: none;">Interview</span>
+								</div>
+								<div class="row">
+								
+								</div>
+								<br>
+
+						}}
+						}}
+						<hr>
+						@(i+=1)
+						} 
+					} else {
+						<p>You have not applied for any jobs yet.  Start by searching&nbsp;&nbsp;<a href="/joblistings"><strong><u>here</u></strong></a></p>
+					}
+			</div>
+			
+			
+		</div>
+	</div>
+}

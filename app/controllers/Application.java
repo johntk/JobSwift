@@ -31,7 +31,8 @@ public class Application extends Controller {
 		// Create a list of all job listings to pass to dashboard view
 		List<JobListingModel> jobList = JobListingModel.findAll();
 		List<JobApplicationModel> applicationList = JobApplicationModel.findAllUnprocessedApplications();
-		return ok(views.html.Recruiter.Dashboard.render(jobList, applicationList));
+		List<JobApplicationModel> interviewList = JobApplicationModel.findAllCompleteInterviews();
+		return ok(views.html.Recruiter.Dashboard.render(jobList, applicationList, interviewList));
 	}
 
 	// Method for submitting sign-up form from main website

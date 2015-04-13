@@ -73,8 +73,10 @@ public class FileUploadController extends Controller {
 			File file = cvFile.getFile();
 			file.renameTo(new File(userFolderName, newFileName));
 			
+			System.out.println(userFolderName);
+			
 			ApplicantModel app = Application.getCurrentUser();
-			app.cvFilePath = userFolderName +"/"+ newFileName;
+			app.cvFilePath = "globalUploadFolder/"+ app.applicant_email +"/"+ newFileName;
 			app.cvFileName = newFileName;
 			app.update();
 			

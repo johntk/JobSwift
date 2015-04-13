@@ -116,7 +116,6 @@ public class AndroidUserController extends Controller {
 	    			}
 	    		}
 	    	}
-	    	System.out.println(appList);
 	    	return ok(appList);
 	    }
 	}
