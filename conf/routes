@@ -39,7 +39,7 @@ GET		/json    					controllers.AndroidController.json()
 POST	/update    					controllers.AndroidController.update()
 POST	/androidlogin				controllers.AndroidUserController.login()
 POST	/androidregister			controllers.AndroidUserController.register()
-GET	/androidgetinterviews		controllers.AndroidUserController.getInterviews()
+POST	/androidgetinterviews		controllers.AndroidUserController.getInterviews()
 
 
 # Map static resources from the /public folder to the /assets URL path
