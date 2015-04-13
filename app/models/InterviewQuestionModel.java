@@ -22,7 +22,7 @@ public class InterviewQuestionModel extends Model {
 	public String question;
 
 	@ManyToOne
-	JobListingModel job;
+	public JobListingModel job;
 	
 	// Default Constructor
 	public InterviewQuestionModel() {	

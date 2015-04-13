@@ -17,5 +17,7 @@ libraryDependencies ++= Seq(
   anorm,
   cache,
   "mysql" % "mysql-connector-java" % "5.1.34",
-  "org.mindrot" % "jbcrypt" % "0.3m"
+  "org.mindrot" % "jbcrypt" % "0.3m",
+  "org.json" % "json" % "20090211",
+  "com.google.code.gson" % "gson" % "1.7.1"
 )

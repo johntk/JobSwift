@@ -1,11 +1,2 @@
-/application.conf
-/assets/
 /controllers/
-/evolutions/
-/helpers/
 /models/
-/routes
-/views/
-/ApplicationTest.class
-/IntegrationTest$1.class
-/IntegrationTest.class
