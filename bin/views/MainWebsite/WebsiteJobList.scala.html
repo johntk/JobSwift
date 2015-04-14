@@ -18,7 +18,7 @@
 				
 					<div class="form-group">
 						<label for="job_location">Location</label>
-						<select class="form-control" name="job_location">
+						<select required class="form-control" name="job_location">
 							<option value="" disabled selected>Choose a location</option>
 							<option value="%">Any</option>
 							@for(location <- locations) {
@@ -29,7 +29,7 @@
 					
 					<div class="form-group">
 					<label for="job_sector">Sector</label>
-					<select class="form-control" name="job_sector">
+					<select required class="form-control" name="job_sector">
 						<option value="" disabled selected>Choose a sector</option>
 						<option value="%">Any</option>
 						@for(sector <- sectors) {
@@ -40,7 +40,7 @@
 					
 					<div class="form-group">
 					<label for="job_type">Job Type</label>
-					<select class="form-control" name="job_type">
+					<select required class="form-control" name="job_type">
 						<option value="" disabled selected>Choose a Job Type</option>
 						<option value="%">Any</option>
 						@for(jobType <- jobTypes) {

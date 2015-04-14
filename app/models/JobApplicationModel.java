@@ -20,7 +20,10 @@ public class JobApplicationModel extends Model {
 	@Id
 	public Long job_application_id;
 	
-	public String status;	
+	public String status;
+	public int interviewDone;
+	public int isComplete;
+	
 	@Formats.DateTime(pattern="dd/MM/yyyy")
 	public Date date = new Date();
 	
@@ -38,6 +41,8 @@ public class JobApplicationModel extends Model {
 		this.app = app;
 		this.job = job;
 		status = "submitted";
+		interviewDone = 0;
+		isComplete = 0;
 		date = Calendar.getInstance().getTime();
 	}
 	
@@ -85,5 +90,9 @@ public class JobApplicationModel extends Model {
 		List<JobApplicationModel> temp = find.where().eq("status", "submitted").findList();
 		return temp;
 	}
-
+	
+	public static List<JobApplicationModel> findAllCompleteInterviews() {
+		List<JobApplicationModel> temp = find.where().eq("interviewDone", 1).findList();
+		return temp;
+	}
 }

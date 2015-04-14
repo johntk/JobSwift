@@ -57,5 +57,13 @@ public class JobApplicationController extends Controller {
 		jam.update();
 		return redirect(routes.ApplicantController.listAllJobApplications());
 	}
+	
+	public static Result setApplicationStatusUserProfile(Long id, String status) {
+		
+		JobApplicationModel jam = JobApplicationModel.findById(id);
+		jam.status = status;
+		jam.update();
+		return redirect(routes.ApplicantController.viewApplicantProfile(jam.app.applicant_email));
+	}
 
 }

@@ -1,16 +1,20 @@
 package controllers;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import models.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import play.libs.Json;
 import play.mvc.*;
 
+import org.json.JSONException;
 import org.mindrot.jbcrypt.BCrypt;
- 
+
 
 public class AndroidUserController extends Controller {
 	
@@ -87,52 +91,32 @@ public class AndroidUserController extends Controller {
 	    }
 	}
 	
-	public static Result getInterviews() {
+	public static Result getInterviews() throws JSONException, FileNotFoundException, UnsupportedEncodingException {
 		JsonNode json = request().body().asJson();
-		ObjectNode singleJobInterview = Json.newObject();
-		ObjectNode jobInterviewColection = Json.newObject();
+		ObjectNode jsonApp;
+		ArrayNode appList = new ArrayNode(null);
 		
-		if(json != null) {
+		if(json == null) {
 	        return badRequest();
 	    } else {
-	    	ApplicantModel app = ApplicantModel.findByEmail("e@e");
-	    	
+	    	ApplicantModel app = ApplicantModel.findByEmail(json.findPath("email").asText());
 	    	if(app != null) {
 	    		List<JobApplicationModel> jobAppList = JobApplicationModel.findAllApplicationsByUser(app);
 	    		
-	    		for(int i=0; i< jobAppList.size(); i++) {
-	    			JobListingModel jlm = jobAppList.get(i).job;
-	    			singleJobInterview.put("job_id", jlm.job_id);
-	    			singleJobInterview.put("company", jlm.job_company);
-	    			singleJobInterview.put("title", jlm.job_title);
-	    			
-	    			List<InterviewQuestionModel> iqList = InterviewQuestionModel.findAllQuestionsByJobListing(jlm);
-	    			for(int j=0; j < iqList.size(); j++) {
-	    				singleJobInterview.put("question"+j, iqList.get(j).question);
+	    		if(jobAppList != null) {
+	    			for(int i =0; i< jobAppList.size(); i++) {
+	    				jsonApp = Json.newObject();
+	    				jsonApp.put("app_id", jobAppList.get(i).job_application_id);
+	    				jsonApp.put("job_id", jobAppList.get(i).job.job_id);
+	    				jsonApp.put("job_title", jobAppList.get(i).job.job_title);
+	    				jsonApp.put("job_description", jobAppList.get(i).job.job_description);
+	    				jsonApp.put("job_location", jobAppList.get(i).job.job_location);
+	    				jsonApp.put("status", jobAppList.get(i).status);
+	    				appList.add(jsonApp);
 	    			}
-	    			jobInterviewColection.put("jobInterview"+i, singleJobInterview);
 	    		}
 	    	}
-	    	return ok(jobInterviewColection);
+	    	return ok(appList);
 	    }
 	}
-	
-//	public static Result print() {
-//		
-//		ApplicantModel app = ApplicantModel.findByEmail("e@e");
-//    	if(app != null) {
-//    		List<JobApplicationModel> jobAppList = JobApplicationModel.findAllApplicationsByUser(app);
-//    		for(int i=0; i< jobAppList.size(); i++) {
-//    			JobListingModel jlm = jobAppList.get(i).job;
-//    			System.out.println("Questions for job: " + jlm.job_title);
-//    			List<InterviewQuestionModel> iqList = InterviewQuestionModel.findAllQuestionsByJobListing(jlm);
-//    			for(int j=0; j < iqList.size(); j++) {
-//    				System.out.println(iqList.get(j).question);
-//    			}
-//    		}
-//    		return ok();
-//    	}else {
-//    		return ok();
-//    	}
-//	}
 }

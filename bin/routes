@@ -19,6 +19,8 @@ DELETE  /applicants/:email			controllers.ApplicantController.deleteUser(email: S
 DELETE  /jobapplication/:id			controllers.JobApplicationController.delete(id: Long)
 POST	/addjob						controllers.JobListingController.addJobListing()
 GET		/setapplicationstatus:id/status		controllers.JobApplicationController.setApplicationStatus(id: Long, status: String)
+GET		/setuserappstatus:id/status	controllers.JobApplicationController.setApplicationStatusUserProfile(id: Long, status: String)
+GET		/viewuser:email				controllers.ApplicantController.viewApplicantProfile(email: String)
 
 
 # Applicant Profile
@@ -40,7 +42,11 @@ POST	/update    					controllers.AndroidController.update()
 POST	/updateProfileImage    		controllers.AndroidController.updateProfileImage()
 POST	/androidlogin				controllers.AndroidUserController.login()
 POST	/androidregister			controllers.AndroidUserController.register()
+<<<<<<< HEAD
 GET		/androidgetinterviews		controllers.AndroidUserController.getInterviews()
+=======
+POST	/androidgetinterviews		controllers.AndroidUserController.getInterviews()
+>>>>>>> master
 
 
 # Map static resources from the /public folder to the /assets URL path
