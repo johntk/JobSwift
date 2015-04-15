@@ -72,6 +72,12 @@ public class AndroidController extends Controller {
 				String fileName = videoFile.getFilename();
 				FileUploadController.createUserFolder(email);
 				File newDir = new File(FileUploadController.getGlobalUploadFolderAbolutePath()+ email);
+				File fileOld = new File(newDir, fileName);
+	        	if(fileOld.delete()){
+	    			System.out.println(fileOld.getName() + " is deleted!");
+	    		}else{
+	    			System.out.println("Delete operation is failed.");
+	    		}
 		        if(!newDir.isDirectory()){
 		            newDir.mkdirs();
 		        }
@@ -123,6 +129,12 @@ public static Result updateProfileImage(){
 		            newDir.mkdirs();
 		        }
 		        if(newDir.canWrite()){
+		        	File fileOld = new File(newDir, fileName);
+		        	if(fileOld.delete()){
+		    			System.out.println(fileOld.getName() + " is deleted!");
+		    		}else{
+		    			System.out.println("Delete operation is failed.");
+		    		}
 		        	file.renameTo(new File(newDir, fileName));
 		        }
 		        return ok();
