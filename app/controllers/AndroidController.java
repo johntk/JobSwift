@@ -16,14 +16,16 @@ import play.libs.Json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public class AndroidController extends Controller {
+import play.mvc.Controller;
+import play.mvc.Result;
 
-			
+public class AndroidController extends Controller {		
 
+	
+	
 	// MultipartRequest Post update
 	public static Result update(){
 			
-		
 		//get the body of the request
 		RequestBody body = request().body();
 		//Assign the type as MultipartFormData
@@ -43,26 +45,19 @@ public class AndroidController extends Controller {
 	    while(myVeryOwnIterator.hasNext()) {
 	        String key=(String)myVeryOwnIterator.next();
 	        String[] value= myMap.get(key);
-//	        System.out.println(value[0]);
 	        if(key.equals("email")){
 	        	 email = value[0];
-	        	 System.out.println(value[0]);
 	        }
 	        if(key.equals("first_name")){
-	        	first_name = value[0];
-	        	System.out.println(value[0]);
+	        	first_name = value[0];	
 	        }
 	        if(key.equals("last_name")){
-	        	last_name = value[0];
-	        	System.out.println(value[0]);
-	        	
+	        	last_name = value[0];	
 	        }
 	        if(key.equals("city")){
-	        	city = value[0];
-	        	System.out.println(value[0]);
+	        	city = value[0];	
 	        } 
 	    }
-	    
 	    
 	    Applicant = ApplicantModel.findByEmail(email);
 	    Applicant.applicant_city = city;
@@ -75,11 +70,71 @@ public class AndroidController extends Controller {
 			if(videoFile != null) {
 				File file = videoFile.getFile(); 
 				String fileName = videoFile.getFilename();
-				File newDir = new File(FileUploadController.getGlobalUploadFolderAbolutePath(),"videos");
+				FileUploadController.createUserFolder(email);
+				File newDir = new File(FileUploadController.getGlobalUploadFolderAbolutePath()+ email);
+				File fileOld = new File(newDir, fileName);
+	        	if(fileOld.delete()){
+	    			System.out.println(fileOld.getName() + " is deleted!");
+	    		}else{
+	    			System.out.println("Delete operation is failed.");
+	    		}
 		        if(!newDir.isDirectory()){
 		            newDir.mkdirs();
 		        }
 		        if(newDir.canWrite()){
+		        	file.renameTo(new File(newDir, fileName));
+		        }
+		        return ok();
+			} 
+			else {
+				return badRequest();
+		}
+	}
+	
+public static Result updateProfileImage(){
+		
+		//get the body of the request
+		RequestBody body = request().body();
+		//Assign the type as MultipartFormData
+		Http.MultipartFormData multippartBody = body.asMultipartFormData();
+		// Pull the video from the MultipartFormData
+		Http.MultipartFormData.FilePart imageFile = multippartBody.getFile("fileKey");
+		// Pull the hashMap from the MultipartFormData
+		Map<String, String[]> myMap  = multippartBody.asFormUrlEncoded();
+		
+		
+		String email ="";
+		ApplicantModel Applicant;
+		Iterator<String> myVeryOwnIterator = myMap.keySet().iterator();
+	    while(myVeryOwnIterator.hasNext()) {
+	        String key=(String)myVeryOwnIterator.next();
+	        String[] value= myMap.get(key);
+	        if(key.equals("email")){
+	        	 email = value[0];
+	        }
+	        
+	    }
+	    
+	    
+	   
+		// Create a directory for the Profile image and add the .jpg to it
+			if(imageFile != null) {
+				File file = imageFile.getFile(); 
+				String fileName = imageFile.getFilename();
+				Applicant = ApplicantModel.findByEmail(email);
+			    Applicant.profileImage = "globalUploadFolder/"+ Applicant.applicant_email +"/"+ fileName;
+				FileUploadController.createUserFolder(email);
+				File newDir = new File(FileUploadController.getGlobalUploadFolderAbolutePath()+ email);
+		        if(!newDir.isDirectory()){
+		            newDir.mkdirs();
+		        }
+		        if(newDir.canWrite()){
+		        	File fileOld = new File(newDir, fileName);
+		        	if(fileOld.delete()){
+		    			System.out.println(fileOld.getName() + " is deleted!");
+		    		}else{
+		    			System.out.println("Delete operation is failed.");
+		    		}
 		        	file.renameTo(new File(newDir, fileName));
 		        }
 		        return ok();
@@ -115,6 +170,7 @@ public class AndroidController extends Controller {
 	        	result.put("city", app.applicant_city);
 	        	result.put("cvFilePath", app.cvFilePath);
 	        	result.put("profileImage", app.profileImage);
+	        	result.put("introVideoPath", app.introVideoPath);
 	            return ok(result);
 	        }
 	    }
