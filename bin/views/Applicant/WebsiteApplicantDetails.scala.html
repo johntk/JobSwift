@@ -4,12 +4,12 @@
 @MainWebsite.MainWebsiteTemplate("Edit Profile")(loginForm) { 
 
 		<div class="user-profile-container container" style="margin-top:80px;">
-			<form action="/updateapplicant" method="POST">	
+			<form name="userForm" action="/updateapplicant" onsubmit="return validateForm()" method="POST">	
 						<div class="row col-xs-12 col-sm-8 col-md-6 col-lg-5" id="edit-profile-form">
 								<h2>Edit Details</h2>
 								<div class="form-group">
 									
-									<select name="applicant_title" class="form-control" value="@appForm.get().applicant_title" id="applicant_title">
+									<select name="applicant_title" required class="form-control" value="@appForm.get().applicant_title" id="applicant_title">
 										<option value="Mr">Mr</option>
 										<option value="Ms">Ms</option>
 									</select>
@@ -17,32 +17,32 @@
 								
 								<div class="form-group">
 									<label for="applicant_firstName">First Names(s)</label>
-									<input type="text" class="form-control" name="applicant_firstName" value="@appForm.get().applicant_firstName" placeholder="First Names(s)" id="applicant_firstName">
+									<input type="text" class="form-control" name="applicant_firstName" required value="@appForm.get().applicant_firstName" placeholder="First Names(s)" id="applicant_firstName">
 								</div>
 								
 								<div class="form-group">
 									<label for="applicant_lastName">Surname</label>
-									<input type="text" class="form-control" name="applicant_lastName" value="@appForm.get().applicant_lastName" placeholder="Surname" id="applicant_lastName">
+									<input type="text" class="form-control" name="applicant_lastName" required value="@appForm.get().applicant_lastName" placeholder="Surname" id="applicant_lastName">
 								</div>
 								
 								<div class="form-group">
 									<label for="applicant_city">City</label>
-									<input type="text" class="form-control" name="applicant_city" value="@appForm.get().applicant_city" placeholder="City" id="applicant_city">
+									<input type="text" class="form-control" name="applicant_city" required value="@appForm.get().applicant_city" placeholder="City" id="applicant_city">
 								</div>
 							
 								<div class="form-group">
 									<label for="email">Email (Cannot Be Changed)</label>
-									<input type="text" class="form-control" readonly name="applicant_email" value="@appForm.get().applicant_email" placeholder="Email" id="applicant_email">
+									<input type="text" class="form-control" readonly name="applicant_email" required value="@appForm.get().applicant_email" placeholder="Email" id="applicant_email">
 								</div>
 								
 								<div class="form-group">
-									<label for="applicant_password">Change Password</label>
-									<input type="password" class="form-control" name="applicant_password" value="@appForm.get().applicant_password" placeholder="Password" id="applicant_password">
+									<label for="applicant_password">Enter Your Password</label>
+									<input type="password" class="form-control" name="applicant_password" required placeholder="Password" id="applicant_password">
 								</div>
 								
 								<div class="form-group">
-									<label for="applicant_password_confirmation">Confirm New Password</label>
-									<input type="password" class="form-control" name="applicant_password_confirmation" value="@appForm.get().applicant_password" placeholder="Confirm Password" id="applicant_password_confirmation">
+									<label for="applicant_password_confirmation">Confirm Password</label>
+									<input type="password" class="form-control" name="applicant_password_confirmation" required placeholder="Confirm Password" id="applicant_password_confirmation">
 								</div>
 								
 						</div>
@@ -58,4 +58,5 @@
 						
 					</form>
 		</div>
+		
 }
