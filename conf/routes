@@ -42,8 +42,8 @@ POST	/update    					controllers.AndroidController.update()
 POST	/updateProfileImage    		controllers.AndroidController.updateProfileImage()
 POST	/androidlogin				controllers.AndroidUserController.login()
 POST	/androidregister			controllers.AndroidUserController.register()
-
-POST	/androidgetinterviews		controllers.AndroidUserController.getInterviews()
+POST	/androidgetjobapplications	controllers.AndroidJobApplicationController.getInterviews()
+POST	/androidgetinterviewquestions controllers.AndroidJobApplicationController.getInterviewQuestions()
 
 
 

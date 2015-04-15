@@ -5,6 +5,8 @@ import play.mvc.*;
 
 import java.util.*;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import controllers.Application.Login;
 import play.data.Form;
 
@@ -54,6 +56,7 @@ public class ApplicantController extends Controller {
         }
 
         ApplicantModel app = boundForm.get();
+        app.applicant_password = BCrypt.hashpw(boundForm.get().applicant_password, BCrypt.gensalt());
         
         if(app.applicant_id != null)
         {

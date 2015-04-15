@@ -62,8 +62,15 @@
 					} else {
 						<a href="" data-toggle="modal" data-target="#userAccountModal">
 							<div class="text-center" id="user-profile-icon">
-								<i class="fa fa-user fa-2x"></i>
-								<br><strong>User Profile</strong>
+								@if(ApplicantModel.findByEmail(session.get("email")).profileImage != null) {
+								<img class="nav-bar-photo web-user-photo" src="@routes.Assets.at(ApplicantModel.findByEmail(session.get("email")).profileImage)" alt="user-photo">
+								} else {
+								<img class="nav-bar-photo web-user-photo" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
+								}
+								<strong>
+								@ApplicantModel.findByEmail(session.get("email")).applicant_firstName
+								@ApplicantModel.findByEmail(session.get("email")).applicant_lastName
+								</strong>
 							</div>
 						</a>
 					}
@@ -150,8 +157,6 @@
 					</button>
 					<br><br>
 					<div class="text-center">
-						<i class="fa fa-user fa-3x"></i>
-						<br><br>
 						<a href="/userprofile" class="btn btn-default btn-lg">View Profile</a>
 						<br><br>
 						<a href="/logout" class="btn btn-danger">LOGOUT</a>
@@ -279,8 +284,8 @@
     <!-- Script to validate matching passwords -->
     <script>
 	function validateForm() {
-	    var pass = document.forms["userSignupForm"]["applicant_password"].value;
-	    var passc = document.forms["userSignupForm"]["applicant_password_confirmation"].value;
+	    var pass = document.forms["userForm"]["applicant_password"].value;
+	    var passc = document.forms["userForm"]["applicant_password_confirmation"].value;
 	    if (pass.length < 6) {
 	    	alert("Password must be at least 6 characters.");
 	        return false;
