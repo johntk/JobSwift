@@ -20,6 +20,38 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
+.web-user-photo {
+	padding: 1px;
+	border-style:solid;
+	border-width: 2px;
+	border-radius: 4px;
+}
+
+.nav-bar-photo {
+	height: 50px;
+	width: auto;
+	max-width: 80px;
+	margin: auto;
+}
+
+#modal-user-photo {
+	width: 50%;
+	max-width:100px;
+	height: auto;
+	margin: auto;
+}
+
+.modal-photo {
+	width: 50%;
+	max-width:100px;
+	height: auto;
+	margin: auto;
+}
+
+.nav-bar-photo:hover {
+	opacity: 0.6;
+}
+
 .navbar-style {
 	padding: 15px 0 10px 0; !important
 }

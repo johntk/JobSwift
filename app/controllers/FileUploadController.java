@@ -69,7 +69,13 @@ public class FileUploadController extends Controller {
 			
 //			String newFileName = Application.getCurrentUser().applicant_firstName+"_"+Application.getCurrentUser().applicant_lastName+"_CV";
 			String newFileName = cvFile.getFilename();
-//			String contentType = cvFile.getContentType();
+			
+			try {
+        		File oldFile = new File(userFolderName, cvFile.getFilename());
+        		oldFile.delete(); } catch(Exception e) {
+        		e.printStackTrace();
+        	}
+			
 			File file = cvFile.getFile();
 			file.renameTo(new File(userFolderName, newFileName));
 			
@@ -113,6 +119,13 @@ public class FileUploadController extends Controller {
 			
 			String newFileName = imageFile.getFilename();
 			File file = imageFile.getFile();
+			
+        	try {
+        		File oldFile = new File(userFolderName, imageFile.getFilename());
+        		oldFile.delete(); } catch(Exception e) {
+        		e.printStackTrace();
+        	}
+			
 			file.renameTo(new File(userFolderName, newFileName));
 			
 			ApplicantModel app = Application.getCurrentUser();

@@ -44,6 +44,10 @@
 	float: left;
 }
 
+#user-photo {
+	min-width: 140px;
+}
+
 #user-photo:hover{
 	opacity: .7;
 }
