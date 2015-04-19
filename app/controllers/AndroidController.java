@@ -122,7 +122,9 @@ public static Result updateProfileImage(){
 				File file = imageFile.getFile(); 
 				String fileName = imageFile.getFilename();
 				Applicant = ApplicantModel.findByEmail(email);
-			    Applicant.profileImage = "globalUploadFolder/"+ Applicant.applicant_email +"/"+ fileName;
+			    Applicant.profileImage = "globalUploadFolder/" + Applicant.applicant_email + "/" +  fileName;
+			    Applicant.update();
+			    System.out.println(Applicant.profileImage);
 				FileUploadController.createUserFolder(email);
 				File newDir = new File(FileUploadController.getGlobalUploadFolderAbolutePath()+ email);
 		        if(!newDir.isDirectory()){

@@ -13,7 +13,7 @@ public class FileUploadController extends Controller {
 	
 	public static String getGlobalUploadFolderAbolutePath() {
 		String root = Play.application().path().toString();
-		String globalFolderPath = root + "/public/globalUploadFolder/";
+		String globalFolderPath = root + File.separator + "public" + File.separator + "globalUploadFolder" + File.separator;
 		File globalFolder = new File(globalFolderPath);
 		
 		// Check if the main upload folder exists first, if not create it
