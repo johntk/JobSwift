@@ -124,7 +124,6 @@ public static Result updateProfileImage(){
 				Applicant = ApplicantModel.findByEmail(email);
 			    Applicant.profileImage = "globalUploadFolder/" + Applicant.applicant_email + "/" +  fileName;
 			    Applicant.update();
-			    System.out.println(Applicant.profileImage);
 				FileUploadController.createUserFolder(email);
 				File newDir = new File(FileUploadController.getGlobalUploadFolderAbolutePath()+ email);
 		        if(!newDir.isDirectory()){
@@ -145,6 +144,62 @@ public static Result updateProfileImage(){
 				return badRequest();
 		}
 	}
+
+public static Result updateCV(){
+	
+	//get the body of the request
+	RequestBody body = request().body();
+	//Assign the type as MultipartFormData
+	Http.MultipartFormData multippartBody = body.asMultipartFormData();
+	// Pull the video from the MultipartFormData
+	Http.MultipartFormData.FilePart imageFile = multippartBody.getFile("fileKey");
+	// Pull the hashMap from the MultipartFormData
+	Map<String, String[]> myMap  = multippartBody.asFormUrlEncoded();
+	
+	
+	String email ="";
+	ApplicantModel Applicant;
+	Iterator<String> myVeryOwnIterator = myMap.keySet().iterator();
+    while(myVeryOwnIterator.hasNext()) {
+        String key=(String)myVeryOwnIterator.next();
+        String[] value= myMap.get(key);
+        if(key.equals("email")){
+        	 email = value[0];
+        }
+        
+    }
+    
+    
+   
+	// Create a directory for the CV  and add the file to it
+		if(imageFile != null) {
+			File file = imageFile.getFile(); 
+			String fileName = imageFile.getFilename();
+			System.out.println(fileName);
+			Applicant = ApplicantModel.findByEmail(email);
+		    Applicant.cvFilePath = "globalUploadFolder/" + Applicant.applicant_email + "/" +  fileName;
+		    Applicant.cvFileName = fileName;
+		    Applicant.update();
+			FileUploadController.createUserFolder(email);
+			File newDir = new File(FileUploadController.getGlobalUploadFolderAbolutePath()+ email);
+	        if(!newDir.isDirectory()){
+	            newDir.mkdirs();
+	        }
+	        if(newDir.canWrite()){
+	        	File fileOld = new File(newDir, fileName);
+	        	if(fileOld.delete()){
+	    			System.out.println(fileOld.getName() + " is deleted!");
+	    		}else{
+	    			System.out.println("Delete operation is failed.");
+	    		}
+	        	file.renameTo(new File(newDir, fileName));
+	        }
+	        return ok();
+		} 
+		else {
+			return badRequest();
+	}
+}
 	
 	public static Result refresh() {
 		String email;

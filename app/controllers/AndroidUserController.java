@@ -40,6 +40,7 @@ public class AndroidUserController extends Controller {
 	        	result.put("city", app.applicant_city);
 	        	result.put("cvFilePath", app.cvFilePath);
 	        	result.put("profileImage", app.profileImage);
+	        	result.put("cvFileName", app.cvFileName);
 	            return ok(result);
 	        }
 	    }
