@@ -68,7 +68,6 @@ public class AndroidJobApplicationController extends Controller {
 	    			}
 	    		}
 	    	}
-	    	System.out.println(qList);
 	    	return ok(qList);
 	    }
 	}

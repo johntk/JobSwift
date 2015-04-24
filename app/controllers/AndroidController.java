@@ -232,4 +232,48 @@ public static Result updateCV(){
 	        }
 	    }
 	}
+	
+	public static Result saveInterviewVideos() {
+		
+		//get the body of the request
+		RequestBody body = request().body();
+		//Assign the type as MultipartFormData
+		Http.MultipartFormData multippartBody = body.asMultipartFormData();
+		// Pull the video from the MultipartFormData
+		Http.MultipartFormData.FilePart videoFile = multippartBody.getFile("fileKey");
+		// Pull the hashMap from the MultipartFormData
+		Map<String, String[]> intVideoMap  = multippartBody.asFormUrlEncoded();
+		
+		String[] em = intVideoMap.get("email");
+		String[] aid = intVideoMap.get("applicationId");
+		String email = em[0];
+		String applicationId = aid[0];
+
+		// Create a directory for the interview videos
+			if(videoFile != null) {
+				File file = videoFile.getFile(); 
+				String fileName = videoFile.getFilename();
+				FileUploadController.createUserFolder(email);
+				
+				File newDir = new File(FileUploadController.getGlobalUploadFolderAbolutePath()+ email + 
+						"/InterviewVideos" + "/JobApplication" + applicationId);
+				File fileOld = new File(newDir, fileName);
+	        	if(fileOld.delete()){
+	    			System.out.println(fileOld.getName() + " is deleted!");
+	    		}else{
+	    			System.out.println("Delete operation is failed.");
+	    		}
+		        if(!newDir.isDirectory()){
+		            newDir.mkdirs();
+		        }
+		        if(newDir.canWrite()){
+		        	file.renameTo(new File(newDir, fileName));
+		        }
+		        return ok();
+			} 
+			else {
+				return badRequest();
+		}
+	}
 }
+

@@ -45,6 +45,7 @@ POST	/androidlogin				controllers.AndroidUserController.login()
 POST	/androidregister			controllers.AndroidUserController.register()
 POST	/androidgetjobapplications	controllers.AndroidJobApplicationController.getInterviews()
 POST	/androidgetinterviewquestions controllers.AndroidJobApplicationController.getInterviewQuestions()
+POST	/uploadinterviewvideos		controllers.AndroidController.saveInterviewVideos()
 
 
 
