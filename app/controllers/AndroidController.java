@@ -289,6 +289,7 @@ public static Result updateCV(){
 		
 		if(jobApp != null) {
 			jobApp.interviewDone = 1;
+			jobApp.status = "complete";
 			jobApp.update();
 			return ok();
 		} else {

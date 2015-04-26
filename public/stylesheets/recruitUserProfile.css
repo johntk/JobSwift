@@ -65,5 +65,20 @@
 }
 
 #user-intro-video video {
-	width: 95%;
+	max-width: 95%;
+	height: 450px;
+	margin: 0 auto;
+}
+
+#question-response-list {
+	margin: 40px 0 0 0;
+}
+
+.user-interview-video video {
+	max-width: 95%;
+	height: 450px;
+}
+
+.int-video-nested-list summary {
+	margin: 10px 0 0 0;
 }
