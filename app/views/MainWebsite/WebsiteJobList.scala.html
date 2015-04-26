@@ -10,7 +10,7 @@
 		<h4><strong>Showing Results for @if(jobs == null){0}else{@jobs.size} jobs</strong></h4>
 	</div>
 	<div class="clearfix"></div>
-		<div class="col-md-3 col-sm-3 col-xs-3" id="job-list-side-bar">
+		<div class="col-xs-12 col-sm-12 col-md-3 " id="job-list-side-bar">
 			<h3><strong>Search Jobs</strong></h3>
 			<hr>
 			<div>
@@ -56,7 +56,7 @@
 			</div>
 		</div>
 		
-		<div class="col-md-8 col-sm-8 col-xs-8 job-list-box">
+		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 job-list-box">
 			@if(jobs != null) {	
 				@for(job <- jobs) {
 					<div class="single-job-listing">

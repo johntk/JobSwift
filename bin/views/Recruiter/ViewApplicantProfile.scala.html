@@ -1,17 +1,17 @@
-@(app: ApplicantModel)(jobAppList: List[JobApplicationModel])
-@import java.math.BigInteger; var i=1
+@(app: ApplicantModel)(jobAppList: List[JobApplicationModel])(interviewQuestionList: List[InterviewQuestionModel])
+@import java.math.BigInteger; var i=1; var j=1;
 
 @Recruiter.RecruitersScreenTemplate("Applicant's Profile") {
 	
-	<div class="user-profile-container container" style="padding: 0;">
-		<div class="col-sm-12 col-md-10 col-lg-8" id="profile-inner-div">
+	<div class="user-profile-container container col-xs-12 col-sm-12 col-md-12 col-lg-10" style="padding: 0; float: none;">
+	
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8" id="profile-inner-div">
 			<div id="profile-section" class="profile-class">
 				
 				<h3 class="blue-text"><strong>@app.applicant_firstName's Profile</strong></h3>
 				<hr>
 				
-				<div class="col-xs-12 col-sm-12 col-md-12" id="applicant-info">
-					<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="applicant-info">
 						@if(app != null) {
 							@if(app.profileImage == null) {
 								<img class="thumbnail" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
@@ -24,17 +24,18 @@
 								<br>
 								<strong class="blue-text">City:</strong>&nbsp;&nbsp;@app.applicant_city
 						}
-					</div>
 				</div>
-			</div>
 			
-			@if(app.cvFileName != null) {
-				<div class="cv-upload-div">
-					<h4 class="blue-text"><strong>Download @app.applicant_firstName's CV</strong></h4>
+				@if(app.cvFileName != null) {
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-center cv-upload-div">
+					<span class="blue-text"><strong>Download @app.applicant_firstName's CV</strong></span>
+					<br>
 					<a href="@routes.Assets.at(app.cvFilePath)" download class="btn btn-primary" style="white-space: normal;" id="cv-filename"><i class="fa fa-file-text-o"></i> @app.cvFileName</a>
 				</div>
 			}
 			
+				
+			</div>
 			
 			<div id="job-list" class="profile-class">
 				<h3 class="blue-text"><strong>Job Applications for @app.applicant_firstName @app.applicant_lastName</strong></h3>
@@ -87,8 +88,39 @@
 								</div>
 								<br>
 
-						}}
-						}}
+						} else {
+							@if(jobApp.status == "complete"){
+								<div>
+									<span>Application Status:</span> <span id="job-app-progress" class="label label-primary" style="float: none;">Complete</span>
+								</div>
+								
+								<div id="question-response-list">
+									
+									<details>
+										<summary class="btn btn-primary">View Interview Responses</summary>
+										@for(question <- interviewQuestionList) {
+											@if(question.job.job_id == jobApp.job.job_id) {
+											<span class="int-video-nested-list">
+												<details>
+													<summary class="btn btn-default">@j - @question.question</summary>
+													
+													<div class="user-interview-video">
+													<h4><strong>Response</strong></h4>
+														<video controls class="thumbnail">
+												  			<source src="@routes.Assets.at("globalUploadFolder/" + jobApp.app.applicant_email + "/InterviewVideos/JobApplication" + jobApp.job_application_id + "/interviewVideo" + question.question_id + ".mp4")" type=video/mp4>
+														</video>
+													</div>
+													
+													@(j+=1)
+												</details>
+											</span>
+											}
+										}
+										@(j=1)
+									</details>
+								</div>
+						}
+						}}}}
 						<hr>
 						@(i+=1)
 						} 
@@ -97,7 +129,15 @@
 					}
 			</div>
 			
-			
 		</div>
+		
+		
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 profile-class text-center" id="user-intro-video">
+		<h4><strong>Introduction Video</strong></h4>
+			<video controls class="thumbnail">
+	  			<source src="@routes.Assets.at(app.introVideoPath)" type=video/mp4>
+			</video>
+		</div>
+		
 	</div>
 }

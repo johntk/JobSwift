@@ -32,7 +32,7 @@
 				@for(jobApp <- jobApps) {
 					<tr>
 						<td class="user_table_id"></td>
-						<td><a href="/viewuser@jobApp.app.applicant_email" target="_blank" class="btn btn-primary">@jobApp.app.applicant_firstName @jobApp.app.applicant_lastName</a></td>
+						<td><a href="/viewuser/@jobApp.app.applicant_email" target="_blank" class="btn btn-primary">@jobApp.app.applicant_firstName @jobApp.app.applicant_lastName</a></td>
 						<td>@jobApp.job.job_title</td>
 						<td>@jobApp.date</td>
 						<td>

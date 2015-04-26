@@ -20,7 +20,7 @@ DELETE  /jobapplication/:id			controllers.JobApplicationController.delete(id: Lo
 POST	/addjob						controllers.JobListingController.addJobListing()
 GET		/setapplicationstatus:id/status		controllers.JobApplicationController.setApplicationStatus(id: Long, status: String)
 GET		/setuserappstatus:id/status	controllers.JobApplicationController.setApplicationStatusUserProfile(id: Long, status: String)
-GET		/viewuser:email				controllers.ApplicantController.viewApplicantProfile(email: String)
+GET		/viewuser/:email			controllers.ApplicantController.viewApplicantProfile(email: String)
 
 
 # Applicant Profile
@@ -46,6 +46,7 @@ POST	/androidregister			controllers.AndroidUserController.register()
 POST	/androidgetjobapplications	controllers.AndroidJobApplicationController.getInterviews()
 POST	/androidgetinterviewquestions controllers.AndroidJobApplicationController.getInterviewQuestions()
 POST	/uploadinterviewvideos		controllers.AndroidController.saveInterviewVideos()
+POST	/completeinterviewvideo		controllers.AndroidController.interviewVideosComplete()
 
 
 

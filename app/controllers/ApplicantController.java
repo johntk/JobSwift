@@ -43,7 +43,20 @@ public class ApplicantController extends Controller {
     public static Result viewApplicantProfile(String email) {
     	ApplicantModel app = ApplicantModel.findByEmail(email);
     	List<JobApplicationModel> appList = JobApplicationModel.findAllApplicationsByUser(app);
-    	return ok(views.html.Recruiter.ViewApplicantProfile.render(app, appList));
+    	List<InterviewQuestionModel> iqList = new ArrayList<InterviewQuestionModel>();
+    	
+    	for(int i=0; i < appList.size(); i++) {
+    		if(appList.get(i).interviewDone == 1) {
+    			List<InterviewQuestionModel> tempiq = InterviewQuestionModel.findAllQuestionsByJobListing(appList.get(i).job);
+    			if(tempiq != null) {
+    				for(int j=0; j< tempiq.size(); j++) {
+    					iqList.add(tempiq.get(j));
+    				}
+    			}
+    		}
+    	}
+    	
+    	return ok(views.html.Recruiter.ViewApplicantProfile.render(app, appList, iqList));
     }
     
     // Form to update applicant details

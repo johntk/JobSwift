@@ -1,0 +1,84 @@
+
+.user-profile-container {
+	min-height: 92%;
+	margin-bottom: 50px;
+}
+
+#profile-inner-div {
+	float: left;
+}
+
+.profile-class {
+	position: relative;
+	background: #fff;
+	margin: 20px 0 0 0;
+	padding: 20px;
+	overflow: auto;
+}
+
+.cv-upload-div {
+	background: #fff;
+	float: right;
+}
+
+#profile-section img {
+	float: left;
+	width: 50%;
+	max-width: 100px;
+	margin-right: 20px;
+}
+
+#applicant-job-listing {
+	background: #E1E1E1;
+	padding: 10px;
+	margin: 50px 0 10px 0;
+	width: 100%;
+	max-width: 400px;
+	border-radius: 6px;
+}
+
+#job-app-progress {
+	font-size: 14px;
+	margin: 25px 0 0 20px;
+	float: left;
+}
+
+#user-photo {
+	min-width: 140px;
+}
+
+#user-photo:hover{
+	opacity: .7;
+}
+
+#edit-profile-form {
+	float: none;
+	margin: 0 auto;
+}
+
+.view-profile-buttons {
+	margin: 50px 0 0 0;
+}
+
+#user-intro-video {
+	
+}
+
+#user-intro-video video {
+	max-width: 95%;
+	height: 450px;
+	margin: 0 auto;
+}
+
+#question-response-list {
+	margin: 40px 0 0 0;
+}
+
+.user-interview-video video {
+	max-width: 95%;
+	height: 450px;
+}
+
+.int-video-nested-list summary {
+	margin: 10px 0 0 0;
+}
