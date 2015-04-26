@@ -38,12 +38,12 @@
 						<td class="user_table_id">@i</td>
 						<td class="user_img_table">
 							@if(applicant.profileImage == null) {
-								<img class="thumbnail" style="max-width: 80px;" id="user-photo" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
+								<img class="thumbnail" style="max-width: 80px;" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
 							} else {
-								<img class="thumbnail" style="max-width: 80px;" id="user-photo" src="@routes.Assets.at(applicant.profileImage)" alt="user-photo">
+								<img class="thumbnail" style="max-width: 80px;" src="@routes.Assets.at(applicant.profileImage)" alt="user-photo">
 							}
 						</td>
-						<td>@applicant.applicant_firstName @applicant.applicant_lastName</td>
+						<td><a href="/viewuser/@applicant.applicant_email" target="_blank" class="btn btn-primary">@applicant.applicant_firstName @applicant.applicant_lastName</a></td>
 						<td>@applicant.applicant_city</td>
 						<td>@applicant.applicant_email</td>
 						<td>

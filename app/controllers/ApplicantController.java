@@ -43,6 +43,7 @@ public class ApplicantController extends Controller {
     public static Result viewApplicantProfile(String email) {
     	ApplicantModel app = ApplicantModel.findByEmail(email);
     	List<JobApplicationModel> appList = JobApplicationModel.findAllApplicationsByUser(app);
+    	System.out.println(app.introVideoPath);
     	return ok(views.html.Recruiter.ViewApplicantProfile.render(app, appList));
     }
     

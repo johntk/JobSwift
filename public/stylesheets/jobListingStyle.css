@@ -9,7 +9,7 @@
 
 .job-list-heading h4 {
 	float: right;
-	margin-right: 30px;
+	
 }
 
 .job-title {
@@ -17,8 +17,10 @@
 	font-weight: 300;
 }
 
+.job-list-box {
+}
+
 .job-list-top {
-	margin: 0 0 0px 0;
 	padding: 25px 15px 25px 15px;
 	font-size: 22px;
 	font-weight: bold;
@@ -42,15 +44,16 @@
 	padding: 0;
 }
 
+#job-list-side-bar {
+	padding: 20px;
+	margin: 0 0 15px 0;
+	background: #fff;
+}
+
 #job-list-head {
 	color: #226bb3;
 	float: left;
 	margin-right: 20px;
-}
-
-#job-list-side-bar {
-	padding-bottom: 20px;
-	background: #fff;
 }
 
 .single-job-listing details {

@@ -11,6 +11,7 @@ import play.mvc.Http.RequestBody;
 import java.io.File;
 
 import models.ApplicantModel;
+import models.JobApplicationModel;
 import play.libs.Json;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -84,6 +85,10 @@ public class AndroidController extends Controller {
 		        if(newDir.canWrite()){
 		        	file.renameTo(new File(newDir, fileName));
 		        }
+		        
+		        Applicant.introVideoPath = "globalUploadFolder/" + Applicant.applicant_email + "/intro.mp4";
+		        Applicant.update();
+		        
 		        return ok();
 			} 
 			else {
@@ -269,11 +274,27 @@ public static Result updateCV(){
 		        if(newDir.canWrite()){
 		        	file.renameTo(new File(newDir, fileName));
 		        }
+		        
 		        return ok();
 			} 
 			else {
 				return badRequest();
 		}
 	}
+	
+	public static Result interviewVideosComplete() {
+		JsonNode json = request().body().asJson();
+		
+		JobApplicationModel jobApp = JobApplicationModel.findById(json.findPath("applicationId").asLong());
+		
+		if(jobApp != null) {
+			jobApp.interviewDone = 1;
+			jobApp.update();
+			return ok();
+		} else {
+			return badRequest();
+		}
+	}
+	
 }
 
