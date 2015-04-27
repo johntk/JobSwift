@@ -24,10 +24,8 @@
 				<tr>
 					<th>#</th>
 					<th></th>
-					<th>Name</th>
-					<th>City</th>
+					<th>Profile</th>
 					<th>Email</th>
-					<th>CV</th>
 					<th>Registered Date</th>
 					<th>DELETE USER</th>
 				</tr>
@@ -38,21 +36,13 @@
 						<td class="user_table_id">@i</td>
 						<td class="user_img_table">
 							@if(applicant.profileImage == null) {
-								<img class="thumbnail" style="max-width: 80px;" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
+								<img class="thumbnail" style="max-width: 60px;" src="@routes.Assets.at("images/blank_user.jpg")" alt="user-photo">
 							} else {
-								<img class="thumbnail" style="max-width: 80px;" src="@routes.Assets.at(applicant.profileImage)" alt="user-photo">
+								<img class="thumbnail" style="max-width: 60px;" src="@routes.Assets.at(applicant.profileImage)" alt="user-photo">
 							}
 						</td>
 						<td><a href="/viewuser/@applicant.applicant_email" target="_blank" class="btn btn-primary">@applicant.applicant_firstName @applicant.applicant_lastName</a></td>
-						<td>@applicant.applicant_city</td>
 						<td>@applicant.applicant_email</td>
-						<td>
-							@if(applicant.cvFilePath != null) {
-								<a href="@routes.Assets.at(applicant.cvFilePath)" download class="btn btn-primary" id="cv-filename"><i class="fa fa-arrow-circle-down"></i> Download @applicant.applicant_firstName's CV</a>
-							}else {
-								<span class="label label-warning">No CV On File</span>
-							}
-						</td>
 						<td>@applicant.dateOfSignup</td>
 						<td>
 						<!-- <a href="@routes.ApplicantController.details(applicant.applicant_email)"><i class="fa fa-pencil"></i></a>  -->

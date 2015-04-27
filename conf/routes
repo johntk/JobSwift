@@ -24,6 +24,8 @@ GET		/setapplicationstatus:id/status		controllers.JobApplicationController.setAp
 GET		/setuserappstatus:id/status	controllers.JobApplicationController.setApplicationStatusUserProfile(id: Long, status: String)
 GET		/viewuser/:email			controllers.ApplicantController.viewApplicantProfile(email: String)
 GET		/recruiterlogout			controllers.RecruiterController.recruiterLogout()
+GET		/jobprofile/:id				controllers.JobListingController.jobProfile(id: Long)
+POST	/updatejoblisting			controllers.JobListingController.updateJobListing()
 
 
 # Applicant Profile

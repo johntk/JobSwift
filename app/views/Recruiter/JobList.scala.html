@@ -23,6 +23,7 @@
 				<tr>
 					<th>#</th>
 					<th>Title</th>
+					<th>Job ID</th>
 					<th>Type</th>
 					<th>Location</th>
 					<th>Salary</th>
@@ -33,7 +34,8 @@
 				@for(job <- jobList) {
 					<tr>
 						<td class="user_table_id"></td>
-						<td>@job.job_title</td>
+						<td><a href="/jobprofile/@job.job_id" class="btn btn-primary">@job.job_title</a></td>
+						<td>@job.job_id</td>
 						<td>@job.job_type</td>
 						<td>@job.job_location</td>
 						<td>&euro;@job.job_salary</td>
