@@ -1,0 +1,36 @@
+@(loginForm: Form[RecruiterController.EmpLogin])
+
+@RecruitersScreenTemplate("Login") {
+
+<div class="container">
+
+	<div class="col-xs-8 col-sm-4 col-md-4 col-lg-4" id="recruiter-login-form">
+	
+		<form name="userForm" action="/authenticateemp" method="POST">	
+			<div class="row">				
+					<div class="form-group">
+						
+						<input type="text" class="form-control" name="employee_userName" required placeholder="Login ID" id="applicant_firstName">
+					</div>
+					
+					<div class="form-group">
+						
+						<input type="password" class="form-control" name="employeePassword" required placeholder="Password" id="applicant_lastName">
+					</div>
+			</div>
+			
+			<div class="row centered">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<input type="hidden" value="@loginForm("id").valueOr("")" name="id"/>
+					
+					<input type="submit" class="btn btn-primary btn-square-adjust" value="Submit">
+
+				</div>
+			</div>	
+			
+		</form>
+		
+	</div>
+</div>
+
+}

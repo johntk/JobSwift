@@ -77,7 +77,7 @@ public class JobListingController extends Controller {
     	}
     	
     	job.delete();
-    	return redirect(routes.Application.dashboard());
+    	return redirect(routes.RecruiterController.dashboard());
     }
 	
 	public static class JobSearch {
