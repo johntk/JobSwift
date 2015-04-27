@@ -84,10 +84,10 @@ public class AndroidController extends Controller {
 		        if(newDir.canWrite()){
 		        	file.renameTo(new File(newDir, fileName));
 		        }
-		        return ok();
+		        return ok("uploaded");
 			} 
 			else {
-				return badRequest();
+				return badRequest("failed");
 		}
 	}
 	
@@ -138,10 +138,10 @@ public static Result updateProfileImage(){
 		    		}
 		        	file.renameTo(new File(newDir, fileName));
 		        }
-		        return ok();
+		        return ok("uploaded");
 			} 
 			else {
-				return badRequest();
+				return badRequest("failed");
 		}
 	}
 
