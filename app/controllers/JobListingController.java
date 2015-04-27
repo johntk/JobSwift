@@ -88,6 +88,7 @@ public class JobListingController extends Controller {
 		public String job_type;
 	}
 	
+	// Redirect to main website with list of job results
 	public static Result jobSearchResult() {
 		Form<JobSearch> jobForm = Form.form(JobSearch.class).bindFromRequest();
 		String location = jobForm.get().job_location;
@@ -99,11 +100,23 @@ public class JobListingController extends Controller {
 		return redirect(routes.JobListingController.jobListings());
 	}
 	
+	@Security.Authenticated(RecruiterSecured.class)
+	public static Result jobSearchResultRecruiter() {
+		Form<JobSearch> jobForm = Form.form(JobSearch.class).bindFromRequest();
+		String location = jobForm.get().job_location;
+		String sector = jobForm.get().job_sector;
+		String jobType = jobForm.get().job_type;
+		
+		tempJobs = JobListingModel.findByForm(location, sector, jobType);
+		
+		return ok(views.html.Recruiter.JobList.render(tempJobs,jobForm, locationList(), jobTypeList(), sectorList()));
+	}
+	
 	// Displays all jobs in recruiters dashboard
 	@Security.Authenticated(RecruiterSecured.class)
 	public static Result listJobs() {
 		List<JobListingModel> jobs = JobListingModel.findAll();
-    	return ok(views.html.Recruiter.JobList.render(jobs));
+    	return ok(views.html.Recruiter.JobList.render(jobs,Form.form(JobSearch.class), locationList(), jobTypeList(), sectorList()));
 	}
 	
 	public static Result jobProfile(Long id) {

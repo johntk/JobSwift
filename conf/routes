@@ -28,7 +28,7 @@ GET		/jobprofile/:id				controllers.JobListingController.jobProfile(id: Long)
 POST	/updatejoblisting			controllers.JobListingController.updateJobListing()
 
 POST	/searchapplicant			controllers.ApplicantController.applicantSearchResult()
-
+POST	/recruitersearchjobs		controllers.JobListingController.jobSearchResultRecruiter()
 
 # Applicant Profile
 GET		/userprofile				controllers.Application.applicantProfile()
