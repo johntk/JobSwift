@@ -119,7 +119,7 @@ public class JobListingController extends Controller {
     	return ok(views.html.Recruiter.JobList.render(jobs,Form.form(JobSearch.class), locationList(), jobTypeList(), sectorList()));
 	}
 	
-	public static Result jobProfile(Long id) {
+	public static Result editJobListing(Long id) {
 		JobListingModel jlm = JobListingModel.findById(id);
 		List<InterviewQuestionModel> iqList = InterviewQuestionModel.findAllQuestionsByJobListing(jlm);
 		
@@ -131,7 +131,7 @@ public class JobListingController extends Controller {
 			tempQuestions.add(iqList.get(i).question);
 		}
 		
-		return ok(views.html.Recruiter.JobProfile.render(filledForm, tempQuestions, locationList(), jobTypeList(), sectorList()));
+		return ok(views.html.Recruiter.EditJobListing.render(filledForm, tempQuestions, locationList(), jobTypeList(), sectorList()));
 	}
 	
 	// Update the job listing from the job profile screen
@@ -156,8 +156,8 @@ public class JobListingController extends Controller {
         	}
         	
             flash("success", String.format("Successfully updated job %s", job));
-            return redirect(routes.JobListingController.jobProfile(job.job_id));
-        } else return redirect(routes.JobListingController.jobProfile(job.job_id));
+            return redirect(routes.JobListingController.editJobListing(job.job_id));
+        } else return redirect(routes.JobListingController.editJobListing(job.job_id));
 	}
 	
 	

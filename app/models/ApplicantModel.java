@@ -86,16 +86,15 @@ public class ApplicantModel extends Model {
 	}
 	
 	// Query database for job listings based on search values
-	public static List<ApplicantModel> findByForm(String firstName, String lastName, String city) {
+	public static List<ApplicantModel> findByForm(String firstName, String lastName, String email, String city) {
 		List<ApplicantModel> tempApps = new ArrayList<ApplicantModel>();
 		
 		if(firstName.equals("")){firstName = "%";}
 		if(lastName.equals("")){lastName = "%";}
+		if(email.equals("")){email = "%";}
 		if(city.equals("")){city = "%";}
 		
-		System.out.println(firstName + lastName + city);
-		
-		tempApps = find.where().ilike("applicant_first_name", firstName).ilike("applicant_last_name", lastName).ilike("applicant_city", city).findList();
+		tempApps = find.where().ilike("applicant_first_name", firstName).ilike("applicant_last_name", lastName).ilike("applicant_email", email).ilike("applicant_city", city).findList();
 
 		return tempApps;
 	}

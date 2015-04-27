@@ -120,6 +120,7 @@ public class ApplicantController extends Controller {
     public static class ApplicantSearch {
     	public String applicant_firstName;
     	public String applicant_lastName;
+    	public String applicant_email;
     	public String applicant_city;
     }
     
@@ -127,9 +128,10 @@ public class ApplicantController extends Controller {
 		Form<ApplicantSearch> jobForm = Form.form(ApplicantSearch.class).bindFromRequest();
 		String firstName = jobForm.get().applicant_firstName;
 		String lastName = jobForm.get().applicant_lastName;
+		String email = jobForm.get().applicant_email;
 		String city = jobForm.get().applicant_city;
 		
-		tempApps = ApplicantModel.findByForm(firstName, lastName, city);
+		tempApps = ApplicantModel.findByForm(firstName, lastName, email, city);
 		
 		return ok(views.html.Applicant.ApplicantList.render(tempApps, Form.form(ApplicantController.ApplicantSearch.class)));
 	}

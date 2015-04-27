@@ -1,0 +1,85 @@
+@(jobForm: Form[JobListingModel])(iqList: List[String])(locations: List[String])(jobTypes: List[String])(sectors: List[String])
+@import java.math.BigInteger; var i=0
+
+@Recruiter.RecruitersScreenTemplate(jobForm.get().job_title) {
+
+	<div class="user-profile-container container" style="margin-top:80px;">
+			<form name="jobForm" action="/updatejoblisting" onsubmit="return validateForm()" method="POST">	
+						<div class="row col-xs-12 col-sm-8 col-md-6 col-lg-5" id="edit-job-form">
+								<h2>Job Details</h2>
+
+								<div class="form-group">
+									<label for="job_sector">Sector</label>
+									<select class="form-control" value="@jobForm.get().job_sector" name="job_sector">
+										@for(sector <- sectors) {
+											<option value="@sector" name="job_sector">@sector</option>
+										}
+									</select>
+								</div>
+								
+								<div class="form-group">
+									<label for="job_company">Company</label>
+									<input type="text" class="form-control" name="job_company" required value="@jobForm.get().job_company" placeholder="Company" id=job_company>
+								</div>
+								
+								<div class="form-group">
+									<label for="job_title">Title</label>
+									<input type="text" class="form-control" name="job_title" required value="@jobForm.get().job_title" placeholder="Title" id="job_title">
+								</div>
+							
+								<div class="form-group">
+									<label for="job_type">Job Type</label>
+									<select class="form-control" value="@jobForm.get().job_type" name="job_type">
+										@for(jobType <- jobTypes) {
+											<option value="@jobType" name="job_type">@jobType</option>
+										}
+									</select>
+								</div>
+								
+								<div class="form-group">
+									<label for="job_location">Location</label>
+									<select class="form-control" value="@jobForm.get().job_location" name="job_location">
+										@for(location <- locations) {
+											<option value="@location" name="job_location">@location</option>
+										}
+									</select>
+								</div>
+								
+								<div class="form-group">
+									<label for="job_salary">Salary</label>
+									<input type="text" class="form-control" name="job_salary" value="@jobForm.get().job_salary" placeholder="Salary" id="job_salary">
+								</div>
+								
+								<div class="form-group">
+									<label for="job_description">Description</label>
+									<textarea type="text" class="form-control" name="job_description" required placeholder="Description" id="job_description">@jobForm.get().job_description</textarea>
+								</div>
+								
+								<div class="form-group">
+									<label for="job_criteria">Salary</label>
+									<textarea type="text" class="form-control" name="job_criteria" required placeholder="Criteria" id="job_criteria">@jobForm.get().job_criteria</textarea>
+								</div>
+								
+								@for(question <- iqList) {
+								<div class="form-group">
+									<label for="job_criteria">Question @(i+1)</label>
+									<input type="text" class="form-control" name="questions[@i]" required value="@question" placeholder="Criteria" id="job_criteria">
+								</div>
+								@(i+=1)
+								}
+								
+						</div>
+						
+						<div class="row centered">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<input type="hidden" value="@jobForm("job_id").valueOr("")" name="job_id"/>
+								<input type="submit" class="btn btn-primary btn-square-adjust" value="Save">
+								&nbsp;&nbsp;
+								<a class="btn btn-default btn-square-adjust" href="@routes.RecruiterController.dashboard()">Cancel</a>
+							</div>
+						</div>	
+						
+					</form>
+		</div>
+	
+}
