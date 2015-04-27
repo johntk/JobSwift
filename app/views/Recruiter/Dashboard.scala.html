@@ -41,7 +41,7 @@
 	
 	<div class="col-md-3 col-sm-6 col-xs-6">
 		<div class="panel panel-back noti-box">
-				<div class="inner-noti-box">
+				<div class="inner-noti-box complete-interview-button">
 					<span class="icon-box bg-color-blue set-icon"> <i
 						class="fa fa-check-square-o"></i>
 					</span>
@@ -127,6 +127,45 @@
 	</div>
 </div>
 
+<!--  -->
+<div class="toggle-hide complete-interview-list-table">
+	<h3>Completed Interviews</h3>
+	<div class="table-responsive" style="padding:10px;">
+	
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Applicant</th>
+					<th>Job Application ID</th>
+					<th>Company</th>
+					<th>Job Title</th>
+				</tr>
+			</thead>
+			<tbody class="user_table_body">
+				@for(interview <- interviewList) {
+					<tr>
+						<td class="user_table_id">@i</td>
+						<td>
+						<p><strong>Name:</strong> @interview.app.applicant_firstName @interview.app.applicant_lastName</p>
+						<a href="/viewuser/@interview.app.applicant_email" target="_blank" class="btn btn-default">View Applicant's Profile</a>
+						</td>
+						<td>@interview.job_application_id</td>
+						<td>@interview.job.job_company</td>
+						<td>@interview.job.job_title</td>
+						
+						@**<td>
+							<a href="@routes.ApplicantController.details(applicant.applicant_email)"><i class="fa fa-pencil"></i></a>
+						</td>**@
+					</tr>
+					@(i+=1)
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
 <div class="toggle-hide job-list-table">
 	<h3>All Job Listings</h3>
 	<div class="table-responsive" style="padding:10px;">
@@ -165,16 +204,29 @@
         	$('.new-app-button').click(function() {
         		if ($(".job-list-table").is(":visible")) {
         	    	$('.job-list-table').hide();
+        	    } else if ($(".complete-interview-list-table").is(":visible")) {
+        	    	$('.complete-interview-list-table').hide();
         	    }
 				$('.app-list-table').fadeIn("fast");
         	});
         	
+        	$('.complete-interview-button').click(function() {
+        		if ($(".app-list-table").is(":visible")) {
+        	    	$('.app-list-table').hide();
+        	    }else if ($(".job-list-table").is(":visible")) {
+        	    	$('.job-list-table').hide();
+        	    }
+        	    $('.complete-interview-list-table').fadeIn("fast");
+    		});
+        	
         	$('.job-list-button').click(function() {
         		if ($(".app-list-table").is(":visible")) {
         	    	$('.app-list-table').hide();
+        	    }else if ($(".complete-interview-list-table").is(":visible")) {
+        	    	$('.complete-interview-list-table').hide();
         	    }
         	    $('.job-list-table').fadeIn("fast");
-    	});
+    		});
         	
     	});
 	</script>

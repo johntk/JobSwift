@@ -19,6 +19,15 @@ create table applicant_model (
   constraint pk_applicant_model primary key (applicant_id))
 ;
 
+create table employee_model (
+  employee_id               bigint auto_increment not null,
+  employee_user_name        varchar(255),
+  employee_password         varchar(255),
+  employee_first_name       varchar(255),
+  employee_last_name        varchar(255),
+  constraint pk_employee_model primary key (employee_id))
+;
+
 create table interview_question_model (
   question_id               bigint auto_increment not null,
   question                  longtext,
@@ -64,6 +73,8 @@ create index ix_job_application_model_job_3 on job_application_model (job_job_id
 SET FOREIGN_KEY_CHECKS=0;
 
 drop table applicant_model;
+
+drop table employee_model;
 
 drop table interview_question_model;
 

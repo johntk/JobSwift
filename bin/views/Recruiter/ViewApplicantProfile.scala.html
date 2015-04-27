@@ -46,11 +46,10 @@
 						<div id="applicant-job-listing" class="row">
 							<strong>@i</strong> | <span>@jobApp.job.job_title &#8209; <strong>@jobApp.job.job_location</strong>&nbsp;-&nbsp;Job ID: @jobApp.job.job_id</span>
 						</div>
-						
+						<li>Application ID: <strong>@jobApp.job_application_id</strong></li>
+						<br>
 						@if(jobApp.status == "submitted") {
-							<div>
-								<span>Application Status:</span> <span id="job-app-progress" class="label label-danger" style="float: none;">Submitted</span>
-							</div>
+							<li>Application Status:</span> <span id="job-app-progress" class="label label-danger" style="float: none;">Submitted</li>
 							<div class="row view-profile-buttons">
 								<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id,"accepted")" class="btn btn-success btn-sm" style="margin: 5px;">Accept</a>
 								<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id, "declined")" class="btn btn-danger btn-sm" style="margin: 5px;">Decline</a>
@@ -59,9 +58,7 @@
 
 						} else {
 							@if(jobApp.status == "declined"){
-								<div>
-									<span>Application Status:</span> <span id="job-app-progress" class="label label-danger" style="float: none;">Unsuccessful</span>
-								</div>
+								<li>Application Status:</span> <span id="job-app-progress" class="label label-danger" style="float: none;">Unsuccessful</li>
 								<div class="row view-profile-buttons">
 								<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id,"submitted")" class="btn btn-warning btn-sm" style="margin: 5px;">Reopen Application</a>
 								</div>
@@ -69,9 +66,7 @@
 							
 						} else {
 							@if(jobApp.status == "accepted"){
-								<div>
-									<span>Application Status:</span> <span id="job-app-progress" class="label label-warning" style="float: none;">Accepted</span>
-								</div>
+								<li>Application Status:</span> <span id="job-app-progress" class="label label-warning" style="float: none;">Accepted</li>
 								<div class="row view-profile-buttons">
 									<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id,"interview")" class="btn btn-success btn-sm" style="margin: 5px;">Submit Interview</a>
 									<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id,"submitted")" class="btn btn-danger btn-sm" style="margin: 5px;">Cancel</a>
@@ -80,9 +75,7 @@
 								
 						} else {
 							@if(jobApp.status == "interview"){
-								<div>
-									<span>Application Status:</span> <span id="job-app-progress" class="label label-success" style="float: none;">Interview</span>
-								</div>
+								<span>Application Status:</span> <span id="job-app-progress" class="label label-success" style="float: none;">Interview</span>
 								<div class="row">
 								
 								</div>
@@ -91,7 +84,7 @@
 						} else {
 							@if(jobApp.status == "complete"){
 								<div>
-									<span>Application Status:</span> <span id="job-app-progress" class="label label-primary" style="float: none;">Complete</span>
+									<li>Application Status:</span> <span id="job-app-progress" class="label label-primary" style="float: none;">Complete</li>
 								</div>
 								
 								<div id="question-response-list">

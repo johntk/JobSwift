@@ -17,7 +17,6 @@ public class Application extends Controller {
 		return ok(views.html.MainWebsite.Homepage.render(appForm, Form.form(Login.class) ));
 	}
 	
-	
 	// Render the applicant profile view for the main website
 	@Security.Authenticated(Secured.class)
 	public static Result applicantProfile() {
@@ -26,15 +25,6 @@ public class Application extends Controller {
 		return ok(views.html.Applicant.ApplicantProfile.render(appMod, jobAppList, Form.form(Login.class) ));
 	}
 	
-	// Render the dashboard view for the recruiters page
-	public static Result dashboard() {
-		// Create a list of all job listings to pass to dashboard view
-		List<JobListingModel> jobList = JobListingModel.findAll();
-		List<JobApplicationModel> applicationList = JobApplicationModel.findAllUnprocessedApplications();
-		List<JobApplicationModel> interviewList = JobApplicationModel.findAllCompleteInterviews();
-		return ok(views.html.Recruiter.Dashboard.render(jobList, applicationList, interviewList));
-	}
-
 	// Method for submitting sign-up form from main website
 	public static Result submitForm() {
 		Form<ApplicantModel> boundForm = appForm.bindFromRequest();
@@ -55,7 +45,7 @@ public class Application extends Controller {
 			}
 	}
 	
-	// Inner class to store user credentials for logging in
+	// Inner class to store user credentials for logging in from main website
 	public static class Login {
 		public String applicant_email;
 		public String applicant_password;

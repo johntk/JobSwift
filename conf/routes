@@ -10,7 +10,9 @@ GET     /logout						controllers.Application.logOut()
 POST	/jobsearch					controllers.JobListingController.jobSearchResult()
 
 # Recruiters Dashboard
-GET     /dashboard					controllers.Application.dashboard()
+GET		/recruiterlogin				controllers.RecruiterController.recruiterLogin()
+POST	/authenticateemp			controllers.RecruiterController.authenticateEmployee()
+GET     /dashboard					controllers.RecruiterController.dashboard()
 GET     /applicants					controllers.ApplicantController.listApplicants()
 GET     /recruiterjoblistings		controllers.JobListingController.listJobs()
 GET		/jobapplications			controllers.ApplicantController.listAllJobApplications()

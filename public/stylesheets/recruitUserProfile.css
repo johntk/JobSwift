@@ -65,8 +65,9 @@
 }
 
 #user-intro-video video {
+	max-height: 450px;
 	max-width: 95%;
-	height: 450px;
+	width: auto;
 	margin: 0 auto;
 }
 
