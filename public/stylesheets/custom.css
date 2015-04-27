@@ -9,6 +9,7 @@ Light Blue: #226bb3
 */
 body {
 	font-family: 'Open Sans', sans-serif;
+	filter:blur(3px);
 }
 
 #wrapper {
@@ -416,6 +417,11 @@ p {
 #recruit-page-inner {
 	overflow-y: auto;
 	overflow-x: hidden;
+}
+
+#recruiter-login-form {
+	float: none;
+	margin: 0 auto;
 }
 
 /*==============================================

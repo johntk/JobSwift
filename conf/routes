@@ -23,6 +23,7 @@ POST	/addjob						controllers.JobListingController.addJobListing()
 GET		/setapplicationstatus:id/status		controllers.JobApplicationController.setApplicationStatus(id: Long, status: String)
 GET		/setuserappstatus:id/status	controllers.JobApplicationController.setApplicationStatusUserProfile(id: Long, status: String)
 GET		/viewuser/:email			controllers.ApplicantController.viewApplicantProfile(email: String)
+GET		/recruiterlogout			controllers.RecruiterController.recruiterLogout()
 
 
 # Applicant Profile
@@ -37,6 +38,9 @@ POST	/updateapplicant			controllers.ApplicantController.updateApplicant()
 GET		/newjoblisting				controllers.JobListingController.newJobListing()
 DELETE  /joblisting/:id				controllers.JobListingController.delete(id: Long)
 GET		/apply:id					controllers.JobApplicationController.applyForJob(id: Long)
+
+GET		/hash						controllers.Hash.hashing()
+POST	/hashvalue					controllers.Hash.hashValue()
 
 # Android
 POST	/refresh    				controllers.AndroidController.refresh()

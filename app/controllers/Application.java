@@ -59,14 +59,18 @@ public class Application extends Controller {
 		
 		// Check if the user exists in the database
 		if(ApplicantModel.authenticateApplicant(email, password) == null) {
-			// Clear the existing session
-			session().clear();
+			// Clear any existing user email from the session
+			if(session().containsKey("email")) {
+				session().remove("email");
+			}
 			flash("error", "Invalid Login!");
 			return redirect(routes.Application.index());
 		}
-		
-		// Clear the existing session
-		session().clear();
+
+		// Clear any existing user email from the session
+		if(session().containsKey("email")) {
+			session().remove("email");
+		}
 		// Add users email to the session
 		session("email", email);
 		// Redirect to homepage
@@ -81,7 +85,9 @@ public class Application extends Controller {
 	}
 
 	public static Result logOut() {
-		session().clear();
+		if(session().containsKey("email")) {
+			session().remove("email");
+		}
 		return redirect(routes.Application.index());
 	}
 }

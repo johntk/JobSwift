@@ -15,12 +15,14 @@ public class ApplicantController extends Controller {
 	private static final Form<ApplicantModel> appForm = Form.form(ApplicantModel.class);
 	
 	// Method to retrieve all applicants in the database
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result listApplicants() {
     	List<ApplicantModel> applicants = ApplicantModel.findAll();
     	return ok(views.html.Applicant.ApplicantList.render(applicants));
     }
 	
 	// Displays all job applciations in the recruiters dashboard
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result listAllJobApplications() {
     	List<JobApplicationModel> jobApps = JobApplicationModel.findAll();
     	return ok(views.html.Recruiter.JobApplicationList.render(jobApps));

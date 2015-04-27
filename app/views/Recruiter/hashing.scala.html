@@ -1,0 +1,68 @@
+@(inputForm: Form[Hash.HashForm])
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<!-- Bootstrap core CSS -->
+    <link href="@routes.Assets.at("bootstrap/css/bootstrap.css")" rel="stylesheet">
+  </head>
+  
+  <body>
+  	<div class="container-fluid text-center">
+  	
+  		<img src="@routes.Assets.at("images/title_logo.png")" alt="logo" style="max-width: 180px; width: 100%;">
+  		
+  		<div class="col col-xs-8 col-sm-4 col-md-4 col-lg-4">
+  		<hr>
+  			<h2>bCrypt Hashing Algorithm</h2>
+  		
+		  	<form name="inputForm" action="/hashvalue" method="POST">				
+				<div class="form-group">
+					<input type="password" class="form-control" name="string_value" required placeholder="Enter a value" id="string_value">
+				</div>
+				
+				<input type="button" class="btn btn-primary btn-square-adjust" onclick="textpass( 'string_value' );" value="Mask/UnmaskText">
+				<br><br>
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<input type="hidden" value="@inputForm("id").valueOr("")" name="id"/>
+					
+					<input type="submit" class="btn btn-primary btn-square-adjust" value="Submit">
+				
+				</div>
+			</form>
+		</div>
+		<br><br><br>
+		@if(flash.containsKey("result")){
+		   <div class="alert alert-success">
+				<h4>Hashed Result</h4>
+				@flash.get("result")
+		   </div>
+		 }
+		
+	</div>
+	
+	<script>
+	function textpass(elID){
+	    var el = document.getElementById( elID ) || false;
+	    if( !el ){ return; }
+	    if( el.getAttribute( 'type' ) == 'text' ){ el.setAttribute( 'type','password' ); }
+	    else{ el.setAttribute( 'type','text' ); }
+	}
+	</script>
+	
+  </body>
+  
+  <style>
+  	body {
+  		padding: 50px;
+  	}
+  	.col {
+  		float: none;
+  		margin: 0 auto;
+  	}
+  	form {
+  		float: none;
+  		margin: 0 auto;
+  	}
+  </style>
