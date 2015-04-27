@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -82,6 +83,21 @@ public class ApplicantModel extends Model {
 		if(app != null && BCrypt.checkpw(password, app.applicant_password)) {
 			return app;
 		}else return null;
+	}
+	
+	// Query database for job listings based on search values
+	public static List<ApplicantModel> findByForm(String firstName, String lastName, String city) {
+		List<ApplicantModel> tempApps = new ArrayList<ApplicantModel>();
+		
+		if(firstName.equals("")){firstName = "%";}
+		if(lastName.equals("")){lastName = "%";}
+		if(city.equals("")){city = "%";}
+		
+		System.out.println(firstName + lastName + city);
+		
+		tempApps = find.where().ilike("applicant_first_name", firstName).ilike("applicant_last_name", lastName).ilike("applicant_city", city).findList();
+
+		return tempApps;
 	}
 	
 }

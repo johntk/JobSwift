@@ -99,6 +99,7 @@ public class JobListingController extends Controller {
 		return redirect(routes.JobListingController.jobListings());
 	}
 	
+	// Displays all jobs in recruiters dashboard
 	@Security.Authenticated(RecruiterSecured.class)
 	public static Result listJobs() {
 		List<JobListingModel> jobs = JobListingModel.findAll();

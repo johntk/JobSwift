@@ -27,6 +27,8 @@ GET		/recruiterlogout			controllers.RecruiterController.recruiterLogout()
 GET		/jobprofile/:id				controllers.JobListingController.jobProfile(id: Long)
 POST	/updatejoblisting			controllers.JobListingController.updateJobListing()
 
+POST	/searchapplicant			controllers.ApplicantController.applicantSearchResult()
+
 
 # Applicant Profile
 GET		/userprofile				controllers.Application.applicantProfile()
