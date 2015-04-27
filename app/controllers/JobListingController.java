@@ -19,6 +19,7 @@ public class JobListingController extends Controller {
 				(tempJobs,Form.form(JobListingController.JobSearch.class), Form.form(Login.class), JobListingController.locationList(), jobTypeList(), JobListingController.sectorList() ));
 	}
 	
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result newJobListing()
 	{
 		return ok(views.html.Recruiter.JobDetailsForm.render(jobForm, locationList(), jobTypeList(), sectorList()));
@@ -27,6 +28,7 @@ public class JobListingController extends Controller {
 	
 	// Method to add a job listing to the database
 	// submitted from the job listing form
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result addJobListing() {
 		
 		Form<JobListingModel> boundForm = jobForm.bindFromRequest();
@@ -58,6 +60,7 @@ public class JobListingController extends Controller {
         }
 	}
 	
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result delete(Long id) {
     	final JobListingModel job = JobListingModel.findById(id);
     	if(job == null) {
@@ -158,6 +161,7 @@ public class JobListingController extends Controller {
 		return list;
 	}
 	
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result listJobs() {
 		List<JobListingModel> jobs = JobListingModel.findAll();
     	return ok(views.html.Recruiter.JobList.render(jobs));

@@ -27,14 +27,18 @@ public class RecruiterController extends Controller{
 		
 		// Check if the user exists in the database
 		if(EmployeeModel.authenticateEmployee(userName, password) == null) {
-			// Clear the existing session
-			session().clear();
+			// Clear any existing user from the session
+			if(session().containsKey("username")) {
+				session().remove("username");
+			}
 			flash("error", "Invalid Login!");
 			return redirect(routes.RecruiterController.recruiterLogin());
 		}
 		
-		// Clear the existing session
-		session().clear();
+		// Clear any existing user from the session
+		if(session().containsKey("username")) {
+			session().remove("username");
+		}
 		// Add users email to the session
 		session("username", userName);
 		// Redirect to homepage
@@ -50,6 +54,13 @@ public class RecruiterController extends Controller{
 		List<JobApplicationModel> applicationList = JobApplicationModel.findAllUnprocessedApplications();
 		List<JobApplicationModel> interviewList = JobApplicationModel.findAllCompleteInterviews();
 		return ok(views.html.Recruiter.Dashboard.render(jobList, applicationList, interviewList));
+	}
+	
+	public static Result recruiterLogout() {
+		if(session().containsKey("username")) {
+			session().remove("username");
+		}
+		return redirect(routes.RecruiterController.recruiterLogin());
 	}
 
 }
