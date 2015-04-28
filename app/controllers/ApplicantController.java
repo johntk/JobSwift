@@ -22,13 +22,6 @@ public class ApplicantController extends Controller {
     	return ok(views.html.Applicant.ApplicantList.render(applicants, Form.form(ApplicantController.ApplicantSearch.class)));
     }
 	
-	// Displays all job applciations in the recruiters dashboard
-	@Security.Authenticated(RecruiterSecured.class)
-	public static Result listAllJobApplications() {
-    	List<JobApplicationModel> jobApps = JobApplicationModel.findAll();
-    	return ok(views.html.Recruiter.JobApplicationList.render(jobApps));
-    }
-    
     public static Result newApplicant() {
     	return ok(views.html.Applicant.ApplicantDetails.render(appForm));
     }

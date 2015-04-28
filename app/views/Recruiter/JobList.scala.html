@@ -60,6 +60,7 @@
 			<thead>
 				<tr>
 					<th>Job ID</th>
+					<th>Company</th>
 					<th>Title</th>
 					<th>Sector</th>
 					<th>Type</th>
@@ -73,12 +74,13 @@
 				@for(job <- jobList) {
 					<tr>
 						<td>@job.job_id</td>
-						<td>@job.job_title</td>
+						<td>@job.job_company</td>
+						<td><a href="/jobprofile/@job.job_id" target="_blank" class="btn btn-primary">@job.job_title</a></td>
 						<td>@job.job_sector</td>
 						<td>@job.job_type</td>
 						<td>@job.job_location</td>
 						<td>&euro;@job.job_salary</td>
-						<td><a href="/jobprofile/@job.job_id" class="fa fa-pencil-square-o fa-2x"></a></td>
+						<td><a href="/editjoblisting/@job.job_id" class="fa fa-pencil-square-o fa-2x"></a></td>
 						<td>
 							<a class="text-danger" style="cursor: pointer;" onclick="javascript:del('@routes.JobListingController.delete(job.job_id)')"><i class="fa fa-remove fa-2x"></i></a>
 						</td>

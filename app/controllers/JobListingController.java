@@ -221,4 +221,11 @@ public class JobListingController extends Controller {
 		list.add("Wicklow");
 		return list;
 	}
+	
+	public static Result jobListingProfile(Long id) {
+		JobListingModel jlm = JobListingModel.findById(id);
+		List<JobApplicationModel> jobAppList = JobApplicationModel.findAllApplicationsByJobListing(jlm);
+		
+		return ok(views.html.Recruiter.JobListingProfile.render(jlm, jobAppList));
+	}
 }
