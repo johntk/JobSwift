@@ -37,6 +37,9 @@ public class ApplicantModel extends Model {
 	@Constraints.MinLength(6)
 	public String applicant_password;
 	
+	@Lob
+	public String gcm_id;
+	
 	@OneToMany
 	public List<JobApplicationModel> applicationList;
 

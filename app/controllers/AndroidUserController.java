@@ -1,5 +1,9 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
 import models.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -15,7 +19,7 @@ public class AndroidUserController extends Controller {
 	
 	// Process the applicant login form from the homepage
 	public static Result login() {
-		String email, password;
+		String email, password, gcmId;
 		JsonNode json = request().body().asJson();
 		ObjectNode result = Json.newObject();
 
@@ -26,6 +30,8 @@ public class AndroidUserController extends Controller {
 	    } else {
 	        email = json.findPath("email").textValue();
 	        password = json.findPath("password").textValue();
+	        gcmId = json.findPath("gcmid").textValue();
+	        
 	        ApplicantModel app = ApplicantModel.authenticateApplicant(email, password);
 	        if(app == null) {
 	        	result.put("error",true);
@@ -41,6 +47,13 @@ public class AndroidUserController extends Controller {
 	        	result.put("cvFilePath", app.cvFilePath);
 	        	result.put("profileImage", app.profileImage);
 	        	result.put("cvFileName", app.cvFileName);
+	        	
+	        	app.gcm_id = gcmId;
+//	        	System.out.println(gcmId);
+	        	app.update();
+	        	
+	        	GCMContent content = createContent(gcmId);
+	        	GCMController.post(content);
 	            return ok(result);
 	        }
 	    }
@@ -85,5 +98,15 @@ public class AndroidUserController extends Controller {
 		        return ok(result);
 	    	}
 	    }
+	}
+	
+	public static GCMContent createContent(String regid){
+		
+		GCMContent c = new GCMContent();
+		
+		c.addRegId(regid);
+		c.createData("Test Title", "Test Message");
+		
+		return c;
 	}
 }
