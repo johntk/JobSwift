@@ -20,6 +20,13 @@ create table applicant_model (
   constraint pk_applicant_model primary key (applicant_id))
 ;
 
+create table assigned_task_model (
+  assigned_task_id          bigint auto_increment not null,
+  emp_employee_id           bigint,
+  job_app_job_application_id bigint,
+  constraint pk_assigned_task_model primary key (assigned_task_id))
+;
+
 create table employee_model (
   employee_id               bigint auto_increment not null,
   employee_user_name        varchar(255),
@@ -44,6 +51,7 @@ create table job_application_model (
   date                      datetime,
   app_applicant_id          bigint,
   job_job_id                bigint,
+  assigned_task_assigned_task_id bigint,
   constraint pk_job_application_model primary key (job_application_id))
 ;
 
@@ -60,12 +68,18 @@ create table job_listing_model (
   constraint pk_job_listing_model primary key (job_id))
 ;
 
-alter table interview_question_model add constraint fk_interview_question_model_job_1 foreign key (job_job_id) references job_listing_model (job_id) on delete restrict on update restrict;
-create index ix_interview_question_model_job_1 on interview_question_model (job_job_id);
-alter table job_application_model add constraint fk_job_application_model_app_2 foreign key (app_applicant_id) references applicant_model (applicant_id) on delete restrict on update restrict;
-create index ix_job_application_model_app_2 on job_application_model (app_applicant_id);
-alter table job_application_model add constraint fk_job_application_model_job_3 foreign key (job_job_id) references job_listing_model (job_id) on delete restrict on update restrict;
-create index ix_job_application_model_job_3 on job_application_model (job_job_id);
+alter table assigned_task_model add constraint fk_assigned_task_model_emp_1 foreign key (emp_employee_id) references employee_model (employee_id) on delete restrict on update restrict;
+create index ix_assigned_task_model_emp_1 on assigned_task_model (emp_employee_id);
+alter table assigned_task_model add constraint fk_assigned_task_model_jobApp_2 foreign key (job_app_job_application_id) references job_application_model (job_application_id) on delete restrict on update restrict;
+create index ix_assigned_task_model_jobApp_2 on assigned_task_model (job_app_job_application_id);
+alter table interview_question_model add constraint fk_interview_question_model_job_3 foreign key (job_job_id) references job_listing_model (job_id) on delete restrict on update restrict;
+create index ix_interview_question_model_job_3 on interview_question_model (job_job_id);
+alter table job_application_model add constraint fk_job_application_model_app_4 foreign key (app_applicant_id) references applicant_model (applicant_id) on delete restrict on update restrict;
+create index ix_job_application_model_app_4 on job_application_model (app_applicant_id);
+alter table job_application_model add constraint fk_job_application_model_job_5 foreign key (job_job_id) references job_listing_model (job_id) on delete restrict on update restrict;
+create index ix_job_application_model_job_5 on job_application_model (job_job_id);
+alter table job_application_model add constraint fk_job_application_model_assignedTask_6 foreign key (assigned_task_assigned_task_id) references assigned_task_model (assigned_task_id) on delete restrict on update restrict;
+create index ix_job_application_model_assignedTask_6 on job_application_model (assigned_task_assigned_task_id);
 
 
 
@@ -74,6 +88,8 @@ create index ix_job_application_model_job_3 on job_application_model (job_job_id
 SET FOREIGN_KEY_CHECKS=0;
 
 drop table applicant_model;
+
+drop table assigned_task_model;
 
 drop table employee_model;
 

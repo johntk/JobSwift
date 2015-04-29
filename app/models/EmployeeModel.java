@@ -30,6 +30,9 @@ public class EmployeeModel extends Model {
 	@Constraints.Required
 	public String employee_lastName;
 	
+	@OneToMany
+	public List<AssignedTaskModel> assignedTasks;
+	
 	public static EmployeeModel create(String employee_userName, String employeePassword, String employee_firstName, String employee_lastName) {
 		EmployeeModel emp = new EmployeeModel();
 		emp.employee_userName = employee_userName;

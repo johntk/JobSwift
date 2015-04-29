@@ -48,15 +48,24 @@ public class JobApplicationController extends Controller {
     		return notFound(String.format("Job %s does not exist.", id));
     	}
     	
+    	AssignedTaskModel atm = AssignedTaskModel.findTaskByJobApplication(jobApp);
+    	if(atm != null) {
+    		atm.delete();
+    	}
     	jobApp.delete();
     	return redirect(routes.JobApplicationController.listAllJobApplications());
     }
 	
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result setApplicationStatus(Long id, String status) {
-		
+
 		JobApplicationModel jam = JobApplicationModel.findById(id);
 		jam.status = status;
 		jam.update();
+		
+		if(status.equals("accepted")) {
+			assignEmployeeTask(jam);
+		}
 		
 		if(status.equals("interview")) {
 			sendInterviewNotification(jam);
@@ -65,11 +74,16 @@ public class JobApplicationController extends Controller {
 		return redirect(routes.JobApplicationController.listAllJobApplications());
 	}
 	
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result setApplicationStatusUserProfile(Long id, String status) {
 		
 		JobApplicationModel jam = JobApplicationModel.findById(id);
 		jam.status = status;
 		jam.update();
+		
+		if(status.equals("accepted")) {
+			assignEmployeeTask(jam);
+		}
 		
 		if(status.equals("interview")) {
 			sendInterviewNotification(jam);
@@ -94,6 +108,14 @@ public class JobApplicationController extends Controller {
 		Form<FilterJobApplication> filterForm = Form.form(FilterJobApplication.class).bindFromRequest();
 		List<JobApplicationModel> jobApps = JobApplicationModel.findApplicationByStatus(filterForm.get().status);
 		return ok(views.html.Recruiter.JobApplicationList.render(jobApps, Form.form(FilterJobApplication.class)));
+	}
+	
+	public static void assignEmployeeTask(JobApplicationModel jam) {
+		EmployeeModel employee = EmployeeModel.findByUserName(session().get("username"));
+		AssignedTaskModel atm = new AssignedTaskModel();
+		atm.emp = employee;
+		atm.jobApp = jam;
+		atm.save();
 	}
 	
 	public static void sendInterviewNotification(JobApplicationModel jam) {

@@ -32,6 +32,9 @@ public class JobApplicationModel extends Model {
 	@ManyToOne
 	public JobListingModel job;
 	
+	@OneToOne
+	public AssignedTaskModel assignedTask;
+	
 	// Default Constructor
 	public JobApplicationModel() {
 	}
@@ -104,4 +107,5 @@ public class JobApplicationModel extends Model {
 			return temp;
 		}
 	}
+
 }
