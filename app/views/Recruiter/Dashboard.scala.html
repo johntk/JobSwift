@@ -1,4 +1,4 @@
-@(jobList: List[JobListingModel])(applicationList: List[JobApplicationModel])(interviewList: List[JobApplicationModel])
+@(jobList: List[JobListingModel])(applicationList: List[JobApplicationModel])(interviewList: List[JobApplicationModel])(taskList: List[AssignedTaskModel])
 @import java.math.BigInteger; var i=1
 @RecruitersScreenTemplate("Recruitment Agency") {
 
@@ -67,24 +67,25 @@
 				</div>
 		</div>
 	</div>
+-->
+*@
 
 	<div class="col-md-3 col-sm-6 col-xs-6">
 		<div class="panel panel-back noti-box">
-				<div class="inner-noti-box">
+				<div class="inner-noti-box assigned-task-button">
 					<span class="icon-box bg-color-blue set-icon"> <i
 						class="fa fa-bell-o"></i>
 					</span>
 					<div class="text-box">
-						<p class="main-text">&nbsp;New</p>
-						<p class="text-muted">Notifications</p>
+						<p class="main-text">&nbsp;@taskList.size Assigned</p>
+						<p class="text-muted">Tasks</p>
 					</div>
 				</div>
 		</div>
 	</div>
 
 </div>
--->
-*@
+
 <!-- /. ROW  -->
 <div class="clearfix"></div>
 <hr />
@@ -170,32 +171,26 @@
 </div>
 
 
-<div class="toggle-hide job-list-table">
-	<h3>All Job Listings</h3>
+<div class="toggle-hide task-list-table">
+	<h3>All Assigned Tasks</h3>
 	<div class="table-responsive" style="padding:10px;">
 	
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>#</th>
-					<th>Title</th>
-					<th>Type</th>
-					<th>Location</th>
-					<th>Salary</th>
-					<th></th>
+					<th>Assigned Employee</th>
+					<th>Job Title</th>
+					<th>Applicant</th>
+					<th>Application Status</th>
 				</tr>
 			</thead>
 			<tbody class="user_table_body">
-				@for(job <- jobList) {
+				@for(task <- taskList) {
 					<tr>
-						<td class="user_table_id"></td>
-						<td>@job.job_title</td>
-						<td>@job.job_type</td>
-						<td>@job.job_location</td>
-						<td>&euro;@job.job_salary</td>
-						<td>
-						<a class="text-danger" style="cursor: pointer;" onclick="javascript:del('@routes.JobListingController.delete(job.job_id)')"><i class="fa fa-remove fa-2x"></i></a>
-						</td>
+						<td>@task.emp.employee_firstName @task.emp.employee_lastName</td>
+						<td>@task.jobApp.job.job_title</td>
+						<td><a href="/viewuser/@task.jobApp.app.applicant_email" target="_blank" class="btn btn-primary">@task.jobApp.app.applicant_firstName @task.jobApp.app.applicant_lastName</a></td>
+						<td>@task.jobApp.status</td>
 					</tr>
 				}
 			</tbody>
@@ -206,8 +201,8 @@
 	<script>
 		$(document).ready(function() {
         	$('.new-app-button').click(function() {
-        		if ($(".job-list-table").is(":visible")) {
-        	    	$('.job-list-table').hide();
+        		if ($(".task-list-table").is(":visible")) {
+        	    	$('.task-list-table').hide();
         	    } else if ($(".complete-interview-list-table").is(":visible")) {
         	    	$('.complete-interview-list-table').hide();
         	    }
@@ -217,19 +212,19 @@
         	$('.complete-interview-button').click(function() {
         		if ($(".app-list-table").is(":visible")) {
         	    	$('.app-list-table').hide();
-        	    }else if ($(".job-list-table").is(":visible")) {
-        	    	$('.job-list-table').hide();
+        	    }else if ($(".task-list-table").is(":visible")) {
+        	    	$('.task-list-table').hide();
         	    }
         	    $('.complete-interview-list-table').fadeIn("fast");
     		});
         	
-        	$('.job-list-button').click(function() {
+        	$('.assigned-task-button').click(function() {
         		if ($(".app-list-table").is(":visible")) {
         	    	$('.app-list-table').hide();
         	    }else if ($(".complete-interview-list-table").is(":visible")) {
         	    	$('.complete-interview-list-table').hide();
         	    }
-        	    $('.job-list-table').fadeIn("fast");
+        	    $('.task-list-table').fadeIn("fast");
     		});
         	
     	});

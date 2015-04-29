@@ -53,7 +53,9 @@ public class RecruiterController extends Controller{
 		List<JobListingModel> jobList = JobListingModel.findAll();
 		List<JobApplicationModel> applicationList = JobApplicationModel.findAllUnprocessedApplications();
 		List<JobApplicationModel> interviewList = JobApplicationModel.findAllCompleteInterviews();
-		return ok(views.html.Recruiter.Dashboard.render(jobList, applicationList, interviewList));
+		List<AssignedTaskModel> assignedTasks = AssignedTaskModel.findAllTasksByEmployee(EmployeeModel.findByUserName(session().get("username")) );
+		
+		return ok(views.html.Recruiter.Dashboard.render(jobList, applicationList, interviewList, assignedTasks));
 	}
 	
 	public static Result recruiterLogout() {
