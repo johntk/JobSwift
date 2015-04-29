@@ -69,6 +69,7 @@ POST	/androidgetinterviewquestions controllers.AndroidJobApplicationController.g
 POST	/uploadinterviewvideos		controllers.AndroidController.saveInterviewVideos()
 POST	/completeinterviewvideo		controllers.AndroidController.interviewVideosComplete()
 
+POST	/sendgcm					controllers.AndroidUserController.storeGCMId()
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class GCMController extends Controller {
@@ -73,4 +74,14 @@ public class GCMController extends Controller {
                 e.printStackTrace();
             }
         }
+    
+    public static GCMContent createContent(String regid, String msg){
+		
+		GCMContent c = new GCMContent();
+		
+		c.addRegId(regid);
+		c.createData("message", msg);
+		
+		return c;
+	}
 }

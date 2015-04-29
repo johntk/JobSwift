@@ -57,6 +57,11 @@ public class JobApplicationController extends Controller {
 		JobApplicationModel jam = JobApplicationModel.findById(id);
 		jam.status = status;
 		jam.update();
+		
+		if(status.equals("interview")) {
+			sendInterviewNotification(jam);
+		}
+		
 		return redirect(routes.JobApplicationController.listAllJobApplications());
 	}
 	
@@ -65,6 +70,11 @@ public class JobApplicationController extends Controller {
 		JobApplicationModel jam = JobApplicationModel.findById(id);
 		jam.status = status;
 		jam.update();
+		
+		if(status.equals("interview")) {
+			sendInterviewNotification(jam);
+		}
+		
 		return redirect(routes.ApplicantController.viewApplicantProfile(jam.app.applicant_email));
 	}
 	
@@ -84,6 +94,12 @@ public class JobApplicationController extends Controller {
 		Form<FilterJobApplication> filterForm = Form.form(FilterJobApplication.class).bindFromRequest();
 		List<JobApplicationModel> jobApps = JobApplicationModel.findApplicationByStatus(filterForm.get().status);
 		return ok(views.html.Recruiter.JobApplicationList.render(jobApps, Form.form(FilterJobApplication.class)));
+	}
+	
+	public static void sendInterviewNotification(JobApplicationModel jam) {
+		GCMContent content = GCMController.createContent(jam.app.gcm_id, "You're interview for " + jam.job.job_title + " in " + jam.job.job_location +
+				" is now available!\nLog into your app to complete your application.");
+    	GCMController.post(content);
 	}
 
 }

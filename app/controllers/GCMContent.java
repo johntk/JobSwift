@@ -10,6 +10,10 @@ public class GCMContent implements Serializable {
 
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<String> registration_ids;
 	private Map<String,String> data;
 	
