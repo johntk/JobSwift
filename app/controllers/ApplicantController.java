@@ -13,19 +13,15 @@ import play.data.Form;
 public class ApplicantController extends Controller {
 	
 	private static final Form<ApplicantModel> appForm = Form.form(ApplicantModel.class);
+	private static List<ApplicantModel> tempApps = new ArrayList<ApplicantModel>();
 	
 	// Method to retrieve all applicants in the database
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result listApplicants() {
     	List<ApplicantModel> applicants = ApplicantModel.findAll();
-    	return ok(views.html.Applicant.ApplicantList.render(applicants));
+    	return ok(views.html.Applicant.ApplicantList.render(applicants, Form.form(ApplicantController.ApplicantSearch.class)));
     }
 	
-	// Displays all job applciations in the recruiters dashboard
-	public static Result listAllJobApplications() {
-    	List<JobApplicationModel> jobApps = JobApplicationModel.findAll();
-    	return ok(views.html.Recruiter.JobApplicationList.render(jobApps));
-    }
-    
     public static Result newApplicant() {
     	return ok(views.html.Applicant.ApplicantDetails.render(appForm));
     }
@@ -112,5 +108,25 @@ public class ApplicantController extends Controller {
     	flash("success","Account Deleted");
     	return redirect(routes.Application.index());
     }
+    
+    // inner class to for applicant search method
+    public static class ApplicantSearch {
+    	public String applicant_firstName;
+    	public String applicant_lastName;
+    	public String applicant_email;
+    	public String applicant_city;
+    }
+    
+    public static Result applicantSearchResult() {
+		Form<ApplicantSearch> jobForm = Form.form(ApplicantSearch.class).bindFromRequest();
+		String firstName = jobForm.get().applicant_firstName;
+		String lastName = jobForm.get().applicant_lastName;
+		String email = jobForm.get().applicant_email;
+		String city = jobForm.get().applicant_city;
+		
+		tempApps = ApplicantModel.findByForm(firstName, lastName, email, city);
+		
+		return ok(views.html.Applicant.ApplicantList.render(tempApps, Form.form(ApplicantController.ApplicantSearch.class)));
+	}
 
 }

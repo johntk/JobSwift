@@ -1,5 +1,9 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
 import models.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -15,7 +19,7 @@ public class AndroidUserController extends Controller {
 	
 	// Process the applicant login form from the homepage
 	public static Result login() {
-		String email, password;
+		String email, password, gcmId;
 		JsonNode json = request().body().asJson();
 		ObjectNode result = Json.newObject();
 
@@ -26,6 +30,8 @@ public class AndroidUserController extends Controller {
 	    } else {
 	        email = json.findPath("email").textValue();
 	        password = json.findPath("password").textValue();
+	        gcmId = json.findPath("gcmid").textValue();
+	        
 	        ApplicantModel app = ApplicantModel.authenticateApplicant(email, password);
 	        if(app == null) {
 	        	result.put("error",true);
@@ -41,6 +47,39 @@ public class AndroidUserController extends Controller {
 	        	result.put("cvFilePath", app.cvFilePath);
 	        	result.put("profileImage", app.profileImage);
 	        	result.put("cvFileName", app.cvFileName);
+	        	
+	        	app.gcm_id = gcmId;
+	        	app.update();
+	        	
+	            return ok(result);
+	        }
+	    }
+	}
+	
+	public static Result storeGCMId() {
+		String email, gcmId;
+		JsonNode json = request().body().asJson();
+		ObjectNode result = Json.newObject();
+	    if(json == null) {
+	    	result.put("error", true);
+	    	result.put("error_msg", "No JSon");
+	        return badRequest(result);
+	    } else {
+	        email = json.findPath("email").textValue();
+	        gcmId = json.findPath("gcmid").textValue();
+	        
+	        ApplicantModel app = ApplicantModel.findByEmail(email);
+	        if(app == null) {
+	        	
+	        	result.put("error",true);
+	        	result.put("error_msg", "User Not Found");
+	            return ok(result);
+	        } else {
+	        	result.put("error", false);
+	        	
+	        	app.gcm_id = gcmId;
+	        	app.update();
+	        	
 	            return ok(result);
 	        }
 	    }
@@ -86,4 +125,5 @@ public class AndroidUserController extends Controller {
 	    	}
 	    }
 	}
+	
 }

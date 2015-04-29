@@ -15,7 +15,12 @@ POST	/authenticateemp			controllers.RecruiterController.authenticateEmployee()
 GET     /dashboard					controllers.RecruiterController.dashboard()
 GET     /applicants					controllers.ApplicantController.listApplicants()
 GET     /recruiterjoblistings		controllers.JobListingController.listJobs()
-GET		/jobapplications			controllers.ApplicantController.listAllJobApplications()
+
+# Job Applications - recruiters dashboard
+GET		/jobapplications			controllers.JobApplicationController.listAllJobApplications()
+POST	/filterjobapplications		controllers.JobApplicationController.filterJobApplications()
+
+#
 POST	/submitform					controllers.Application.submitForm()
 DELETE  /applicants/:email			controllers.ApplicantController.deleteUser(email: String)
 DELETE  /jobapplication/:id			controllers.JobApplicationController.delete(id: Long)
@@ -23,7 +28,18 @@ POST	/addjob						controllers.JobListingController.addJobListing()
 GET		/setapplicationstatus:id/status		controllers.JobApplicationController.setApplicationStatus(id: Long, status: String)
 GET		/setuserappstatus:id/status	controllers.JobApplicationController.setApplicationStatusUserProfile(id: Long, status: String)
 GET		/viewuser/:email			controllers.ApplicantController.viewApplicantProfile(email: String)
+GET		/recruiterlogout			controllers.RecruiterController.recruiterLogout()
+GET		/editjoblisting/:id			controllers.JobListingController.editJobListing(id: Long)
+POST	/updatejoblisting			controllers.JobListingController.updateJobListing()
 
+POST	/searchapplicant			controllers.ApplicantController.applicantSearchResult()
+POST	/recruitersearchjobs		controllers.JobListingController.jobSearchResultRecruiter()
+
+
+
+
+
+GET		/jobprofile/:id				controllers.JobListingController.jobListingProfile(id: Long)
 
 # Applicant Profile
 GET		/userprofile				controllers.Application.applicantProfile()
@@ -38,6 +54,9 @@ GET		/newjoblisting				controllers.JobListingController.newJobListing()
 DELETE  /joblisting/:id				controllers.JobListingController.delete(id: Long)
 GET		/apply:id					controllers.JobApplicationController.applyForJob(id: Long)
 
+GET		/hash						controllers.Hash.hashing()
+POST	/hashvalue					controllers.Hash.hashValue()
+
 # Android
 POST	/refresh    				controllers.AndroidController.refresh()
 POST	/update    					controllers.AndroidController.update()
@@ -50,6 +69,7 @@ POST	/androidgetinterviewquestions controllers.AndroidJobApplicationController.g
 POST	/uploadinterviewvideos		controllers.AndroidController.saveInterviewVideos()
 POST	/completeinterviewvideo		controllers.AndroidController.interviewVideosComplete()
 
+POST	/sendgcm					controllers.AndroidUserController.storeGCMId()
 
 
 # Map static resources from the /public folder to the /assets URL path

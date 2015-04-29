@@ -32,6 +32,9 @@ public class JobApplicationModel extends Model {
 	@ManyToOne
 	public JobListingModel job;
 	
+	@OneToOne
+	public AssignedTaskModel assignedTask;
+	
 	// Default Constructor
 	public JobApplicationModel() {
 	}
@@ -87,7 +90,7 @@ public class JobApplicationModel extends Model {
 	}
 	
 	public static List<JobApplicationModel> findAllUnprocessedApplications() {
-		List<JobApplicationModel> temp = find.where().eq("status", "submitted").findList();
+		List<JobApplicationModel> temp = find.where().eq("status", "submitted").orderBy("date").findList();
 		return temp;
 	}
 	
@@ -95,4 +98,14 @@ public class JobApplicationModel extends Model {
 		List<JobApplicationModel> temp = find.where().eq("interviewDone", 1).findList();
 		return temp;
 	}
+	
+	public static List<JobApplicationModel> findApplicationByStatus(String status) {
+		if(status.equals("%")) {
+			return findAll();
+		} else {
+			List<JobApplicationModel> temp = find.where().eq("status", status).findList();
+			return temp;
+		}
+	}
+
 }

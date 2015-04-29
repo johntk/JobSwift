@@ -39,10 +39,11 @@
 				</button>
 				<a class="navbar-brand" href="/dashboard">JOBSWIFT</a>
 			</div>
-			<div
-				style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;">
-				<a href="#" class="btn btn-danger square-btn-adjust">Logout</a>
+			@if(session.get("username") != null) {
+			<div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;">
+				<a href="/recruiterlogout" class="btn btn-danger square-btn-adjust">Logout</a>
 			</div>
+			}
 		</nav>
 		<!-- /. NAV TOP  -->
 		<nav class="navbar-default navbar-side" role="navigation">
@@ -52,27 +53,27 @@
 						<img src="@routes.Assets.at("images/icon.png")" class="user-image img-responsive" />
 					</span>
 
-
-					<li>
-						<a href="/dashboard"><i class="fa fa-home fa-3x"></i> Home</a>
-					</li>
-					
-					<li>
-						<a href="/applicants"><i class="fa fa-users fa-3x"></i> Applicants</a>
-					</li>
-					
-					<li>
-						<a href="/jobapplications"><i class="fa fa-list-ul fa-3x"></i> Job Applications</a>
-					</li>
-					
-					<li>
-						<a href="/recruiterjoblistings"><i class="fa fa-align-left fa-3x"></i> Job Listings</a>
-					</li>
-					
-					<li>
-						<a href="/newjoblisting"><i class="fa fa-plus fa-3x"></i> Add Job Listing</a>
-					</li>
-					
+					@if(session.get("username") != null) {
+						<li>
+							<a href="/dashboard"><i class="fa fa-home fa-3x"></i> Home</a>
+						</li>
+						
+						<li>
+							<a href="/applicants"><i class="fa fa-users fa-3x"></i> Applicants</a>
+						</li>
+						
+						<li>
+							<a href="/jobapplications"><i class="fa fa-list-ul fa-3x"></i> Job Applications</a>
+						</li>
+						
+						<li>
+							<a href="/recruiterjoblistings"><i class="fa fa-align-left fa-3x"></i> Job Listings</a>
+						</li>
+						
+						<li>
+							<a href="/newjoblisting"><i class="fa fa-plus fa-3x"></i> Add Job Listing</a>
+						</li>
+					}
 				</ul>
 				
 			</div>

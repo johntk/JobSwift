@@ -69,7 +69,7 @@
 								<li>Application Status:</span> <span id="job-app-progress" class="label label-warning" style="float: none;">Accepted</li>
 								<div class="row view-profile-buttons">
 									<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id,"interview")" class="btn btn-success btn-sm" style="margin: 5px;">Submit Interview</a>
-									<a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id,"submitted")" class="btn btn-danger btn-sm" style="margin: 5px;">Cancel</a>
+									@*<!-- <a href= "@routes.JobApplicationController.setApplicationStatusUserProfile(jobApp.job_application_id,"submitted")" class="btn btn-danger btn-sm" style="margin: 5px;">Cancel</a> --> *@
 								</div>
 								<br>
 								
@@ -118,7 +118,7 @@
 						@(i+=1)
 						} 
 					} else {
-						<p>You have not applied for any jobs yet.  Start by searching&nbsp;&nbsp;<a href="/joblistings"><strong><u>here</u></strong></a></p>
+						<p>No job applications on record.</p>
 					}
 			</div>
 			

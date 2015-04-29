@@ -1,4 +1,4 @@
-@(jobList: List[JobListingModel])
+@(jobList: List[JobListingModel])(jobSearchForm: Form[JobListingController.JobSearch])(locations: List[String])(jobTypes: List[String])(sectors: List[String])
 
 @Recruiter.RecruitersScreenTemplate("Job Listings") {
 
@@ -15,29 +15,72 @@
       }
 </script>
 
-	<h3>All Job Listings</h3>
+	<h3>Search Job Listings</h3>
+	
+	<div>
+		<form class="form-horizontal" action="/recruitersearchjobs" method="POST">
+		
+			<div class="form-inline">
+						<select required class="form-control" name="job_location">
+							<option value="" disabled selected>Choose a location</option>
+							<option value="%">Any</option>
+							@for(location <- locations) {
+								<option value="@location" name="job_location">@location</option>
+							}
+						</select>
+
+					<select required class="form-control" name="job_sector">
+						<option value="" disabled selected>Choose a sector</option>
+						<option value="%">Any</option>
+						@for(sector <- sectors) {
+							<option value="@sector" name="job_sector">@sector</option>
+						}
+					</select>
+
+					<select required class="form-control" name="job_type">
+						<option value="" disabled selected>Choose a Job Type</option>
+						<option value="%">Any</option>
+						@for(jobType <- jobTypes) {
+							<option value="@jobType" name="job_sector">@jobType</option>
+						}
+					</select>
+					
+					<input type="hidden" value="@jobSearchForm("id").valueOr("")" name="id"/>
+					<input type="submit" class="btn btn-primary btn-square-adjust" value="Submit">
+			</div>
+
+		</form>
+	</div>
+	
+	<hr>
+	
 	<div class="table-responsive" style="padding:10px;">
 	
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>#</th>
+					<th>Job ID</th>
+					<th>Company</th>
 					<th>Title</th>
+					<th>Sector</th>
 					<th>Type</th>
 					<th>Location</th>
 					<th>Salary</th>
+					<th>Edit</th>
 					<th>DELETE</th>
 				</tr>
 			</thead>
 			<tbody class="user_table_body">
 				@for(job <- jobList) {
 					<tr>
-						<td class="user_table_id"></td>
-						<td>@job.job_title</td>
+						<td>@job.job_id</td>
+						<td>@job.job_company</td>
+						<td><a href="/jobprofile/@job.job_id" target="_blank" class="btn btn-primary">@job.job_title</a></td>
+						<td>@job.job_sector</td>
 						<td>@job.job_type</td>
 						<td>@job.job_location</td>
 						<td>&euro;@job.job_salary</td>
-						
+						<td><a href="/editjoblisting/@job.job_id" class="fa fa-pencil-square-o fa-2x"></a></td>
 						<td>
 							<a class="text-danger" style="cursor: pointer;" onclick="javascript:del('@routes.JobListingController.delete(job.job_id)')"><i class="fa fa-remove fa-2x"></i></a>
 						</td>

@@ -19,14 +19,15 @@ public class JobListingController extends Controller {
 				(tempJobs,Form.form(JobListingController.JobSearch.class), Form.form(Login.class), JobListingController.locationList(), jobTypeList(), JobListingController.sectorList() ));
 	}
 	
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result newJobListing()
 	{
 		return ok(views.html.Recruiter.JobDetailsForm.render(jobForm, locationList(), jobTypeList(), sectorList()));
 	}
 	
-	
 	// Method to add a job listing to the database
 	// submitted from the job listing form
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result addJobListing() {
 		
 		Form<JobListingModel> boundForm = jobForm.bindFromRequest();
@@ -58,6 +59,7 @@ public class JobListingController extends Controller {
         }
 	}
 	
+	@Security.Authenticated(RecruiterSecured.class)
 	public static Result delete(Long id) {
     	final JobListingModel job = JobListingModel.findById(id);
     	if(job == null) {
@@ -86,6 +88,7 @@ public class JobListingController extends Controller {
 		public String job_type;
 	}
 	
+	// Redirect to main website with list of job results
 	public static Result jobSearchResult() {
 		Form<JobSearch> jobForm = Form.form(JobSearch.class).bindFromRequest();
 		String location = jobForm.get().job_location;
@@ -96,6 +99,67 @@ public class JobListingController extends Controller {
 		
 		return redirect(routes.JobListingController.jobListings());
 	}
+	
+	@Security.Authenticated(RecruiterSecured.class)
+	public static Result jobSearchResultRecruiter() {
+		Form<JobSearch> jobForm = Form.form(JobSearch.class).bindFromRequest();
+		String location = jobForm.get().job_location;
+		String sector = jobForm.get().job_sector;
+		String jobType = jobForm.get().job_type;
+		
+		tempJobs = JobListingModel.findByForm(location, sector, jobType);
+		
+		return ok(views.html.Recruiter.JobList.render(tempJobs,jobForm, locationList(), jobTypeList(), sectorList()));
+	}
+	
+	// Displays all jobs in recruiters dashboard
+	@Security.Authenticated(RecruiterSecured.class)
+	public static Result listJobs() {
+		List<JobListingModel> jobs = JobListingModel.findAll();
+    	return ok(views.html.Recruiter.JobList.render(jobs,Form.form(JobSearch.class), locationList(), jobTypeList(), sectorList()));
+	}
+	
+	public static Result editJobListing(Long id) {
+		JobListingModel jlm = JobListingModel.findById(id);
+		List<InterviewQuestionModel> iqList = InterviewQuestionModel.findAllQuestionsByJobListing(jlm);
+		
+		Form<JobListingModel> filledForm = jobForm.fill(jlm);
+		
+		List<String> tempQuestions = new ArrayList<String>();
+		
+		for(int i=0; i<iqList.size(); i++) {
+			tempQuestions.add(iqList.get(i).question);
+		}
+		
+		return ok(views.html.Recruiter.EditJobListing.render(filledForm, tempQuestions, locationList(), jobTypeList(), sectorList()));
+	}
+	
+	// Update the job listing from the job profile screen
+	public static Result updateJobListing() {
+		Form<JobListingModel> boundForm = jobForm.bindFromRequest();
+        if(boundForm.hasErrors())
+        {
+          flash("error", "Please correct the form below.");
+          return redirect(routes.JobListingController.listJobs());
+        }
+
+        JobListingModel job = boundForm.get();
+        
+        if(job.job_id != null)
+        {
+        	job.update();
+        	List<InterviewQuestionModel> iqList = InterviewQuestionModel.findAllQuestionsByJobListing(job);
+        	
+        	for(int i=0; i<job.questions.size(); i++) {
+        		iqList.get(i).question = job.questions.get(i);
+        		iqList.get(i).update();
+        	}
+        	
+            flash("success", String.format("Successfully updated job %s", job));
+            return redirect(routes.JobListingController.editJobListing(job.job_id));
+        } else return redirect(routes.JobListingController.editJobListing(job.job_id));
+	}
+	
 	
 	public static void clearJobResults() {
 		tempJobs = null;
@@ -158,8 +222,10 @@ public class JobListingController extends Controller {
 		return list;
 	}
 	
-	public static Result listJobs() {
-		List<JobListingModel> jobs = JobListingModel.findAll();
-    	return ok(views.html.Recruiter.JobList.render(jobs));
+	public static Result jobListingProfile(Long id) {
+		JobListingModel jlm = JobListingModel.findById(id);
+		List<JobApplicationModel> jobAppList = JobApplicationModel.findAllApplicationsByJobListing(jlm);
+		
+		return ok(views.html.Recruiter.JobListingProfile.render(jlm, jobAppList));
 	}
 }
