@@ -9,7 +9,6 @@ Light Blue: #226bb3
 */
 body {
 	font-family: 'Open Sans', sans-serif;
-	filter:blur(3px);
 }
 
 #wrapper {
