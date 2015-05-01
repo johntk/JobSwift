@@ -23,7 +23,7 @@ import play.mvc.Result;
 public class AndroidController extends Controller {		
 
 	
-	
+	// Add video path and user details to DB, save video to server
 	// MultipartRequest Post update
 	public static Result update(){
 			
@@ -96,7 +96,7 @@ public class AndroidController extends Controller {
 				return badRequest("failed");
 		}
 	}
-	
+// Add Profile image path to DB and save image on server
 public static Result updateProfileImage(){
 		
 		//get the body of the request
@@ -151,6 +151,7 @@ public static Result updateProfileImage(){
 		}
 	}
 
+// Save cv path to DB and add CV to server
 public static Result updateCV(){
 	
 	//get the body of the request
@@ -207,6 +208,7 @@ public static Result updateCV(){
 	}
 }
 	
+// Return all user details to application
 	public static Result refresh() {
 		String email;
 		JsonNode json = request().body().asJson();
@@ -239,6 +241,7 @@ public static Result updateCV(){
 	    }
 	}
 	
+	// Save interview video path to DB and video saved to server
 	public static Result saveInterviewVideos() {
 		
 		//get the body of the request
