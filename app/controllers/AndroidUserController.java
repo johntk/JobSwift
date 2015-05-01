@@ -13,9 +13,10 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class AndroidUserController extends Controller {
 	
-	// Process the applicant login form from the homepage
+	// Process the applicant login from the Android app
 	public static Result login() {
-		String email, password, gcmId;
+		// Receives JSON object from app
+		String email, password;
 		JsonNode json = request().body().asJson();
 		ObjectNode result = Json.newObject();
 
@@ -26,14 +27,15 @@ public class AndroidUserController extends Controller {
 	    } else {
 	        email = json.findPath("email").textValue();
 	        password = json.findPath("password").textValue();
-	        gcmId = json.findPath("gcmid").textValue();
 	        
+	        // If email in JSON exists, retrieve applicant object
 	        ApplicantModel app = ApplicantModel.authenticateApplicant(email, password);
 	        if(app == null) {
 	        	result.put("error",true);
 	        	result.put("error_msg", "User Not Found");
 	            return ok(result);
 	        } else {
+	        	// Put all applicants details into JSON object and return to app
 	        	result.put("error", false);
 	        	result.put("app_id", app.applicant_id);
 	        	result.put("first_name", app.applicant_firstName);
@@ -44,14 +46,13 @@ public class AndroidUserController extends Controller {
 	        	result.put("profileImage", app.profileImage);
 	        	result.put("cvFileName", app.cvFileName);
 	        	
-	        	app.gcm_id = gcmId;
-	        	app.update();
-	        	
 	            return ok(result);
 	        }
 	    }
 	}
 	
+	// Store the users Google Cloud ID in the database
+	// GCM ID is retrieved here after successful login to app
 	public static Result storeGCMId() {
 		String email, gcmId;
 		JsonNode json = request().body().asJson();
@@ -90,6 +91,7 @@ public class AndroidUserController extends Controller {
 	    }
 	}
 	
+	// Registering user from android app
 	public static Result register() {
 		JsonNode json = request().body().asJson();
 		ObjectNode result = Json.newObject();

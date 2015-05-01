@@ -78,12 +78,14 @@ public class Application extends Controller {
 		return redirect(routes.Application.index());
 	}
 	
+	// Returns the user currently stored in session()
 	@Security.Authenticated(Secured.class)
 	public static ApplicantModel getCurrentUser() {
 		appMod = ApplicantModel.findByEmail(request().username());
 		return appMod;
 	}
 
+	// Log out the user from website
 	public static Result logOut() {
 		if(session().containsKey("email")) {
 			session().remove("email");

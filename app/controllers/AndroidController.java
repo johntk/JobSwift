@@ -285,6 +285,10 @@ public static Result updateCV(){
 		}
 	}
 	
+	/*
+	 * Sets the status of a given job application to complete
+	 * once all interview videos have been uploaded to the server
+	 */
 	public static Result interviewVideosComplete() {
 		JsonNode json = request().body().asJson();
 		

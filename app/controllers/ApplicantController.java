@@ -22,10 +22,7 @@ public class ApplicantController extends Controller {
     	return ok(views.html.Applicant.ApplicantList.render(applicants, Form.form(ApplicantController.ApplicantSearch.class)));
     }
 	
-    public static Result newApplicant() {
-    	return ok(views.html.Applicant.ApplicantDetails.render(appForm));
-    }
-    
+	// Returns the edit applicant screen pre-filled with applicant's details
     public static Result details(String email) {
     	final ApplicantModel app = ApplicantModel.findByEmail(email);
     	if (app == null) {
@@ -36,11 +33,14 @@ public class ApplicantController extends Controller {
     	return ok(views.html.Applicant.WebsiteApplicantDetails.render(filledForm, Form.form(Login.class)));
     }
     
+    // Returns the applicants profile view for the recruiters website
     public static Result viewApplicantProfile(String email) {
     	ApplicantModel app = ApplicantModel.findByEmail(email);
+    	// Find all job applications for the user
     	List<JobApplicationModel> appList = JobApplicationModel.findAllApplicationsByUser(app);
-    	List<InterviewQuestionModel> iqList = new ArrayList<InterviewQuestionModel>();
     	
+    	List<InterviewQuestionModel> iqList = new ArrayList<InterviewQuestionModel>();
+    	// Find all applications with complete interview and retrieve all questions
     	for(int i=0; i < appList.size(); i++) {
     		if(appList.get(i).interviewDone == 1) {
     			List<InterviewQuestionModel> tempiq = InterviewQuestionModel.findAllQuestionsByJobListing(appList.get(i).job);
@@ -116,7 +116,7 @@ public class ApplicantController extends Controller {
     	public String applicant_email;
     	public String applicant_city;
     }
-    
+    // Search for an applicant from recruiters website
     public static Result applicantSearchResult() {
 		Form<ApplicantSearch> jobForm = Form.form(ApplicantSearch.class).bindFromRequest();
 		String firstName = jobForm.get().applicant_firstName;

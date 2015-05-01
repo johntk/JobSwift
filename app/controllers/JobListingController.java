@@ -119,6 +119,7 @@ public class JobListingController extends Controller {
     	return ok(views.html.Recruiter.JobList.render(jobs,Form.form(JobSearch.class), locationList(), jobTypeList(), sectorList()));
 	}
 	
+	// Edit a job listing from recruiters website
 	public static Result editJobListing(Long id) {
 		JobListingModel jlm = JobListingModel.findById(id);
 		List<InterviewQuestionModel> iqList = InterviewQuestionModel.findAllQuestionsByJobListing(jlm);
