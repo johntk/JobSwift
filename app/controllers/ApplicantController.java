@@ -75,7 +75,7 @@ public class ApplicantController extends Controller {
         } else return redirect(routes.Application.applicantProfile());
     }
     
- // Delete method to delete user from recruiters dashboard
+    // Delete method to delete user from recruiters dashboard
     public static Result deleteUser(String email) {
     	final ApplicantModel app = ApplicantModel.findByEmail(email);
     	if(app == null) {
@@ -85,7 +85,7 @@ public class ApplicantController extends Controller {
     	List<JobApplicationModel> jam = JobApplicationModel.findAllApplicationsByUser(app);
     	if(jam != null) {
 	    	for(int i=0; i<jam.size(); i++) {
-	    		jam.get(i).delete();
+	    		JobApplicationController.delete(jam.get(i).job_application_id);
 	    	}
     	}
     	app.delete();

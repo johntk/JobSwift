@@ -68,7 +68,8 @@ public class JobApplicationController extends Controller {
 		}
 		
 		if(status.equals("interview")) {
-			sendInterviewNotification(jam);
+			GCMController.sendNotification(jam.app.gcm_id, "You're interview for " + jam.job.job_title + " in " + jam.job.job_location +
+					" is now available!\nLog into your app to complete your application.");
 		}
 		
 		return redirect(routes.JobApplicationController.listAllJobApplications());
@@ -86,7 +87,9 @@ public class JobApplicationController extends Controller {
 		}
 		
 		if(status.equals("interview")) {
-			sendInterviewNotification(jam);
+//			sendInterviewNotification(jam);
+			GCMController.sendNotification(jam.app.gcm_id, "You're interview for " + jam.job.job_title + " in " + jam.job.job_location +
+				" is now available!\nLog into your app to complete your application.");
 		}
 		
 		return redirect(routes.ApplicantController.viewApplicantProfile(jam.app.applicant_email));
@@ -118,10 +121,10 @@ public class JobApplicationController extends Controller {
 		atm.save();
 	}
 	
-	public static void sendInterviewNotification(JobApplicationModel jam) {
-		GCMContent content = GCMController.createContent(jam.app.gcm_id, "You're interview for " + jam.job.job_title + " in " + jam.job.job_location +
-				" is now available!\nLog into your app to complete your application.");
-    	GCMController.post(content);
-	}
+//	public static void sendInterviewNotification(JobApplicationModel jam) {
+//		GCMContent content = GCMController.createContent(jam.app.gcm_id, "You're interview for " + jam.job.job_title + " in " + jam.job.job_location +
+//				" is now available!\nLog into your app to complete your application.");
+//    	GCMController.post(content);
+//	}
 
 }

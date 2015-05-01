@@ -39,6 +39,7 @@ public class ApplicantModel extends Model {
 	
 	@Lob
 	public String gcm_id;
+	public int loggedIntoApp;
 	
 	@OneToMany
 	public List<JobApplicationModel> applicationList;
@@ -62,6 +63,7 @@ public class ApplicantModel extends Model {
 		app.applicant_password = BCrypt.hashpw(password, BCrypt.gensalt());
 
 		app.dateOfSignup = Calendar.getInstance().getTime();
+		app.loggedIntoApp = 0;
 		app.save();
 		return app;
 	}

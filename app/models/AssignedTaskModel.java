@@ -42,4 +42,5 @@ public class AssignedTaskModel extends Model {
 		List<AssignedTaskModel> temp = find.where().eq("emp.employee_id", emp.employee_id).findList();
 		return temp;
 	}
+	
 }
