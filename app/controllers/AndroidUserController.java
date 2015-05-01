@@ -1,9 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
 import models.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -78,6 +74,15 @@ public class AndroidUserController extends Controller {
 	        	result.put("error", false);
 	        	
 	        	app.gcm_id = gcmId;
+	        	
+	        	// Check if the user has logged into the app before
+	        	// If not, send them a welcome message push notification
+	        	if(app.loggedIntoApp == 0) {
+		        	GCMController.sendNotification(app.gcm_id, "Thank you for choosing JobSwift.\n\n"
+		    				+ "Make sure to complete your profile by adding a short introduction video that tells us all about your skills & work experience.\n"
+		    				+ "When your profile is complete, visit our website to start applying for jobs.");
+		    		app.loggedIntoApp = 1;
+	        	}
 	        	app.update();
 	        	
 	            return ok(result);

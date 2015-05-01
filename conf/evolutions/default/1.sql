@@ -12,6 +12,7 @@ create table applicant_model (
   applicant_city            varchar(255),
   applicant_password        varchar(255),
   gcm_id                    longtext,
+  logged_into_app           integer,
   cv_file_path              varchar(255),
   cv_file_name              varchar(255),
   profile_image             varchar(255),
