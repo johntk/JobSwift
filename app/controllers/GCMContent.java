@@ -1,3 +1,8 @@
+/*
+ * GCM Content class builds a notification
+ * to send to GCM server and forward on to user's app
+ */
+
 package controllers;
 
 import java.io.Serializable;

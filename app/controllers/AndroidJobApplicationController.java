@@ -1,3 +1,11 @@
+
+/*
+ * Job application controller
+ * sends list of job applications for a user to Android app
+ * gets all interview questions for any qualifying job application
+ *  
+ */
+
 package controllers;
 
 import java.io.FileNotFoundException;
@@ -17,7 +25,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class AndroidJobApplicationController extends Controller {
 	
-	public static Result getInterviews() throws JSONException, FileNotFoundException, UnsupportedEncodingException {
+	public static Result getJobApplications() throws JSONException, FileNotFoundException, UnsupportedEncodingException {
 		JsonNode json = request().body().asJson();
 		ObjectNode jsonApp;
 		ArrayNode appList = new ArrayNode(null);

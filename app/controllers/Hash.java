@@ -1,8 +1,13 @@
+
+/*
+ * Hash class
+ * Uses bCrypt hashing algorithm
+ */
+
 package controllers;
 
 import play.data.Form;
 import play.mvc.*;
-import models.ApplicantModel;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -16,6 +21,8 @@ public class Hash extends Controller{
 		return ok(views.html.Recruiter.hashing.render(Form.form(HashForm.class)));
 	}
 	
+	// Receives request from form
+	// Extracts string from here and returns the hashed value
 	public static Result hashValue() {
 		Form<HashForm> loginForm = Form.form(HashForm.class).bindFromRequest();
 		String formValue = loginForm.get().string_value;

@@ -10,8 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import models.JobApplicationModel;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class GCMController extends Controller {
@@ -87,6 +85,7 @@ public class GCMController extends Controller {
 		return c;
 	}
     
+    // Sends a push notification to user's app
     public static void sendNotification(String gcmId, String message) {
 		GCMContent content = GCMController.createContent(gcmId, message);
     	GCMController.post(content);
